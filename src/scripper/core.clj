@@ -1,7 +1,6 @@
-(ns scripper.core)
+(ns scripper.core
 
-(:import [org.jaudiotager.audio AudioFileIO]
-           [org.jaudiotagger.tag FieldKey])
+(:import [org.jaudiotagger.audio AudioFileIO]))
 
 (defn -main
   "I don't do a whole lot."
