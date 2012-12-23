@@ -25,10 +25,11 @@
 (defn create-mp3 [mp3 filename]
   "will create the new MP3 file"
   (with-open [output (new java.io.FileOutputStream filename)]
-    (.write output mp3)))
+    (.write output mp3))
+  (new java.io.File filename))
 
 (defn download-binary [url]
-  "downloads a file and returns it as a bytearry"
+  "downloads a file and returns it as a bytearray"
   (let [u (new java.net.URL url)
         filestream (. u openStream)]
     (. org.apache.commons.io.IOUtils toByteArray filestream)))
@@ -37,8 +38,7 @@
   "creates the file and tags it with the given tags"
   (let [
   filename (str "./" (:artist tags) " - " (:title tags) ".mp3")
-  jfile (create-mp3 (download-binary (:mp3 tags)) filename)
-  file (AudioFileIO/read (new java.io.File filename))
+  file (-> (:mp3 tags) download-binary  ,, (create-mp3 ,, filename) AudioFileIO/read)
   tag (. file getTagOrCreateAndSetDefault)]
     (. tag setField FieldKey/ARTIST (:artist tags))
     (. tag setField FieldKey/TITLE  (:title tags))
