@@ -9,23 +9,7 @@
            [org.jaudiotagger.tag TagField]
            [org.jaudiotagger.audio.mp3 MP3File])
   (:require[clojure.java.io :as io]))
-           
-(defn tags [file]
-  (let [fields (apply conj {} (map (fn [n] [(keyword (. (. n toString) toLowerCase)) n]) (. FieldKey values)))
-	tag (. file (getTag))]
-    (apply conj {}
-	    (filter (fn [[name val]] (and val (not (empty? val))))
-		    (map (fn [[name val]]
-			  [name (seq (map #(. % getContent) (. tag (getFields val))))])
-		      fields)))))
- 
-(defn audioheader [file]
-  (bean (. file (getAudioHeader))))
- 
-(defn metadata [filename]
-  (let [file (AudioFileIO/read (new java.io.File filename))]
-    {:tags (tags file)
-     :audioheader (audioheader file)}))
+
     
 (defn set-image [image]
   ;; sets the image of the mp3 file, image should be an array of bytes
@@ -44,15 +28,6 @@
   ;; mp3 should be a byte-array, maybe function can be rewritten with clojure IO
   (with-open [output (new java.io.FileOutputStream filename)]
     (.write output mp3)))
-    
-(defn test-image-array []
-  (let [
-  file (new java.io.File "./ressources/noimage.jpg")
-  filestream (new java.io.FileInputStream  file)
-  data (byte-array (int (. file length)))]
-    (. filestream read data)
-    (. filestream close)
-    data))
     
 (defn download-binary [url]
   (let [
