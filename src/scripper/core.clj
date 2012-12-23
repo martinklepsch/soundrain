@@ -6,7 +6,8 @@
            [org.jaudiotagger.tag.id3 	ID3v23Frame]
            [org.jaudiotagger.tag.datatype DataTypes]
            [org.jaudiotagger.tag.reference PictureTypes]
-           [org.jaudiotagger.tag TagField]))
+           [org.jaudiotagger.tag TagField])
+  (:require[clojure.java.io :as io]))
            
 (defn tags [file]
   (let [fields (apply conj {} (map (fn [n] [(keyword (. (. n toString) toLowerCase)) n]) (. FieldKey values)))
@@ -55,23 +56,37 @@
     (. filestream close)
     data))
     
+(defn download-image [url]
+  (let [
+    u (new java.net.URL url)
+    filestream (. u openStream)]
+    (. org.apache.commons.io.IOUtils toByteArray filestream)))
+    
 (defn tagmp3 [tags,filename]
   ;; tags the file with the name "filename" with tags
   (let [
   file (AudioFileIO/read (new java.io.File filename))
   tag (. file getTag)]
-    (. tag setField FieldKey/ARTIST (str(:artist tags)))
-    (. tag setField FieldKey/TITLE  (str(:title tags)))
-    (. tag setField FieldKey/YEAR   (str(:year tags)))
-    (. tag setField FieldKey/ALBUM  (str(:album tags)))
+    (. tag setField FieldKey/ARTIST (:artist tags))
+    (. tag setField FieldKey/TITLE  (:title tags))
+    (. tag setField FieldKey/YEAR   (:year tags))
+    (. tag setField FieldKey/ALBUM  (:album tags))
     (. tag deleteArtworkField)
-    (. tag setField (set-image (test-image-array)))
+    (. tag setField (set-image (download-image (:image tags))))
     (. file commit)))
     
-(defn test-write []
-  (tagmp3 {:artist "TestArtist", :title "TestTrack", :album "TestAlbum", :year "1000"} "./ressources/test_01_What_i_hope.mp3"))
-
     
+(defn test-write []
+  (tagmp3 {
+    :artist "TestArtist", 
+    :title "TestTrack", 
+    :album "TestAlbum", 
+    :year "1000" 
+    :image "https://dl.dropbox.com/u/1994140/P8270580n.jpg"
+    } 
+    "./ressources/test_01_What_i_hope.mp3"))
+
+      
 (defn -main
   "I don't do a whole lot."
   [& args]
