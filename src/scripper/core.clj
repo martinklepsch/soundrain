@@ -12,7 +12,7 @@
 
     
 (defn set-image [image]
-  ;; sets the image of the mp3 file, image should be an array of bytes
+  ;; returns a id3v2-frame containing image
   (let [
   body (new FrameBodyAPIC)
   frame (new ID3v23Frame "APIC")]
@@ -24,19 +24,19 @@
     frame))
 
 (defn createmp3 [mp3,filename]
-  ;; don't know if there is a better way than writing the mp3 to disk and tag it.
-  ;; mp3 should be a byte-array, maybe function can be rewritten with clojure IO
+  ;; will create the mp3
   (with-open [output (new java.io.FileOutputStream filename)]
     (.write output mp3)))
     
 (defn download-binary [url]
+  ;; downloads a file and returns it as a bytearry
   (let [
     u (new java.net.URL url)
     filestream (. u openStream)]
     (. org.apache.commons.io.IOUtils toByteArray filestream)))
     
 (defn tagmp3 [tags]
-  ;; tags the file with the name "filename" with tags
+  ;; creates the file and tags it with the given tags
   (let [
   filename (str "./" (:artist tags) " - " (:title tags) ".mp3")
   jfile (createmp3 (download-binary (:mp3 tags)) filename)
