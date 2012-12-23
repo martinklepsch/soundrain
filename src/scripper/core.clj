@@ -10,12 +10,11 @@
            [org.jaudiotagger.audio.mp3 MP3File])
   (:require[clojure.java.io :as io]))
 
-    
+
 (defn set-image [image]
-  ;; returns a id3v2-frame containing image
-  (let [
-  body (new FrameBodyAPIC)
-  frame (new ID3v23Frame "APIC")]
+  "returns a id3v2-frame containing image"
+  (let [body (new FrameBodyAPIC)
+        frame (new ID3v23Frame "APIC")]
     (. body setObjectValue DataTypes/OBJ_PICTURE_DATA image)
     (. body setObjectValue DataTypes/OBJ_PICTURE_TYPE PictureTypes/DEFAULT_ID)
     (. body setObjectValue DataTypes/OBJ_MIME_TYPE "image/jpg")
@@ -23,23 +22,22 @@
     (. frame setBody body)
     frame))
 
-(defn createmp3 [mp3,filename]
-  ;; will create the mp3
+(defn create-mp3 [mp3 filename]
+  "will create the new MP3 file"
   (with-open [output (new java.io.FileOutputStream filename)]
     (.write output mp3)))
-    
+
 (defn download-binary [url]
-  ;; downloads a file and returns it as a bytearry
-  (let [
-    u (new java.net.URL url)
-    filestream (. u openStream)]
+  "downloads a file and returns it as a bytearry"
+  (let [u (new java.net.URL url)
+        filestream (. u openStream)]
     (. org.apache.commons.io.IOUtils toByteArray filestream)))
-    
+
 (defn tagmp3 [tags]
-  ;; creates the file and tags it with the given tags
+  "creates the file and tags it with the given tags"
   (let [
   filename (str "./" (:artist tags) " - " (:title tags) ".mp3")
-  jfile (createmp3 (download-binary (:mp3 tags)) filename)
+  jfile (create-mp3 (download-binary (:mp3 tags)) filename)
   file (AudioFileIO/read (new java.io.File filename))
   tag (. file getTagOrCreateAndSetDefault)]
     (. tag setField FieldKey/ARTIST (:artist tags))
@@ -48,19 +46,17 @@
     (. tag setField FieldKey/ALBUM  (:album tags))
     (. tag setField (set-image (download-binary (:image tags))))
     (. file commit)))
-    
-    
+
+
 (defn test-write []
   (tagmp3 {
-    :mp3 	"https://dl.dropbox.com/u/1994140/testmp3.mp3"
-    :artist 	"TestArtist", 
-    :title 	"TestTrack", 
-    :album 	"TestAlbum", 
-    :year 	"1000" 
-    :image 	"https://dl.dropbox.com/u/1994140/P8270580n.jpg"
-    } ))
+    :mp3    "https://dl.dropbox.com/u/1994140/testmp3.mp3"
+    :artist "TestArtist",
+    :title  "TestTrack",
+    :album  "TestAlbum",
+    :year   "1000"
+    :image  "https://dl.dropbox.com/u/1994140/P8270580n.jpg"}))
 
-      
 (defn -main
   "I don't do a whole lot."
   [& args]
