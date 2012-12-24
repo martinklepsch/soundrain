@@ -15,11 +15,11 @@
   "returns a id3v2-frame containing image"
   (let [body (new FrameBodyAPIC)
         frame (new ID3v23Frame "APIC")]
-    (. body setObjectValue DataTypes/OBJ_PICTURE_DATA image)
-    (. body setObjectValue DataTypes/OBJ_PICTURE_TYPE PictureTypes/DEFAULT_ID)
-    (. body setObjectValue DataTypes/OBJ_MIME_TYPE "image/jpg")
-    (. body setObjectValue DataTypes/OBJ_DESCRIPTION "")
-    (. frame setBody body)
+    (.setObjectValue body DataTypes/OBJ_PICTURE_DATA image)
+    (.setObjectValue body DataTypes/OBJ_PICTURE_TYPE PictureTypes/DEFAULT_ID)
+    (.setObjectValue body DataTypes/OBJ_MIME_TYPE "image/jpg")
+    (.setObjectValue body DataTypes/OBJ_DESCRIPTION "")
+    (.setBody frame body)
     frame))
 
 (defn create-mp3 [mp3 filename]
@@ -40,12 +40,12 @@
   filename (str "./" (:artist tags) " - " (:title tags) ".mp3")
   file (-> (:mp3 tags) download-binary  ,, (create-mp3 ,, filename) AudioFileIO/read)
   tag (. file getTagOrCreateAndSetDefault)]
-    (. tag setField FieldKey/ARTIST (:artist tags))
-    (. tag setField FieldKey/TITLE  (:title tags))
-    (. tag setField FieldKey/YEAR   (:year tags))
-    (. tag setField FieldKey/ALBUM  (:album tags))
-    (. tag setField (set-image (download-binary (:image tags))))
-    (. file commit)))
+    (.setField tag FieldKey/ARTIST (:artist tags))
+    (.setField tag FieldKey/TITLE  (:title tags))
+    (.setField tag FieldKey/YEAR   (:year tags))
+    (.setField tag FieldKey/ALBUM  (:album tags))
+    (.setField tag (set-image (download-binary (:image tags))))
+    (.commit file)))
 
 
 (defn test-write []
