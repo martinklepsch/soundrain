@@ -31,15 +31,15 @@
 (defn download-binary [url]
   "downloads a file and returns it as a bytearray"
   (let [u (new java.net.URL url)
-        filestream (. u openStream)]
-    (. org.apache.commons.io.IOUtils toByteArray filestream)))
+        filestream (.openStream u)]
+    (org.apache.commons.io.IOUtils/toByteArray filestream)))
 
 (defn tagmp3 [tags]
   "creates the file and tags it with the given tags"
   (let [
   filename (str "./" (:artist tags) " - " (:title tags) ".mp3")
   file (-> (:mp3 tags) download-binary  ,, (create-mp3 ,, filename) AudioFileIO/read)
-  tag (. file getTagOrCreateAndSetDefault)]
+  tag (.getTagOrCreateAndSetDefault file)]
     (.setField tag FieldKey/ARTIST (:artist tags))
     (.setField tag FieldKey/TITLE  (:title tags))
     (.setField tag FieldKey/YEAR   (:year tags))
