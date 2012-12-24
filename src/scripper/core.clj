@@ -44,7 +44,7 @@
     (.setField tag FieldKey/TITLE  (:title tags))
     (.setField tag FieldKey/YEAR   (:year tags))
     (.setField tag FieldKey/ALBUM  (:album tags))
-    (.setField tag (set-image (download-binary (:image tags))))
+    (.setField tag (-> (:image tags) download-binary set-image))
     (.commit file)))
 
 
