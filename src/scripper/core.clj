@@ -85,7 +85,7 @@
 
 (defn filter-jsons [jsons]
   "returns only the json data that's in the given javascript"
-  (let [re #"\"\w*\":\s*\"[a-zA-Z0-9?.:_\-=/\s()]*\""]
+  (let [re #"\"\w*\":\s*\"[^\"]*\""]
     (map #(re-seq re %) (flatten jsons))))
 
 (defn json-to-hash [json]
@@ -122,7 +122,7 @@
   (map download-helper (merge-hashs (get-text-tags url) (get-artworks url))))
 
 (defn test-fetch []
-  (download-mp3 "https://soundcloud.com/qotsa"))
+  (download-mp3 "https://soundcloud.com/porter-robinson/porter-robinson-mat-zo-easy"))
     
 (defn -main
   "I don't do a whole lot."
