@@ -60,25 +60,40 @@
     :image  "https://dl.dropbox.com/u/1994140/P8270580n.jpg"}))
     
 (defn get-javascripts [url]
+  "returns a list of all the javascripts embedded in the body"
   (let [body (:body (client/get url))]
     (map :content (html/select (html/html-resource (java.io.StringReader. body)) [:script]))))
 
 (defn get-artworks [url]
+  "returns a list of hashs with the artwork-images"
   (let [body (:body (client/get url))
 	re #"http://[a-zA-Z0-9?.:_\-=/\s()]*\.jpg"]
-    (map #(hash-map :image (first (re-seq re %))) (filter #(not (nil? %)) (map #(:style (:attrs %)) 
-    (html/select (html/html-resource (java.io.StringReader.  body))[:a] )))))) 
+    (map  #(hash-map :image (first (re-seq re %))) 
+      (filter #(not (nil? %)) 
+	(map  #(:style (:attrs %)) 
+	  (html/select (html/html-resource (java.io.StringReader.  body))[:a] )))))) 
 
 (defn merge-hashs [jsons artworks]
+  "takes two lists of hashs and merge the corresponding hashs, returns a list of hashs"
   (map #(merge (first %) (second %)) (partition 2 (interleave artworks jsons))))
 
-(defn get-json-data [jscript]
+(defn filter-jsons [jscript]
+  "returns only the json data that's in the given javascript"
   (let [re #"\"\w*\":\s*\"[a-zA-Z0-9?.:_\-=/\s()]*\""]
     (map #(re-seq re %) (map str (flatten jscript)))))
 
 (defn json-to-hash [json]
-  (apply hash-map (flatten (map #(list (keyword (first %)) (second %)) (partition 2 (map #(clojure.string/replace % #"\"" "") (flatten (map #(clojure.string/split % #"\":\"") json))))))))
+  "takes a json in the form of \"key\":\"value\" and returns :key value, the jsons are already in a list"
+  (apply hash-map (flatten 
+    (map #(list (keyword (first %)) (second %)) 
+      (partition 2 
+	(map #(clojure.string/replace % #"\"" "") 
+	  (flatten (map #(clojure.string/split % #"\":\"") json))))))))
 
+(defn get-text-tags [url]
+  "takes a url and returns a list of hashs of all the text-tags"
+  (filter :streamUrl (map json-to-hash (filter-jsons (get-javascripts url)))))
+  
 (defn download-helper [tags]
   (let [
     artist (:username tags)
@@ -98,7 +113,7 @@
       (println "No streamUrl."))))
       
 (defn download-mp3 [url]
-  (map download-helper (merge-hashs (filter :streamUrl (map json-to-hash (get-json-data (get-javascripts url)))) (get-artworks url))))
+  (map download-helper (merge-hashs (get-text-tags url) (get-artworks url))))
 
 (defn test-fetch []
   (download-mp3 "https://soundcloud.com/theeconomist/sponsor-excerpt-from-the"))
