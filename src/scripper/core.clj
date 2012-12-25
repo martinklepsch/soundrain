@@ -8,7 +8,9 @@
            [org.jaudiotagger.tag.reference PictureTypes]
            [org.jaudiotagger.tag TagField]
            [org.jaudiotagger.audio.mp3 MP3File])
-  (:require[clojure.java.io :as io]))
+  (:require[clojure.java.io :as io]
+	   [clj-http.client :as client]
+           [net.cgrand.enlive-html :as html]))
 
 
 (defn set-image [image]
@@ -56,9 +58,44 @@
     :album  "TestAlbum",
     :year   "1000"
     :image  "https://dl.dropbox.com/u/1994140/P8270580n.jpg"}))
+    
+(defn get-javascript [url]
+  (let [body (:body (client/get url))]
+    (map :content (html/select (html/html-resource (java.io.StringReader. body)) [:script]))))
 
+(defn get-json-data [jscript]
+  (let [re #"\"\w*\":\s*\"[a-zA-Z0-9?.:_=/\s]*\""]
+    (map #(re-seq re %) (map str (flatten jscript)))))
+
+(defn json-to-hash [json]
+  (apply hash-map (flatten (map #(list (keyword (first %)) (second %)) (partition 2 (map #(clojure.string/replace % #"\"" "") (flatten (map #(clojure.string/split % #"\":\"") json))))))))
+
+(defn download-helper [tags]
+  (let [
+    artist (:username tags)
+    title (:title tags)
+    album "test"
+    year "2012"
+    mp3 (:streamUrl tags)
+    image (:waveformUrl tags)]
+      (if (:streamUrl tags)
+      (tagmp3 {
+	:artist artist
+	:mp3 mp3
+	:title (clojure.string/replace title #"[\/.=]" "")
+	:album album
+	:year year
+	:image image})
+      (println ":)"))))
+
+(defn download-mp3 [url]
+  (map download-helper (map json-to-hash (get-json-data (get-javascript url)))))
+
+(defn test-fetch []
+  (download-mp3 "https://soundcloud.com/theeconomist/sponsor-excerpt-from-the"))
+    
 (defn -main
   "I don't do a whole lot."
   [& args]
-  (test-write))
+  (test-fetch))
 
