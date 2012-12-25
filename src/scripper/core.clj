@@ -59,12 +59,21 @@
     :year   "1000"
     :image  "https://dl.dropbox.com/u/1994140/P8270580n.jpg"}))
     
-(defn get-javascript [url]
+(defn get-javascripts [url]
   (let [body (:body (client/get url))]
     (map :content (html/select (html/html-resource (java.io.StringReader. body)) [:script]))))
 
+(defn get-artworks [url]
+  (let [body (:body (client/get url))
+	re #"http://[a-zA-Z0-9?.:_\-=/\s()]*\.jpg"]
+    (map #(hash-map :image (first (re-seq re %))) (filter #(not (nil? %)) (map #(:style (:attrs %)) 
+    (html/select (html/html-resource (java.io.StringReader.  body))[:a] )))))) 
+
+(defn merge-hashs [jsons artworks]
+  (map #(merge (first %) (second %)) (partition 2 (interleave artworks jsons))))
+
 (defn get-json-data [jscript]
-  (let [re #"\"\w*\":\s*\"[a-zA-Z0-9?.:_\-=/\s]*\""]
+  (let [re #"\"\w*\":\s*\"[a-zA-Z0-9?.:_\-=/\s()]*\""]
     (map #(re-seq re %) (map str (flatten jscript)))))
 
 (defn json-to-hash [json]
@@ -77,7 +86,7 @@
     album "test"
     year "2012"
     mp3 (:streamUrl tags)
-    image (:waveformUrl tags)]
+    image (:image tags)]
       (if (:streamUrl tags)
       (tagmp3 {
 	:artist artist
@@ -87,9 +96,9 @@
 	:year year
 	:image image})
       (println "No streamUrl."))))
-
+      
 (defn download-mp3 [url]
-  (map download-helper (filter :streamUrl (map json-to-hash (get-json-data (get-javascript url))))))
+  (map download-helper (merge-hashs (filter :streamUrl (map json-to-hash (get-json-data (get-javascripts url)))) (get-artworks url))))
 
 (defn test-fetch []
   (download-mp3 "https://soundcloud.com/theeconomist/sponsor-excerpt-from-the"))
