@@ -115,7 +115,7 @@
 	:title (clojure.string/replace title #"[\/.=]" "")
 	:album album
 	:year year
-	:image image})
+	:image (clojure.string/replace image #"badge" "t120x120")})
       (println "No streamUrl."))))
       
 (defn download-mp3 [url]
