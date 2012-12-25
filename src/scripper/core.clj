@@ -77,10 +77,14 @@
   "takes two lists of hashs and merge the corresponding hashs, returns a list of hashs"
   (map #(merge (first %) (second %)) (partition 2 (interleave artworks jsons))))
 
-(defn filter-jsons [jscript]
+(defn extract-jsons [jscript]
+  (let [re #"\{[^}]*\{[^}]*\}[^}]*\}"]
+    (filter #(not (nil? %)) (flatten (map #(re-seq re %) (map str (flatten jscript)))))))
+
+(defn filter-jsons [jsons]
   "returns only the json data that's in the given javascript"
   (let [re #"\"\w*\":\s*\"[a-zA-Z0-9?.:_\-=/\s()]*\""]
-    (map #(re-seq re %) (map str (flatten jscript)))))
+    (map #(re-seq re %) (flatten jsons))))
 
 (defn json-to-hash [json]
   "takes a json in the form of \"key\":\"value\" and returns :key value, the jsons are already in a list"
@@ -92,7 +96,7 @@
 
 (defn get-text-tags [url]
   "takes a url and returns a list of hashs of all the text-tags"
-  (filter :streamUrl (map json-to-hash (filter-jsons (get-javascripts url)))))
+  (filter :streamUrl (map json-to-hash (filter-jsons (extract-jsons (get-javascripts url))))))
   
 (defn download-helper [tags]
   (let [
@@ -116,7 +120,7 @@
   (map download-helper (merge-hashs (get-text-tags url) (get-artworks url))))
 
 (defn test-fetch []
-  (download-mp3 "https://soundcloud.com/theeconomist/sponsor-excerpt-from-the"))
+  (download-mp3 "https://soundcloud.com/qotsa"))
     
 (defn -main
   "I don't do a whole lot."
