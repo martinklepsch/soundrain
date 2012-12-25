@@ -64,7 +64,7 @@
     (map :content (html/select (html/html-resource (java.io.StringReader. body)) [:script]))))
 
 (defn get-json-data [jscript]
-  (let [re #"\"\w*\":\s*\"[a-zA-Z0-9?.:_=/\s]*\""]
+  (let [re #"\"\w*\":\s*\"[a-zA-Z0-9?.:_\-=/\s]*\""]
     (map #(re-seq re %) (map str (flatten jscript)))))
 
 (defn json-to-hash [json]
@@ -86,10 +86,10 @@
 	:album album
 	:year year
 	:image image})
-      (println ":)"))))
+      (println "No streamUrl."))))
 
 (defn download-mp3 [url]
-  (map download-helper (map json-to-hash (get-json-data (get-javascript url)))))
+  (map download-helper (filter :streamUrl (map json-to-hash (get-json-data (get-javascript url))))))
 
 (defn test-fetch []
   (download-mp3 "https://soundcloud.com/theeconomist/sponsor-excerpt-from-the"))
