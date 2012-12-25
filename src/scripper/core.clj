@@ -67,11 +67,13 @@
 (defn get-artworks [url]
   "returns a list of hashs with the artwork-images"
   (let [body (:body (client/get url))
-	re #"http://[a-zA-Z0-9?.:_\-=/\s()]*\.jpg"]
-    (map  #(hash-map :image (first (re-seq re %))) 
-      (filter #(not (nil? %)) 
-	(map  #(:style (:attrs %)) 
-	  (html/select (html/html-resource (java.io.StringReader.  body))[:a] )))))) 
+	re #"http://i1.sndcdn.com/artworks[^\"]*\.jpg"]
+    (map #(hash-map :image %)	
+      (filter #(not (nil? %))
+	(map  #(first (re-seq re %)) 
+	  (filter #(not (nil? %)) 
+	    (map  #(:style (:attrs %)) 
+	      (html/select (html/html-resource (java.io.StringReader.  body))[:a] ))))))))
 
 (defn merge-hashs [jsons artworks]
   "takes two lists of hashs and merge the corresponding hashs, returns a list of hashs"
