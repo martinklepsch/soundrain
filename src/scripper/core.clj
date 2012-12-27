@@ -7,7 +7,8 @@
            [org.jaudiotagger.tag.datatype DataTypes]
            [org.jaudiotagger.tag.reference PictureTypes]
            [org.jaudiotagger.tag TagField]
-           [org.jaudiotagger.audio.mp3 MP3File])
+           [org.jaudiotagger.audio.mp3 MP3File]
+           [org.apache.commons.lang StringEscapeUtils])
   (:require[clojure.java.io :as io]
 	   [clj-http.client :as client]
            [net.cgrand.enlive-html :as html]))
@@ -59,21 +60,19 @@
     :year   "1000"
     :image  "https://dl.dropbox.com/u/1994140/P8270580n.jpg"}))
     
-(defn get-javascripts [url]
+(defn get-javascripts [htmlresource]
   "returns a list of all the javascripts embedded in the body"
-  (let [body (:body (client/get url))]
-    (map :content (html/select (html/html-resource (java.io.StringReader. body)) [:script]))))
+  (map :content (html/select htmlresource [:script])))
 
-(defn get-artworks [url]
+(defn get-artworks [htmlresource]
   "returns a list of hashs with the artwork-images"
-  (let [body (:body (client/get url))
-	re #"http://i1.sndcdn.com/artworks[^\"]*\.jpg"]
+  (let [re #"http://i1.sndcdn.com/artworks[^\"]*\.jpg"]
     (map #(hash-map :image %)	
       (filter #(not (nil? %))
 	(map  #(first (re-seq re %)) 
 	  (filter #(not (nil? %)) 
 	    (map  #(:style (:attrs %)) 
-	      (html/select (html/html-resource (java.io.StringReader.  body))[:a] ))))))))
+	      (html/select htmlresource [:a] ))))))))
 
 (defn merge-hashs [jsons artworks]
   "takes two lists of hashs and merge the corresponding hashs, returns a list of hashs"
@@ -96,15 +95,23 @@
 	(map #(clojure.string/replace % #"\"" "") 
 	  (flatten (map #(clojure.string/split % #"\":\"") json))))))))
 
-(defn get-text-tags [url]
-  "takes a url and returns a list of hashs of all the text-tags"
-  (filter :streamUrl (map json-to-hash (filter-jsons (extract-jsons (get-javascripts url))))))
+(defn get-text-tags [htmlresource]
+  "takes a html-resource and returns a list of hashs of all the text-tags"
+  (filter :streamUrl (map json-to-hash (filter-jsons (extract-jsons (get-javascripts htmlresource))))))
+
+(defn get-songs [url]
+  "takes a url and returns hashs about the songs on the page"
+  (let [
+    htmlresource (html/html-resource (java.io.StringReader. (:body (client/get url))))
+    artworks (get-artworks htmlresource )
+    text-tags (get-text-tags htmlresource )]
+      (merge-hashs artworks text-tags)))
   
 (defn download-helper [tags]
   (let [
-    artist (:username tags)
-    title (:title tags)
-    album "test"
+    artist (StringEscapeUtils/unescapeHtml (:username tags))
+    title (StringEscapeUtils/unescapeHtml(clojure.string/replace (:title tags) #"[\\/.=]" "-"))
+    album (StringEscapeUtils/unescapeHtml(:username tags))
     year "2012"
     mp3 (:streamUrl tags)
     image (:image tags)]
@@ -112,14 +119,14 @@
       (tagmp3 {
 	:artist artist
 	:mp3 mp3
-	:title (clojure.string/replace title #"[\/.=]" "")
+	:title title
 	:album album
 	:year year
 	:image (clojure.string/replace image #"badge" "t120x120")})
       (println "No streamUrl."))))
       
 (defn download-mp3 [url]
-  (map download-helper (merge-hashs (get-text-tags url) (get-artworks url))))
+  (map download-helper (get-songs url)))
 
 (defn test-fetch []
   (download-mp3 "https://soundcloud.com/porter-robinson/porter-robinson-mat-zo-easy"))
