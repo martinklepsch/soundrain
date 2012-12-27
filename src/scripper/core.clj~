@@ -11,7 +11,7 @@
            [org.apache.commons.lang StringEscapeUtils])
   (:require[clojure.java.io :as io]
 	   [clj-http.client :as client]
-           [net.cgrand.enlive-html :as html]))
+           [net.cgrand.enlive-html :as html])
 
 
 (defn set-image [image]

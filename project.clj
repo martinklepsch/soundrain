@@ -7,5 +7,10 @@
                  [clj-http "0.6.2"]
                  [org/jaudiotagger "2.0.3"]
                  [enlive "1.0.0-SNAPSHOT"]
-                 [commons-lang "2.5"]]
+                 [commons-lang "2.5"]
+                 [compojure "1.1.3"]]
+  :plugins [[lein-ring "0.7.5"]]
+  :ring {:handler scripper.handler/app}
+  :profiles
+  {:dev {:dependencies [[ring-mock "0.1.3"]]}}
   :main scripper.core)
