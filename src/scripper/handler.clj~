@@ -1,11 +1,11 @@
 (ns scripper.handler
-  (:use compojure.core)
+  (:use compojure.core scripper.view)
   (:require [compojure.handler :as handler]
             [compojure.route :as route]))
-(load "src/scripper/core")
 
 (defroutes app-routes
-  (GET "/" [] "Hello World")
+  (GET "/" [] (url-form))
+  (POST "/" [] (results (params :url)))
   (route/not-found "Not Found"))
 
 (def app
