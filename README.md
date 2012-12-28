@@ -4,7 +4,7 @@ A Clojure library designed to ... well, that part is up to you.
 
 ## Usage
 
-FIXME
+Start the local server with `lein ring server`.
 
 ## License
 
