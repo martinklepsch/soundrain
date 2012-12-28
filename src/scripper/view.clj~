@@ -27,8 +27,8 @@
       [:div {:class "artist"}  [:h3 (:username tags)]  
       [:div {:class "title"} (:title tags)]]
       ;;[:img {:src (to-uri (:image tags))}]
-      [:img {:src (to-uri (:waveformUrl tags))}]
-      [:h4 "download"]
+      ;;[:img {:src (to-uri (:waveformUrl tags))}]
+      [:a {:href (download-mp3 tags)} "download"]
     ])
   
 (defn results [url]

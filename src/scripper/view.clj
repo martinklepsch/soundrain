@@ -28,7 +28,7 @@
       [:div {:class "title"} (:title tags)]]
       ;;[:img {:src (to-uri (:image tags))}]
       ;;[:img {:src (to-uri (:waveformUrl tags))}]
-      [:h4 "download"]
+      [:a {:href (download-mp3 tags)} "download"]
     ])
   
 (defn results [url]

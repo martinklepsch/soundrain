@@ -116,7 +116,6 @@
     year "2012"
     mp3 (:streamUrl tags)
     image (:image tags)]
-      (if (:streamUrl tags)
       (tagmp3 {
 	:artist artist
 	:mp3 mp3
@@ -124,7 +123,7 @@
 	:album album
 	:year year
 	:image (clojure.string/replace image #"badge" "t120x120")})
-      (println "No streamUrl."))))
+      (str "/music/" artist " - " title ".mp3")))
       
 (defn download-mp3s [url]
   "calls download-mp3 for every song found on the page"
