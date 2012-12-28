@@ -8,7 +8,8 @@
                  [org/jaudiotagger "2.0.3"]
                  [enlive "1.0.0-SNAPSHOT"]
                  [commons-lang "2.5"]
-                 [compojure "1.1.3"]]
+                 [compojure "1.1.3"]
+                 [hiccup-bootstrap "0.1.1"]]
   :plugins [[lein-ring "0.7.5"]]
   :ring {:handler scripper.handler/app}
   :profiles

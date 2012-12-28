@@ -2,6 +2,7 @@
   (:use compojure.core scripper.view)
   (:require [compojure.handler :as handler]
             [compojure.route :as route]))
+  (use 'hiccup.bootstrap.middleware)
 
 (defroutes app-routes
   (GET "/" [] (url-form))
@@ -9,4 +10,4 @@
   (route/not-found "Not Found"))
 
 (def app
-  (handler/site app-routes))
+  (wrap-bootstrap-resources( handler/site app-routes)))

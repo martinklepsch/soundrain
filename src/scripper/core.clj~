@@ -11,7 +11,7 @@
            [org.apache.commons.lang StringEscapeUtils])
   (:require[clojure.java.io :as io]
 	   [clj-http.client :as client]
-           [net.cgrand.enlive-html :as html])
+           [net.cgrand.enlive-html :as html]))
 
 
 (defn set-image [image]
@@ -90,7 +90,7 @@
 (defn json-to-hash [json]
   "takes a json in the form of \"key\":\"value\" and returns :key value, the jsons are already in a list"
   (apply hash-map (flatten 
-    (map #(list (keyword (first %)) (second %)) 
+    (map #(list (keyword (clojure.string/lower-case (first %))) (second %)) 
       (partition 2 
 	(map #(clojure.string/replace % #"\"" "") 
 	  (flatten (map #(clojure.string/split % #"\":\"") json))))))))
@@ -114,9 +114,9 @@
     title (StringEscapeUtils/unescapeHtml(clojure.string/replace (:title tags) #"[\\/.=]" "-"))
     album (StringEscapeUtils/unescapeHtml(:username tags))
     year "2012"
-    mp3 (:streamUrl tags)
+    mp3 (:streamurl tags)
     image (:image tags)]
-      (if (:streamUrl tags)
+      (if (:streamurl tags)
       (tagmp3 {
 	:artist artist
 	:mp3 mp3
