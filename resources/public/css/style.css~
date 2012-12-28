@@ -4,6 +4,7 @@
 }
 
 .artist {
+    position: relative;
     color: gray;
 }
 
@@ -11,4 +12,9 @@
     position: relative;
     width: 500px;
     margin-top: 10px;
+}
+
+.picture {
+    float: left;
+    margin 10px 10px 10px 10px;
 }

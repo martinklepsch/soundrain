@@ -24,6 +24,7 @@
       
 (defn song-form [tags]
   [:div.mp3
+      [:img {:src (to-uri (:image tags)) :class "img-polaroid picture"}]
       [:div {:class "artist"}  [:h3 (:username tags)]  
       [:div {:class "title"} (:title tags)]]
       ;;[:img {:src (to-uri (:image tags))}]
