@@ -6,6 +6,7 @@
 
 (defroutes app-routes
   (GET "/" [] (url-form))
+  (route/resources "/")
   (POST "/" [url] (results url))
   (route/not-found "Not Found"))
 
