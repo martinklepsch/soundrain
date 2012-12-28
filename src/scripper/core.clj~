@@ -40,7 +40,7 @@
 (defn tagmp3 [tags]
   "creates the file and tags it with the given tags"
   (let [
-  filename (str "./" (:artist tags) " - " (:title tags) ".mp3")
+  filename (str "./resources/public/music" (:artist tags) " - " (:title tags) ".mp3")
   file (-> (:mp3 tags) download-binary  ,, (create-mp3 ,, filename) AudioFileIO/read)
   tag (.getTagOrCreateAndSetDefault file)]
     (.setField tag FieldKey/ARTIST (:artist tags))
@@ -90,7 +90,7 @@
 (defn json-to-hash [json]
   "takes a json in the form of \"key\":\"value\" and returns :key value, the jsons are already in a list"
   (apply hash-map (flatten 
-    (map #(list (keyword (clojure.string/lower-case (first %))) (second %)) 
+    (map #(list (keyword (first %)) (second %)) 
       (partition 2 
 	(map #(clojure.string/replace % #"\"" "") 
 	  (flatten (map #(clojure.string/split % #"\":\"") json))))))))
@@ -114,9 +114,9 @@
     title (StringEscapeUtils/unescapeHtml(clojure.string/replace (:title tags) #"[\\/.=]" "-"))
     album (StringEscapeUtils/unescapeHtml(:username tags))
     year "2012"
-    mp3 (:streamurl tags)
+    mp3 (:streamUrl tags)
     image (:image tags)]
-      (if (:streamurl tags)
+      (if (:streamUrl tags)
       (tagmp3 {
 	:artist artist
 	:mp3 mp3

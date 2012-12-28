@@ -8,26 +8,27 @@
     [:html 
       [:head 
         [:title title]
-        (include-css "./resources/css/style.css")
+        (include-css "/css/style.css")
         (include-bootstrap)] 
       [:body 
-       [:div {:class "body-content"}
-        [:h2 {:text-align "center"} title]]
-        body]])) 
+       [:div {:class "container"}
+       [:h1  title]
+        body]]])) 
         
 (defn url-form []
   (html-doc "scripper" 
     [:form {:method "POST", :action (to-uri "/"), :class "form-search"}
-      [:input {:type "text" :name "url" :class "input-xxlarge search-query"}]
+      [:input {:type "text" :name "url" :class "input-xlarge search-query"}]
       [:button {:type "submit" :class "btn" } "Search"]
     ]))
       
 (defn song-form [tags]
-  [:div.mp3field 
-    [:h3 (:username tags)  (:title tags)]
-    [:img {:src (to-uri (:image tags))}]
-    [:img {:src (to-uri (:waveformUrl tags))}]
-    [:h4 "download"]
+  [:div.mp3
+      [:div {:class "artist"}  [:h3 (:username tags)]  
+      [:div {:class "title"} (:title tags)]]
+      ;;[:img {:src (to-uri (:image tags))}]
+      [:img {:src (to-uri (:waveformUrl tags))}]
+      [:h4 "download"]
     ])
   
 (defn results [url]

@@ -40,7 +40,7 @@
 (defn tagmp3 [tags]
   "creates the file and tags it with the given tags"
   (let [
-  filename (str "./" (:artist tags) " - " (:title tags) ".mp3")
+  filename (str "./resources/public/music/" (:artist tags) " - " (:title tags) ".mp3")
   file (-> (:mp3 tags) download-binary  ,, (create-mp3 ,, filename) AudioFileIO/read)
   tag (.getTagOrCreateAndSetDefault file)]
     (.setField tag FieldKey/ARTIST (:artist tags))

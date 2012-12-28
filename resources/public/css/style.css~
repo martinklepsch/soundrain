@@ -1,116 +1,14 @@
-body {
+.title {
+    color: gray;
     position: relative;
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 14px;
-
-    width: 800px;
-    margin: 0 auto;
-    padding: 10px;
-    color: #333;
-}
-.time {
-    font-size: 13px;
-    color: gray;
-    position: absolute;
-    top: 10px;
-    left: 10px; 
 }
 
-.login-area {
-    font-size: 13px;
-    color: gray;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
-
-.login-link {
-    color: gray;
-    text-decoration: none;
-}
-
-.login-link:visited {
+.artist {
     color: gray;
 }
 
-.login-link:hover {
-    text-decoration: underline;
-}
-
-
-.error {
-    color: red;
-}
-
-label {
-  display: block;
-  font-size: 20px;
-}
-
-label + label {
-    margin-top: 20px;
-}
-
-input[type=text] {
-    width: 800px;
-    font-size: 12px;
-    padding: 2px;
-    font-family: monospace;
-}
-
-textarea {
-  width: 800px;
-  height: 400px;
-  font-size: 12px;
-  font-family: monospace;
-}
-.main-title {
-    display: block;
-    color: #222;
-    font-size: 40px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 30px;
-    text-decoration: none;
-}
-
-.post + .post {
-    margin-top: 15px;
-}
-
-.page-heading {
+.mp3 {
     position: relative;
-    border-bottom: 3px solid #666;
+    width: 500px;
+    margin-top: 10px;
 }
-
-.page-bottom {
-    margin-top: 20px;
-    position: relative;
-    border-top: 3px solid #666;
-}
-
-.page-title {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.page-date {
-    position: absolute;
-    right: 0px;
-    bottom: 0px;
-    color: #999;
-
-}
-.time-post {
-    position: absolute;
-    right: 0px;
-    bottom: 0px;
-    color: #999;
-
-}
-
-
-.page-content {
-    margin-top: 5px;
-}
-
