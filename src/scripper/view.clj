@@ -18,13 +18,15 @@
 (defn url-form []
   (html-doc "scripper" 
     [:form {:method "POST", :action (to-uri "/"), :class "form-search"}
-      [:input {:type "text" :name "url" :class "input-xlarge search-query"}]
-      [:button {:type "submit" :class "btn" } "Search"]
+      [:div.input-append
+        [:input {:type "text" :name "url" :class "span5 input-large search-query"}]
+        [:button {:type "submit" :class "btn" } "Search"]
+      ]
     ]))
       
 (defn song-form [tags]
   [:div.mp3
-      [:img {:src (to-uri (:image tags)) :class "img-polaroid picture"}]
+      [:img.img-polaroid.picture {:src (to-uri (:image tags))}]
       [:div {:class "artist"}  [:h3 (:username tags)]  
       [:div {:class "title"} (:title tags)]]
       ;;[:img {:src (to-uri (:image tags))}]
