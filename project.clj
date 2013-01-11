@@ -9,7 +9,8 @@
                  [enlive "1.0.0-SNAPSHOT"]
                  [commons-lang "2.5"]
                  [compojure "1.1.3"]
-                 [ccfontes/hiccup-bootstrap "0.1.3"]]
+                 [ccfontes/hiccup-bootstrap "0.1.3"]
+                 [cheshire "5.0.1"]]
   :plugins [[lein-ring "0.7.5"]]
   :ring {:handler scripper.handler/app}
   :profiles
