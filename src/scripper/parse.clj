@@ -3,11 +3,6 @@
 	          [clj-http.client :as client]
             [cheshire.core :as cheshire]))
 
-(defn get-metainformation [song-url]
-  "returns a complete hash with all available meta information"
-  (let []
-
-  ))
 
 (defn get-scripts [source]
   "returns a list of all the javascripts embedded in source"
@@ -19,15 +14,11 @@
         scripts (get-scripts source)]
     (filter #(not (nil? %)) (flatten (map #(re-seq re %) (map str (flatten scripts)))))))
 
-(defn get-artworks [html-resource]
+(defn get-artworks [source]
   "returns a list of hashs with the artwork-images"
   (let [re #"http://i1.sndcdn.com/artworks[^\"]*\.jpg"]
-    (map #(hash-map :image %)
-      (filter #(not (nil? %))
-	(map  #(first (re-seq re %))
-	  (filter #(not (nil? %))
-	    (map  #(:style (:attrs %))
-	      (html/select html-resource [:a]))))))))
+	    (map  #(hash-map :image (clojure.string/replace (re-find re (:style (:attrs %))) #"badge" "t120x120"))
+	      (html/select source [:a.artwork]))))
 
 (defn get-source [url]
   "loads source of url and creates enlive html-resource from it"
@@ -37,9 +28,9 @@
   "takes a html-resource and returns a list of hashs of all the text-tags"
   (filter :streamUrl  (map #(cheshire/parse-string % true) (extract-json source))))
 
-(defn get-songs [url]
-  "takes a url and returns hashs about the songs on the page"
-  (let [source (get-source url)
-        artworks (get-artworks source)
+(defn get-metainformations [url]
+  "takes a url and returns a list of hashs with the metainformation of the songs on the page"
+  (let [source 		(get-source url)
+        artworks 	(get-artworks source)
         text-tags (get-text-tags source)]
-      text-tags))
+      (map #(merge %1 %2) text-tags artworks)))

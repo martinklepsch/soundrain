@@ -1,5 +1,6 @@
 (ns scripper.view
-  (:use compojure.core scripper.core [hiccup core page form util] ))
+  (:use compojure.core scripper.core [hiccup core page form util] )
+  (:require [scripper.parse :as parse]))
   (use 'hiccup.bootstrap.page)
   
 (defn html-doc [title & body] 
@@ -27,7 +28,7 @@
 (defn song-form [tags]
   [:div.mp3
       [:img.img-polaroid.picture {:src (to-uri (:image tags))}]
-      [:div {:class "artist"}  [:h3 (:username tags)]  
+      [:div {:class "artist"}  [:h3 (:username (:user tags))]  
       [:div {:class "title"} (:title tags)]]
       ;;[:img {:src (to-uri (:image tags))}]
       ;;[:img {:src (to-uri (:waveformUrl tags))}]
@@ -35,7 +36,7 @@
     ])
   
 (defn results [url]
-  (let [songs (get-songs url)]
+  (let [songs (parse/get-metainformations url)]
     (html-doc "scripper"
       (map song-form songs))))
   
