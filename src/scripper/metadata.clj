@@ -1,13 +1,16 @@
 (ns scripper.metadata
-  (:import [org.jaudiotagger.audio AudioFileIO]
-           [org.jaudiotagger.tag FieldKey]
-           [org.jaudiotagger.tag.id3 AbstractID3v2Tag]
-           [org.jaudiotagger.tag.id3.framebody FrameBodyAPIC]
-           [org.jaudiotagger.tag.id3 	ID3v23Frame]
-           [org.jaudiotagger.tag.datatype DataTypes]
-           [org.jaudiotagger.tag.reference PictureTypes]
-           [org.jaudiotagger.tag TagField]
-           [org.jaudiotagger.audio.mp3 MP3File])
+  (:import [org.jaudiotagger.audio 							AudioFileIO]
+           [org.jaudiotagger.tag 								FieldKey]
+           [org.jaudiotagger.tag.id3 						AbstractID3v2Tag]
+           [org.jaudiotagger.tag.id3.framebody 	FrameBodyAPIC]
+           [org.jaudiotagger.tag.id3 						ID3v23Frame]
+           [org.jaudiotagger.tag.datatype 			DataTypes]
+           [org.jaudiotagger.tag.reference 			PictureTypes]
+           [org.jaudiotagger.tag 								TagField]
+           [org.jaudiotagger.audio.mp3 					MP3File]
+           [org.jaudiotagger.tag.id3					 	ID3v23Tag]
+           [java.io 														ByteArrayOutputStream]
+           [java.nio.channels										Channels])
   (:require [clojure.java.io :as io]
             [scripper.util :as util]))
 
@@ -40,5 +43,17 @@
      (.setField tag FieldKey/ALBUM  album)
      (.setField tag (-> image util/download-binary set-image))
      (.commit file)))
-
-
+ 
+ (defn create-ID3v23-tag [tags]
+   "takes a hash of tags and returns an ID3-v23-tag bytearray"
+   (let [tag (ID3v23Tag.)
+         {:keys [artist title year album image mp3]} tags   
+         bytearray (ByteArrayOutputStream.)
+         channel (Channels/newChannel bytearray)]
+     (.createField tag FieldKey/ARTIST artist)
+     (.createField tag FieldKey/TITLE  title)
+     (.createField tag FieldKey/YEAR   year)
+     (.createField tag FieldKey/ALBUM  album)
+     (.createArtworkField tag (-> image util/download-binary) "image/jpg")
+     (.write tag channel)
+     (.toByteArray bytearray)))
