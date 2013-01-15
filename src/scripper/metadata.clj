@@ -13,8 +13,8 @@
 
  (defn set-image [image]
    "returns a id3v2-frame containing image"
-   (let [body (new FrameBodyAPIC)
-         frame (new ID3v23Frame "APIC")]
+   (let [body (FrameBodyAPIC.)
+         frame (ID3v23Frame."APIC")]
      (.setObjectValue body DataTypes/OBJ_PICTURE_DATA image)
      (.setObjectValue body DataTypes/OBJ_PICTURE_TYPE PictureTypes/DEFAULT_ID)
      (.setObjectValue body DataTypes/OBJ_MIME_TYPE "image/jpg")
