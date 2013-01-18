@@ -50,10 +50,11 @@
          {:keys [artist title year album image mp3]} tags   
          bytearray (ByteArrayOutputStream.)
          channel (Channels/newChannel bytearray)]
-     (.createField tag FieldKey/ARTIST artist)
-     (.createField tag FieldKey/TITLE  title)
-     (.createField tag FieldKey/YEAR   year)
-     (.createField tag FieldKey/ALBUM  album)
-     (.createArtworkField tag (-> image util/download-binary) "image/jpg")
+     (.addField tag FieldKey/ARTIST artist)
+     (.addField tag FieldKey/TITLE  title)
+     (.addField tag FieldKey/YEAR   year)
+     (.addField tag FieldKey/ALBUM  album)
+     (.setField tag (-> image util/download-binary set-image))
      (.write tag channel)
+     (.close channel)
      (.toByteArray bytearray)))
