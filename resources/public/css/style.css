@@ -1,6 +1,22 @@
 .title {
-    color: gray;
+    color: black;
     position: relative;
+  	font-size: 25px;
+  	line-height: 30px;
+  
+}
+
+.subtitle {
+    color: black;
+    position: relative;
+  	font-size: 20px;
+  	line-height: 30px;
+  
+}
+
+.text {
+	padding-top: 10px;
+
 }
 
 .artist {
@@ -10,8 +26,12 @@
 
 .mp3 {
     position: relative;
-    width: 500px;
-    margin-top: 10px;
+    width: 800px;
+    margin: 10px 10px 10px 10px;
+}
+
+.container {
+	width: 500px;
 }
 
 .picture {

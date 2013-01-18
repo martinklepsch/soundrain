@@ -2,8 +2,7 @@
   (:require [net.cgrand.enlive-html :as html]
 	          [clj-http.client :as client]
             [cheshire.core :as cheshire]
-            [scripper.metadata :as metadata]
-            [ring.util.codec :as codec]))
+            [scripper.metadata :as metadata] ))
 
 
 (defn get-scripts [source]
@@ -37,7 +36,7 @@
         text-tags (get-text-tags source)]
       (map #(merge %1 %2) text-tags artworks)))
 
-(defn get-mp3-metainformations [tags]
+ (defn get-mp3-metainformations [tags]
    "Filters the metadata"
    (let [{{artist :username} :user title :title mp3 :streamUrl image :image} tags]
     {:artist artist
@@ -47,12 +46,3 @@
      :year "2012"
      :image image}))
 
-(defn mp3-json [url]
-   "takes a url and returns a json with the tag data and the b64 encoded mp3-tag-bytarray"
-   (let [metadata (get-metainformations url)
-         mp3-metadata (map get-mp3-metainformations metadata)
-         mp3-tags (map 
-                   #(hash-map :tag (codec/base64-encode (metadata/create-ID3v23-tag %))) 
-                   mp3-metadata)]
-   	(cheshire/generate-string 
-     (map #(merge %1 %2) mp3-metadata mp3-tags))))

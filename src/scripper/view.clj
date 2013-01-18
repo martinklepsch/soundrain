@@ -1,6 +1,5 @@
 (ns scripper.view
-  (:use compojure.core scripper.core [hiccup core page form util] )
-  (:require [scripper.parse :as parse]))
+  (:use compojure.core [hiccup core page form util]))
   (use 'hiccup.bootstrap.page)
   
 (defn html-doc [title & body] 
@@ -10,35 +9,37 @@
       [:head 
         [:title title]
         (include-css "/css/style.css")
-        (include-bootstrap)] 
+        (include-bootstrap)
+        (include-js "/script/jquery-1.9.0.min.js")
+      	(include-js "/script/scripper.js")] 
       [:body 
        [:div {:class "container"}
        [:h1  title]
         body]]])) 
         
 (defn url-form []
-  (html-doc "scripper" 
-    [:form {:method "POST", :action (to-uri "/"), :class "form-search"}
+  (html-doc "scripper"
+     [:div.form-search
       [:div.input-append
         [:input {:type "text" :name "url" :class "span5 input-large search-query"}]
-        [:button {:type "submit" :class "btn" } "Search"]
-      ]
-    ]))
-      
+        [:button {:type "button" :class "btn" } "Search"]
+    ]]))
+
+
+
 (defn song-form [tags]
-  [:div.mp3
-      [:img.img-polaroid.picture {:src (to-uri (:image tags))}]
-      [:div {:class "artist"}  [:h3 (:username (:user tags))]  
-      [:div {:class "title"} (:title tags)]]
-      ;;[:img {:src (to-uri (:image tags))}]
-      ;;[:img {:src (to-uri (:waveformUrl tags))}]
-      [:a {:href (download-mp3 tags)} "download"]
-    ])
+    [:div.mp3
+      [:img.img-polaroid.picture {:src (:image tags)}]
+      [:div.text
+        [:div.title (:artist tags)]
+        [:div.subtitle (:title tags)]
+        ;;[:img {:src (to-uri (:image tags))}]
+        ;;[:img {:src (to-uri (:waveformUrl tags))}]
+       	[:button.btn.btn-primary [:i.icon-download.icon-white]    "download"]
+       ]
+])
   
-(defn results [url]
-  (let [songs (parse/get-metainformations url)]
-    (html-doc "scripper"
-      (map song-form songs))))
-  
+  (defn song-forms [tags]
+  (html (map song-form tags)))
   
  
