@@ -22,7 +22,7 @@ $(document).ready(function() {
 function validURL(str) {
   var pattern = /https:\/\/(www\.)?soundcloud\.com/i;
   if(!pattern.test(str)) {
-    alert("Please enter a valid URL.");
+    // alert("Please enter a valid URL.");
     return false;
   } else {
     return true;
