@@ -39,5 +39,5 @@
 (defn -main
   "I don't do a whole lot."
   [& args]
-  (str "blah"))
+  (println "Run me with \"lein ring server\""))
 

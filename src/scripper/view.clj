@@ -4,13 +4,13 @@
   
 (defn html-doc [title & body] 
   (html 
-    (doctype :html4) 
+    (doctype :html5) 
     [:html 
       [:head 
         [:title title]
         (include-css "/css/style.css")
-        (include-bootstrap)
         (include-js "/script/jquery-1.9.0.min.js")
+        (include-bootstrap)
       	(include-js "/script/scripper.js")] 
       [:body 
        [:div {:class "container"}
@@ -19,11 +19,12 @@
         
 (defn url-form []
   (html-doc "scripper"
-     [:div.form-search
+     [:div.form-search.control-group
       [:div.input-append
         [:input {:type "text" :name "url" :class "span5 input-large search-query"}]
-        [:button {:type "button" :class "btn" } "Search"]
-    ]]))
+        [:button {:type "button" :class "btn" } "Search"]]
+      [:span.help-inline]
+    ]))
 
 
 
