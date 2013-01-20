@@ -30,7 +30,7 @@
   (filter :streamUrl  (map #(cheshire/parse-string % true) (extract-json source))))
 
 (defn get-metainformations [url]
-  "takes a url and returns a list of hashs with the metainformation of the songs on the page"
+  "takes a url and returns a list of hashes with the metainformation of the songs on the page"
   (let [source 		(get-source url)
         artworks 	(get-artworks source)
         text-tags (get-text-tags source)]

@@ -3,7 +3,6 @@
     position: relative;
   	font-size: 25px;
   	line-height: 30px;
-  
 }
 
 .subtitle {
@@ -11,12 +10,10 @@
     position: relative;
   	font-size: 20px;
   	line-height: 30px;
-  
 }
 
 .text {
 	padding-top: 10px;
-
 }
 
 .artist {
@@ -30,9 +27,9 @@
     margin: 10px 10px 10px 10px;
 }
 
-.container {
+/*.container {
 	width: 500px;
-}
+}*/
 
 .picture {
     float: left;

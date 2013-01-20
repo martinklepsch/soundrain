@@ -1,25 +1,24 @@
+var DURATION = 300;
+
 $(document).ready(function() {
   $(".btn").click(function() {
-    var input = $(".span5").val();
-    if(!validURL(input)) {
-      $(".form-search.control-group").addClass("error");
-      $(".help-inline").html("Please enter a valid Soundcloud URL.");
+    var input = $("#search").val();
+    if(!is_valid_url(input)) {
+      show_url_error();
       return;
     }
-    $(".form-search.control-group").removeClass("error");
-    $(".help-inline").html("");
+    hide_url_error();
     $.ajax({
       url: "/search/",
       data: {url: input},
       datatype: "json",
       type: "GET",
-      success: function(data){console.log(data[0]); $("div.form-search").html(data[0].html);}
+      success: show_results
     });
-  }
-    );
+  });
 });
 
-function validURL(str) {
+function is_valid_url(str) {
   var pattern = /https:\/\/(www\.)?soundcloud\.com/i;
   if(!pattern.test(str)) {
     // alert("Please enter a valid URL.");
@@ -27,4 +26,21 @@ function validURL(str) {
   } else {
     return true;
   }
+}
+
+function show_url_error() {
+  $(".form-search.control-group").addClass("error");
+  $(".help-inline").html("Please enter a valid Soundcloud URL.");
+  $(".help-inline").show(DURATION);
+}
+
+function hide_url_error() {
+  $(".form-search.control-group").removeClass("error");
+  $(".help-inline").hide(DURATION);
+  $(".help-inline").html("");
+}
+
+function show_results(data) {
+  console.log(JSON.stringify(data)); 
+  $("search-results").html(data[0].html);
 }
