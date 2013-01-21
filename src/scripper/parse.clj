@@ -7,13 +7,15 @@
 
 (defn get-scripts [source]
   "returns a list of all the javascripts embedded in source"
-  (map :content (html/select source [:div#main-content :script])))
+  (flatten (map :content 
+                (html/select source [:div#main-content :script]))))
 
 (defn extract-json [source]
   "takes an html-resource and extracts all json in the page"
   (let [re      #"\{[^}]*\{[^}]*\}[^}]*\}"
         scripts (get-scripts source)]
-    (filter #(not (nil? %)) (flatten (map #(re-seq re %) (map str (flatten scripts)))))))
+    (filter (comp not nil?) 
+            (map #(re-find re %) scripts))))
 
 (defn get-artworks [source]
   "returns a list of hashs with the artwork-images"
