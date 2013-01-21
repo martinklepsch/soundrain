@@ -18,8 +18,14 @@
 (defn get-artworks [source]
   "returns a list of hashs with the artwork-images"
   (let [re #"http://i1.sndcdn.com/artworks[^\"]*\.jpg"]
-	    (map  #(hash-map :image (clojure.string/replace (re-find re (:style (:attrs %))) #"badge" "t120x120"))
-	      (html/select source [:a.artwork]))))
+	    (map  
+       (comp 
+         	#(hash-map :image %)
+          #(clojure.string/replace % #"badge" "t120x120")
+	     		#(re-find re %)
+        	:style 
+        	:attrs )
+       (html/select source [:a.artwork]))))
 
 (defn get-source [url]
   "loads source of url and creates enlive html-resource from it"
