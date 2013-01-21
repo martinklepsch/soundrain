@@ -31,7 +31,10 @@
          mp3-tags (map 
                    #(hash-map :tag (codec/base64-encode (metadata/create-ID3v23-tag %))) 
                    mp3-metadata)
-         html-site (map #(-> % view/song-form html (hash-map :image)) mp3-metadata)]
+         html-site (map (comp 
+                          #(hash-map :html %)
+                          #(html %) 
+                          view/song-form) mp3-metadata)]
      (map #(merge %1 %2 %3) mp3-metadata mp3-tags html-site)))
  
 
