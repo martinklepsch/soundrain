@@ -35,7 +35,8 @@
 
 (defn get-text-tags [source]
   "takes a html-resource and returns a list of hashs of all the text-tags"
-  (filter :streamUrl  (map #(cheshire/parse-string % true) (extract-json source))))
+  (map #(cheshire/parse-string % true) 
+        (extract-json source)))
 
 (defn get-metainformations [url]
   "takes a url and returns a list of hashes with the metainformation of the songs on the page"
