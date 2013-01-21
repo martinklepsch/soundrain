@@ -3,7 +3,9 @@
             [scripper.metadata :as metadata]
             [scripper.parse :as parse]
             [ring.util.codec :as codec]
-            [scripper.view :as view]))
+            [scripper.view :as view])
+  (:use compojure.core [hiccup core page form util]))
+(use 'hiccup.bootstrap.page)
 
 
 
@@ -29,8 +31,8 @@
          mp3-tags (map 
                    #(hash-map :tag (codec/base64-encode (metadata/create-ID3v23-tag %))) 
                    mp3-metadata)
-         html-site (str (view/song-forms mp3-metadata))]
-     (map #(merge %1 %2 %3) mp3-metadata mp3-tags {:html html-site})))
+         html-site (map #(-> % view/song-form html (hash-map :image)) mp3-metadata)]
+     (map #(merge %1 %2 %3) mp3-metadata mp3-tags html-site)))
  
 
 
