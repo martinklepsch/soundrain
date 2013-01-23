@@ -1,4 +1,4 @@
-(ns scripper.view
+	(ns scripper.view
   (:use compojure.core [hiccup core page form util]))
   (use 'hiccup.bootstrap.page)
   
@@ -24,7 +24,7 @@
         [:small " the freshest thing around"]]]
     [:div.form-search.control-group.span12
       [:div.input-append
-        [:input#search {:type "text" :name "url" :class "input-large search-query"}]
+        [:input#search {:type "search" :autofocus "" :name "url" :class "input-xlarge search-query"}]
         [:button {:type "button" :class "btn" } "Search"]]
       [:span.help-inline]]
     [:div.search-results.span12]
@@ -40,7 +40,7 @@
         [:div.subtitle (:title tags)]
         ;;[:img {:src (to-uri (:image tags))}]
         ;;[:img {:src (to-uri (:waveformUrl tags))}]
-       	[:button.btn.btn-primary [:i.icon-download.icon-white] "download"]
+       	[:button.btn.download-button [:i.icon-download] " download"]
        ]
 ])
   
