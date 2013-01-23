@@ -9,7 +9,7 @@
     color: black;
     position: relative;
   	font-size: 20px;
-  	line-height: 30px;
+  	line-height: 20px;
 }
 
 .text {
@@ -23,8 +23,8 @@
 
 .mp3 {
     position: relative;
-    width: 800px;
-    margin: 10px 10px 10px 10px;
+    width: 500px;
+  	height: 150px;
 }
 
 /*.container {
@@ -34,4 +34,10 @@
 .picture {
     float: left;
     margin: 10px 10px 10px 10px;
+}
+
+.download-button {
+ 	 	position: absolute;
+  	bottom: 10px;
+  	left: 150px;
 }

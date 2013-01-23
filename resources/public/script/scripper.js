@@ -41,6 +41,9 @@ function hide_url_error() {
 }
 
 function show_results(data) {
-  console.log(JSON.stringify(data)); 
-  $("search-results").html(data[0].html);
+  console.log(JSON.stringify(data));
+  $(".search-results").html("");
+  for (var i = 0; i < data.length;i++) {
+    $(".search-results").append(data[i].html);
+  }
 }
