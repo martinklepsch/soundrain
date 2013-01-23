@@ -23,7 +23,7 @@
 	    (map  
        (comp 
          	#(hash-map :image %)
-          #(clojure.string/replace % #"badge" "t120x120")
+          #(clojure.string/replace % #"badge|large" "t120x120")
 	     		#(re-find re %)
         	:style 
         	:attrs )
