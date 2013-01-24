@@ -8,10 +8,12 @@
     [:html 
       [:head 
         [:title title]
-        (include-css "/css/style.css")
         (include-js "/script/jquery-1.9.0.min.js")
+        ; DEADLY SCRIPT
+        ; (include-js "//connect.soundcloud.com/sdk.js")
         [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]
         (include-bootstrap)
+        (include-css "/css/style.css")
       	(include-js "/script/scripper.js")] 
       [:body 
         [:div {:class "container-fluid"}
@@ -25,7 +27,7 @@
     [:div.form-search.control-group.span12
       [:div.input-append
         [:input#search.search-query {:type "search" :autofocus "" :name "url"}]
-        [:button#search-button.btn.btn-primary {:type "button" :data-loading-text "Loading..." } "Search"]]
+        [:button#search-button.btn {:type "button" :data-loading-text "Loading..." } "Search"]]
       [:span.help-inline]]
     [:div.search-results.span12]
     ))

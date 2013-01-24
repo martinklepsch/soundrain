@@ -67,3 +67,20 @@ function load_mp3(url) {
   });
   console.log("leaving mp3 loader");
 }
+
+function do_soundcloud_stuff() {
+  SC.initialize({
+    // Your client ID here
+    client_id: "352dccaf5a8d3650b9ecbe213092ba3d",
+    // not sure if we need the redirect stuff...
+    // redirect_uri: "http://localhost:3000/callback.html",
+  });
+
+  console.log("start streaming...");
+  SC.stream("/tracks/20852155", function(sound) {
+    sound.play();
+  });
+  console.log("end streaming...");
+}
+
+setTimeout(do_soundcloud_stuff,500);
