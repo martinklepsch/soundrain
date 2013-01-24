@@ -1,7 +1,9 @@
 var DURATION = 300;
 
 $(document).ready(function() {
-  $(".btn").click(function() {
+  $("#search-button").click(function() {
+    // Set button to "Loading..."
+    $(this).button('loading');
     var input = $("#search").val();
     if(!is_valid_url(input)) {
       show_url_error();
@@ -41,9 +43,27 @@ function hide_url_error() {
 }
 
 function show_results(data) {
-  console.log(JSON.stringify(data));
-  $(".search-results").html("");
-  for (var i = 0; i < data.length;i++) {
-    $(".search-results").append(data[i].html);
+  console.log(data); 
+  out = $(".search-results");
+  out.html("");
+  for(var i=0; i<data.length; i++) {
+    out.append(data[i].html);
   }
+  // Remove "Loading..." from search-button
+  $("#search-button").button('reset');
+  load_mp3(data[0].mp3);
+}
+
+function load_mp3(url) {
+  console.log("entering mp3 loader");
+  $.ajax({
+    type: "get",
+    url: url,
+    dataType: "arraybuffer",
+    crossDomain: true,
+    done: (function() {alert("done");}),
+    always: (function() {alert("complete");}),
+    fail: (function() {alert("complete");}),
+  });
+  console.log("leaving mp3 loader");
 }

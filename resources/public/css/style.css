@@ -1,19 +1,19 @@
 .title {
     color: black;
     position: relative;
-  	font-size: 25px;
-  	line-height: 30px;
+    font-size: 25px;
+    line-height: 30px;
 }
 
 .subtitle {
     color: black;
     position: relative;
-  	font-size: 20px;
-  	line-height: 20px;
+    font-size: 20px;
+    line-height: 20px;
 }
 
 .text {
-	padding-top: 10px;
+  padding-top: 10px;
 }
 
 .artist {
@@ -24,12 +24,8 @@
 .mp3 {
     position: relative;
     width: 500px;
-  	height: 150px;
+    height: 150px;
 }
-
-/*.container {
-	width: 500px;
-}*/
 
 .picture {
     float: left;
@@ -37,7 +33,7 @@
 }
 
 .download-button {
- 	 	position: absolute;
-  	bottom: 10px;
-  	left: 150px;
+    position: absolute;
+    bottom: 10px;
+    left: 150px;
 }

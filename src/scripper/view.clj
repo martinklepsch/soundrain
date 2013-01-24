@@ -24,8 +24,8 @@
         [:small " the freshest thing around"]]]
     [:div.form-search.control-group.span12
       [:div.input-append
-        [:input#search {:type "search" :autofocus "" :name "url" :class "input-xlarge search-query"}]
-        [:button {:type "button" :class "btn" } "Search"]]
+        [:input#search.search-query {:type "search" :autofocus "" :name "url"}]
+        [:button#search-button.btn.btn-primary {:type "button" :data-loading-text "Loading..." } "Search"]]
       [:span.help-inline]]
     [:div.search-results.span12]
     ))
