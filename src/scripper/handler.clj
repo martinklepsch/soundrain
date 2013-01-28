@@ -1,7 +1,8 @@
 (ns scripper.handler
   (:use compojure.core scripper.view
          [ring.middleware.format-params :only [wrap-json-params]]
-        		[ring.middleware.format-response :only [wrap-json-response]])
+         [ring.middleware.format-response :only [wrap-json-response]]
+         [ring.middleware.cors :only [wrap-cors]])
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
             [scripper.core :as core]
@@ -18,7 +19,9 @@
   (route/not-found "Not Found"))
 
 (def app
-  (->  
+  (->
    (handler/site app-routes)
    (wrap-bootstrap-resources)
-   (wrap-json-response)))
+   (wrap-json-response)
+   (wrap-cors :access-control-allow-origin #"https://soundcloud.com"
+              :access-control-allow-methods [:get])))

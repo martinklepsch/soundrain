@@ -13,7 +13,8 @@
                  [cheshire "5.0.1"]
                  [ring "1.1.7"]
                  [ring-middleware-format "0.2.3"]
-                 [ring-json-response "0.2.0"]]
+                 [ring-json-response "0.2.0"]
+                 [flatland/ring-cors "0.0.7"]]
   :plugins [[lein-ring "0.8.2"]]
   :ring {:handler scripper.handler/app}
   :profiles
