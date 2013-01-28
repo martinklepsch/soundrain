@@ -11,6 +11,9 @@
 (defroutes app-routes
   (GET "/" [] (url-form))
   (GET "/search/" [url] (response (core/mp3-json url)))
+  (GET "/:sc-user/:sc-track" [sc-user sc-track]
+       (response (core/mp3-json
+                   (str "https://soundcloud.com/" sc-user "/" sc-track))))
   (route/resources "/")
   (route/not-found "Not Found"))
 
