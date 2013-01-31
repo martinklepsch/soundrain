@@ -24,11 +24,15 @@
   (html-doc "Scripper"
     [:div.page-header.span12
       [:h1 "Scripper"
-        [:small " the freshest thing around"]]]
+        [:small "download your favorite soundcloud songs with ease"]]]
     [:div.form-search.control-group.span12
       [:div.input-append
-        [:input#search.search-query {:type "search" :autofocus "" :name "url"}]
-        [:button#search-button.btn {:type "button" :data-loading-text "Loading..." } "Search"]]
+        [:input#search.search-query.input-xxlarge {
+          :type "search"
+          :placeholder "Paste a link to Soundcloud here or use our bookmarklet"
+          :autofocus ""
+          :name "url"}]
+        [:button#search-button.btn {:type "submit" :data-loading-text "Loading..." } "Search"]]
       [:span.help-inline]]
     [:div.search-results.span12]
     ))
