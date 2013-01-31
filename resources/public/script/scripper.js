@@ -4,15 +4,17 @@ $(document).ready(function() {
   $("#search-button").click(function() {
     // Set button to "Loading..."
     $(this).button('loading');
-    var input = $("#search").val();
-    if(!is_valid_url(input)) {
+    var soundcloud_uri = $("#search").val();
+    if(!is_valid_url(soundcloud_uri)) {
       show_url_error();
       return;
     }
+
+    sc_uri = soundcloud_uri.split("/").slice(3).join("/")
+
     hide_url_error();
     $.ajax({
-      url: "/search/",
-      data: {url: input},
+      url: sc_uri,
       datatype: "json",
       type: "GET",
       success: show_results
@@ -43,7 +45,7 @@ function hide_url_error() {
 }
 
 function show_results(data) {
-  console.log(data); 
+  console.log(data);
   out = $(".search-results");
   out.html("");
   for(var i=0; i<data.length; i++) {
@@ -67,20 +69,3 @@ function load_mp3(url) {
   });
   console.log("leaving mp3 loader");
 }
-
-function do_soundcloud_stuff() {
-  SC.initialize({
-    // Your client ID here
-    client_id: "352dccaf5a8d3650b9ecbe213092ba3d",
-    // not sure if we need the redirect stuff...
-    // redirect_uri: "http://localhost:3000/callback.html",
-  });
-
-  console.log("start streaming...");
-  SC.stream("/tracks/20852155", function(sound) {
-    sound.play();
-  });
-  console.log("end streaming...");
-}
-
-setTimeout(do_soundcloud_stuff,500);
