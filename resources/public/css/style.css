@@ -1,39 +1,42 @@
+body {
+  font-family: 'Lato', Helvetica, Arial, sans-serif;
+}
+
+small {
+  margin-left: 0.7em;
+}
+
 .title {
-    color: black;
-    position: relative;
-    font-size: 25px;
-    line-height: 30px;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  color: gray;
+  position: relative;
 }
 
 .subtitle {
-    color: black;
-    position: relative;
-    font-size: 20px;
-    line-height: 20px;
+  color: black;
+  position: relative;
+  font-size: 1.2em;
 }
 
 .text {
   padding-top: 10px;
 }
 
-.artist {
-    position: relative;
-    color: gray;
-}
-
 .mp3 {
-    position: relative;
-    width: 500px;
-    height: 150px;
+  position: relative;
+  width: 500px;
+  height: 150px;
+  float: left;
 }
 
 .picture {
-    float: left;
-    margin: 10px 10px 10px 10px;
+  float: left;
+  margin: 10px 10px 10px 10px;
 }
 
 .download-button {
-    position: absolute;
-    bottom: 10px;
-    left: 150px;
+  position: absolute;
+  bottom: 15px;
+  left: 150px;
 }
