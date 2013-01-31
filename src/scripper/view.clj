@@ -14,6 +14,7 @@
         [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]
         (include-bootstrap)
         (include-css "/css/style.css")
+        (include-css "http://fonts.googleapis.com/css?family=Lato")
       	(include-js "/script/scripper.js")]
       [:body
         [:div {:class "container-fluid"}
