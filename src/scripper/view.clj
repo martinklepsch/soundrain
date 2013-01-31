@@ -1,12 +1,12 @@
 	(ns scripper.view
   (:use compojure.core [hiccup core page form util]))
   (use 'hiccup.bootstrap.page)
-  
-(defn html-doc [title & body] 
-  (html 
-    (doctype :html5) 
-    [:html 
-      [:head 
+
+(defn html-doc [title & body]
+  (html
+    (doctype :html5)
+    [:html
+      [:head
         [:title title]
         (include-js "/script/jquery-1.9.0.min.js")
         ; DEADLY SCRIPT
@@ -14,11 +14,11 @@
         [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]
         (include-bootstrap)
         (include-css "/css/style.css")
-      	(include-js "/script/scripper.js")] 
-      [:body 
+      	(include-js "/script/scripper.js")]
+      [:body
         [:div {:class "container-fluid"}
-          body]]])) 
-        
+          body]]]))
+
 (defn url-form []
   (html-doc "Scripper"
     [:div.page-header.span12
@@ -40,13 +40,13 @@
       [:div.text
         [:div.title (:artist tags)]
         [:div.subtitle (:title tags)]
-        ;;[:img {:src (to-uri (:image tags))}]
-        ;;[:img {:src (to-uri (:waveformUrl tags))}]
-       	[:button.btn.download-button [:i.icon-download] " download"]
+        [:a.btn.download-button
+         {:href (:mp3 tags)}
+         [:i.icon-download] " Rightclick > Save link as..."]
        ]
 ])
-  
-  (defn song-forms [tags]
+
+(defn song-forms [tags]
   (html (map song-form tags)))
-  
- 
+
+
