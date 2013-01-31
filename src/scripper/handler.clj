@@ -6,7 +6,7 @@
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
             [scripper.core :as core]
-           ))
+            [ring.adapter.jetty :as ring]))
   (use 'hiccup.bootstrap.middleware 'ring.util.response)
 
 (defroutes app-routes
@@ -28,3 +28,6 @@
    (wrap-json-response)
    (wrap-cors :access-control-allow-origin #"https://soundcloud.com"
               :access-control-allow-methods [:get])))
+
+(defn -main [port]
+  (ring/run-jetty app {:port (Integer. port)}))
