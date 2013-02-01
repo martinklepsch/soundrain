@@ -37,7 +37,7 @@ small {
 
 .download-button {
   position: absolute;
-  bottom: 65px;
+  bottom: 67px;
   left: 150px;
 }
 
@@ -50,7 +50,15 @@ small {
   background-color: #eeeeee;
   border-radius: 5px;
   font-weight: bold;
-  line-height: 45px;
   font-size: 14px;
   padding-left: 10px;
+  line-height: 47px;
+}
+
+.drag-active {
+    border: solid black 1px;
+}
+
+.drag-inactive {
+    border: solid white 1px;
 }

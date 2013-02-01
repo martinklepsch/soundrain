@@ -9,8 +9,6 @@
       [:head
         [:title title]
         (include-js "/script/jquery-1.9.0.min.js")
-        ; DEADLY SCRIPT
-        ; (include-js "//connect.soundcloud.com/sdk.js")
         [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]
         (include-bootstrap)
         (include-css "/css/style.css")
@@ -25,7 +23,7 @@
     [:div.page-header.span12
       [:h1 "Scripper"
         [:small "download your favorite soundcloud songs with ease"]]]
-    [:form.form-search.control-group.span12
+    [:form#search-form.form-search.control-group.span12
       [:div.input-append
         [:input#search.search-query.input-xxlarge {
           :type "search"
@@ -45,10 +43,10 @@
       [:div.text
         [:div.title (:artist tags)]
         [:div.subtitle (:title tags)]
-        [:div.drag " → Drag'n'drop mp3 here"]
+        [:div.drag.drag-inactive " → Drag'n'drop mp3 here"]
         [:a.btn.download-button
-         {:href (:mp3 tags)}
-         [:i.icon-download] " Rightclick → Save link as..."]
+          {:href (:mp3 tags)}
+          [:i.icon-download] " Rightclick → Save link as..."]
        ]
 ])
 
