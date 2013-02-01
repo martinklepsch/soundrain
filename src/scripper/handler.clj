@@ -1,8 +1,7 @@
 (ns scripper.handler
   (:use compojure.core scripper.view
          [ring.middleware.format-params :only [wrap-json-params]]
-         [ring.middleware.format-response :only [wrap-json-response]]
-         [ring.middleware.cors :only [wrap-cors]])
+         [ring.middleware.format-response :only [wrap-json-response]])
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
             [scripper.core :as core]
@@ -25,9 +24,7 @@
   (->
    (handler/site app-routes)
    (wrap-bootstrap-resources)
-   (wrap-json-response)
-   (wrap-cors :access-control-allow-origin #"https://soundcloud.com"
-              :access-control-allow-methods [:get])))
+   (wrap-json-response)))
 
 (defn -main [port]
   (ring/run-jetty app {:port (Integer. port)}))
