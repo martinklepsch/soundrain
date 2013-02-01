@@ -45,9 +45,10 @@
       [:div.text
         [:div.title (:artist tags)]
         [:div.subtitle (:title tags)]
+        [:div.drag " → Drag'n'drop mp3 here"]
         [:a.btn.download-button
          {:href (:mp3 tags)}
-         [:i.icon-download] " Rightclick > Save link as..."]
+         [:i.icon-download] " Rightclick → Save link as..."]
        ]
 ])
 

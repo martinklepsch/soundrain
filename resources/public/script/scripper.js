@@ -1,13 +1,16 @@
 var DURATION = 300;
 
+var current_data;
+
 $(document).ready(function() {
   $("#search-button").click(function() {
     // Set button to "Loading..."
-    $(this).button('loading');
     var soundcloud_uri = $("#search").val();
     if(!is_valid_url(soundcloud_uri)) {
       show_url_error();
       return;
+    } else {
+      $(this).button('loading');
     }
 
     sc_uri = soundcloud_uri.split("/").slice(3).join("/")
@@ -48,24 +51,12 @@ function show_results(data) {
   console.log(data);
   out = $(".search-results");
   out.html("");
+  // to reuse the data afterwards for drag'n'drop events
+  current_data = data;
   for(var i=0; i<data.length; i++) {
     out.append(data[i].html);
+    $(".drag").last().attr("id", "drag-"+i);
   }
   // Remove "Loading..." from search-button
   $("#search-button").button('reset');
-  load_mp3(data[0].mp3);
-}
-
-function load_mp3(url) {
-  console.log("entering mp3 loader");
-  $.ajax({
-    type: "get",
-    url: url,
-    dataType: "arraybuffer",
-    crossDomain: true,
-    done: (function() {alert("done");}),
-    always: (function() {alert("complete");}),
-    fail: (function() {alert("complete");}),
-  });
-  console.log("leaving mp3 loader");
 }

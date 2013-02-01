@@ -37,6 +37,20 @@ small {
 
 .download-button {
   position: absolute;
-  bottom: 15px;
+  bottom: 65px;
   left: 150px;
+}
+
+.drag {
+  position: absolute;
+  bottom: 10px;
+  left: 150px;
+  height: 50px;
+  width: 194px;
+  background-color: #eeeeee;
+  border-radius: 5px;
+  font-weight: bold;
+  line-height: 45px;
+  font-size: 14px;
+  padding-left: 10px;
 }
