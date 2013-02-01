@@ -1,1 +1,1 @@
-web: lein with-profile production trampoline run -m scripper.handler $PORT
+web:  lein trampoline run -m scripper.handler

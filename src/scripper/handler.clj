@@ -26,5 +26,9 @@
    (wrap-bootstrap-resources)
    (wrap-json-response)))
 
-(defn -main [port]
-  (ring/run-jetty app {:port (Integer. port)}))
+(defn start [port]
+  (ring/run-jetty app {:port port :join? false}))
+
+(defn -main []
+  (let [port (Integer/parseInt (or (System/getenv "PORT") "8080"))]
+    (start port)))
