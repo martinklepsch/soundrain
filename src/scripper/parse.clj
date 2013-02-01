@@ -17,21 +17,33 @@
     (filter (comp not nil?) 
             (map #(re-find re %) scripts))))
 
-(defn get-artworks [source]
-  "returns a list of hashs with the artwork-images"
-  (let [re #"http://i1.sndcdn.com/artworks[^\"]*\.jpg"]
-	    (map  
-       (comp 
-         	#(hash-map :image %)
-          #(clojure.string/replace % #"badge|large" "t120x120")
-	     		#(re-find re %)
-        	:style 
-        	:attrs )
-       (html/select source [:a.artwork]))))
-
 (defn get-source [url]
   "loads source of url and creates enlive html-resource from it"
   (html/html-resource (:body (client/get url {:as :stream}))))
+
+(defn get-artworks [source text-tags]
+  "returns a list of hashs with the artwork-images"
+  (let [re #"http://i1.sndcdn.com/artworks[^\"]*\.jpg"
+        sc-set? (not (empty? (filter #(re-find #"/sets/" (str (:content (:attrs %)))) (html/select source [[:meta]]))))]
+	  (if sc-set?  
+    (map  
+       (comp 
+         	(partial hash-map :image)
+          #(clojure.string/replace % #"badge|large" "t120x120")
+	     		(partial re-find re)
+        	:style 
+        	:attrs )
+       (html/select source [#{:a.artwork}])))
+  	(map
+     (fn [x](first (map  
+       (comp 
+         	(partial hash-map :image)
+          #(clojure.string/replace % #"badge|large" "t120x120")
+	     		(partial re-find re)
+        	:style 
+        	:attrs )
+       (html/select (get-source (str "http://soundcloud.com/" (:uri x))) [#{:a.artwork}]))))
+     text-tags)))
 
 (defn get-text-tags [source]
   "takes a html-resource and returns a list of hashs of all the text-tags"
@@ -41,9 +53,10 @@
 (defn get-metainformations [url]
   "takes a url and returns a list of hashes with the metainformation of the songs on the page"
   (let [source 		(get-source url)
-        artworks 	(get-artworks source)
-        text-tags (get-text-tags source)]
+        text-tags (get-text-tags source)
+        artworks 	(get-artworks source text-tags)]
       (map #(merge %1 %2) text-tags artworks)))
+
 
  (defn get-mp3-metainformations [tags]
    "Filters the metadata"

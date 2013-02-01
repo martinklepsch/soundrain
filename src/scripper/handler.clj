@@ -18,6 +18,9 @@
   (GET "/:sc-user/:sc-track" [sc-user sc-track]
        (response (core/mp3-json
                    (str "https://soundcloud.com/" sc-user "/" sc-track))))
+  (GET "/:sc-user/sets/:sc-track" [sc-user sc-track]
+       (response (core/mp3-json
+                   (str "https://soundcloud.com/" sc-user "/sets/" sc-track))))
   (route/not-found "Not Found"))
 
 (def app
