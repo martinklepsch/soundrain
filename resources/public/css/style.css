@@ -49,16 +49,15 @@ small {
   width: 194px;
   background-color: #eeeeee;
   border-radius: 5px;
-  font-weight: bold;
   font-size: 14px;
   padding-left: 10px;
   line-height: 47px;
 }
 
 .drag-active {
-    border: solid black 1px;
+  border: solid black 1px;
 }
 
 .drag-inactive {
-    border: solid white 1px;
+  border: solid white 1px;
 }

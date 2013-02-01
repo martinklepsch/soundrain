@@ -43,7 +43,7 @@
       [:div.text
         [:div.title (:artist tags)]
         [:div.subtitle (:title tags)]
-        [:div.drag.drag-inactive " → Drag'n'drop mp3 here"]
+        [:div.drag.drag-inactive "Then drag'n'drop mp3s here"]
         [:a.btn.download-button
           {:href (:mp3 tags)}
           [:i.icon-download] " Rightclick → Save link as..."]

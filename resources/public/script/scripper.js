@@ -1,8 +1,7 @@
 var DURATION = 300;
 
 var currently_processed_data;
-var index_in_array_of_results;
-var most_recent_drop_div;
+var current_file;
 
 
 $(document).ready(function() {
@@ -52,12 +51,8 @@ function hide_error() {
 }
 
 function show_results(data) {
-  console.log(data);
   out = $(".search-results");
   out.html("");
-
-  // to reuse the data afterwards for drag'n'drop events
-  currently_processed_data = data;
 
   for(var i=0; i<data.length; i++) {
     out.append(data[i].html);
@@ -65,8 +60,13 @@ function show_results(data) {
     $(".drag").last().attr("id", new_id);
     setup_drag_n_drop(new_id);
   }
+
   // Remove "Loading..." from search-button
   $("#search-button").button('reset');
+
+  // to reuse the data afterwards for drag'n'drop events
+  currently_processed_data = data;
+  console.log(currently_processed_data);
 }
 
 function setup_drag_n_drop(id) {
@@ -97,11 +97,11 @@ function dragOver(evt) {
 function drop(evt) {
   evt.preventDefault();
   $(evt.target).removeClass("drag-active").addClass("drag-inactive");
-  most_recent_drop_div = evt.target;
 
   var files = evt.dataTransfer.files;
   var count = files.length;
   var file = files[0];
+  current_file = file;
 
   var reader = new FileReader(), filter = /^(audio\/mp3|audio\/mpeg3|audio\/x\-mpeg\-3|video\/mpeg|video\/x\-mpeg3)$/i;
   reader.onload = handle_binary_data;
@@ -116,11 +116,26 @@ function drop(evt) {
   reader.readAsBinaryString(file);
 }
 
+function get_stream_name(mp3_name) {
+  return mp3_name.slice(mp3_name.lastIndexOf("/")+1, mp3_name.lastIndexOf("?"));
+}
+
 function handle_binary_data(evt) {
   var data_binary_string = evt.target.result;
-  index_in_array_of_results =  parseInt($(most_recent_drop_div).attr("id"));
+  var right_data = null;
+  for (var i=0; i<currently_processed_data.length; i++) {
+    var current = currently_processed_data[i];
+    if (!(current_file.name.indexOf(get_stream_name(current.mp3)) == -1)) {
+      right_data = current;
+    }
+  }
+  if (right_data == null) {
+    show_error("This was an invalid mp3");
+    return;
+  }
+  hide_error();
   // to binary string
-  var tag = atob(currently_processed_data[index_in_array_of_results].tag);
+  var tag = atob(right_data.tag);
   var mp3 = tag + data_binary_string;
   var mp3_data_uri = "data:audio/mp3;base64," + btoa(mp3);
   window.open(mp3_data_uri,'_blank');
