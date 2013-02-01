@@ -3,14 +3,14 @@ var DURATION = 300;
 var current_data;
 
 $(document).ready(function() {
-  $("#search-button").click(function() {
+  $(".form-search").submit(function() {
     // Set button to "Loading..."
     var soundcloud_uri = $("#search").val();
     if(!is_valid_url(soundcloud_uri)) {
       show_url_error();
       return;
     } else {
-      $(this).button('loading');
+      $("#search-button").button('loading');
     }
 
     sc_uri = soundcloud_uri.split("/").slice(3).join("/")
@@ -21,7 +21,8 @@ $(document).ready(function() {
       datatype: "json",
       type: "GET",
       success: show_results
-    });
+    })
+    return false;
   });
 });
 

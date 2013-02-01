@@ -25,7 +25,7 @@
     [:div.page-header.span12
       [:h1 "Scripper"
         [:small "download your favorite soundcloud songs with ease"]]]
-    [:div.form-search.control-group.span12
+    [:form.form-search.control-group.span12
       [:div.input-append
         [:input#search.search-query.input-xxlarge {
           :type "search"
