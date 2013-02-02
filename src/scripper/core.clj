@@ -28,12 +28,12 @@
    "takes a url and returns a hash with the tag data and the b64 encoded mp3-tag-bytarray"
    (let [metadata (parse/get-metainformations url)
          mp3-metadata (map parse/get-mp3-metainformations metadata)
-         mp3-tags (map
-                   #(hash-map :tag (codec/base64-encode (metadata/create-ID3v23-tag %)))
+         mp3-tags (map 
+                   #(hash-map :tag (codec/base64-encode (metadata/create-ID3v23-tag %))) 
                    mp3-metadata)
-         html-site (map (comp
+         html-site (map (comp 
                           #(hash-map :html %)
-                          #(html %)
+                          #(html %) 
                           view/song-form) mp3-metadata)]
      (map #(merge %1 %2 %3) mp3-metadata mp3-tags html-site)))
 
