@@ -1,7 +1,7 @@
 var DURATION = 300;
 
 var currently_processed_data;
-var current_file;
+var currently_processed_files;
 
 
 $(document).ready(function() {
@@ -10,7 +10,7 @@ $(document).ready(function() {
     var soundcloud_uri = $("#search").val();
     if(!is_valid_url(soundcloud_uri)) {
       show_error("Please enter a valid Soundcloud URL.");
-      return;
+      return false;
     } else {
       $("#search-button").button('loading');
     }
@@ -66,7 +66,6 @@ function show_results(data) {
 
   // to reuse the data afterwards for drag'n'drop events
   currently_processed_data = data;
-  console.log(currently_processed_data);
 }
 
 function setup_drag_n_drop(id) {
@@ -98,45 +97,48 @@ function drop(evt) {
   evt.preventDefault();
   $(evt.target).removeClass("drag-active").addClass("drag-inactive");
 
-  var files = evt.dataTransfer.files;
-  var count = files.length;
-  var file = files[0];
-  current_file = file;
-
-  var reader = new FileReader(), filter = /^(audio\/mp3|audio\/mpeg3|audio\/x\-mpeg\-3|video\/mpeg|video\/x\-mpeg3)$/i;
-  reader.onload = handle_binary_data;
+  currently_processed_files = evt.dataTransfer.files;
+  var count = currently_processed_files.length;
 
   // Abort, when the user hasn't uploaded anything
   if (count <= 0) {return; }
-  // Check if the file is a valid mp3
-  if (!filter.test(file.type)) { show_error("Please only upload mp3s"); return; }
-  // Otherwise hide the error
-  hide_error();
+  for (var i=0; i<count; i++) {
+    var reader = new FileReader(), filter = /^(audio\/mpeg|audio\/mp3|audio\/mpeg3|audio\/x\-mpeg\-3|video\/mpeg|video\/x\-mpeg3)$/i;
+    var j = i;
+    reader.onload = function(evt) {
+      handle_binary_data(evt, j);
+    };
+    // Check if the file is a valid mp3
+    console.log(currently_processed_files[i].type);
+    if (!filter.test(currently_processed_files[i].type)) { show_error("Please only upload mp3s"); return; }
+    // Otherwise hide the error
+    hide_error();
 
-  reader.readAsBinaryString(file);
+    reader.readAsBinaryString(currently_processed_files[i]);
+  }
 }
 
 function get_stream_name(mp3_name) {
   return mp3_name.slice(mp3_name.lastIndexOf("/")+1, mp3_name.lastIndexOf("?"));
 }
 
-function handle_binary_data(evt) {
-  var data_binary_string = evt.target.result;
+function handle_binary_data(evt, current_index) {
   var right_data = null;
+  var current;
+  var right_index = -1;
   for (var i=0; i<currently_processed_data.length; i++) {
-    var current = currently_processed_data[i];
-    if (!(current_file.name.indexOf(get_stream_name(current.mp3)) == -1)) {
-      right_data = current;
+    current = currently_processed_data[i];
+    if (!((currently_processed_files[current_index]).name.indexOf(get_stream_name(current.mp3)) == -1)) {
+      right_index = i;
     }
   }
-  if (right_data == null) {
+  if (right_data == -1) {
     show_error("This was an invalid mp3");
+    console.log("right_data is null");
     return;
   }
   hide_error();
   // to binary string
-  var tag = atob(right_data.tag);
-  var mp3 = tag + data_binary_string;
-  var mp3_data_uri = "data:audio/mp3;base64," + btoa(mp3);
+  var mp3_data_uri = "data:audio/mp3;base64," + btoa(atob(currently_processed_data[right_index].tag) + evt.target.result);
   window.open(mp3_data_uri,'_blank');
 }
