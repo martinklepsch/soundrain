@@ -2,6 +2,8 @@ var DURATION = 300;
 
 var currently_processed_data;
 var currently_processed_files;
+var filter = /^(audio\/mpeg|audio\/mp3|audio\/mpeg3|audio\/x\-mpeg\-3|video\/mpeg|video\/x\-mpeg3)$/i;
+
 
 
 $(document).ready(function() {
@@ -103,13 +105,12 @@ function drop(evt) {
   // Abort, when the user hasn't uploaded anything
   if (count <= 0) {return; }
   for (var i=0; i<count; i++) {
-    var reader = new FileReader(), filter = /^(audio\/mpeg|audio\/mp3|audio\/mpeg3|audio\/x\-mpeg\-3|video\/mpeg|video\/x\-mpeg3)$/i;
+    var reader = new FileReader();
     var j = i;
     reader.onload = function(evt) {
       handle_binary_data(evt, j);
     };
     // Check if the file is a valid mp3
-    console.log(currently_processed_files[i].type);
     if (!filter.test(currently_processed_files[i].type)) { show_error("Please only upload mp3s"); return; }
     // Otherwise hide the error
     hide_error();
@@ -134,7 +135,6 @@ function handle_binary_data(evt, current_index) {
   }
   if (right_data == -1) {
     show_error("This was an invalid mp3");
-    console.log("right_data is null");
     return;
   }
   hide_error();
