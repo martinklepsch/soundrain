@@ -3,6 +3,7 @@ var DURATION = 300;
 var currently_processed_data;
 var currently_processed_files;
 var filter = /^(audio\/mpeg|audio\/mp3|audio\/mpeg3|audio\/x\-mpeg\-3|video\/mpeg|video\/x\-mpeg3)$/i;
+var pattern = /^(https|http):\/\/(www\.)?soundcloud\.com/i;
 
 
 
@@ -31,7 +32,6 @@ $(document).ready(function() {
 });
 
 function is_valid_url(str) {
-  var pattern = /^(https|http):\/\/(www\.)?soundcloud\.com/i;
   if(!pattern.test(str)) {
     // alert("Please enter a valid URL.");
     return false;
@@ -74,7 +74,6 @@ function setup_drag_n_drop(id) {
   id = document.getElementById(id);
   id.addEventListener("dragenter", dragEnter, false);
   id.addEventListener("dragleave", dragLeave, false);
-  id.addEventListener("dragover", dragOver, false);
   id.addEventListener("drop", drop, false);
 }
 
@@ -90,11 +89,6 @@ function dragLeave(evt) {
   $(evt.target).removeClass("drag-active").addClass("drag-inactive");
 }
 
-function dragOver(evt) {
-  evt.stopPropagation();
-  evt.preventDefault();
-}
-
 function drop(evt) {
   evt.preventDefault();
   $(evt.target).removeClass("drag-active").addClass("drag-inactive");
@@ -102,8 +96,9 @@ function drop(evt) {
   currently_processed_files = evt.dataTransfer.files;
   var count = currently_processed_files.length;
 
-  // Abort, when the user hasn't uploaded anything
+  // Abort when the user hasn't uploaded anything
   if (count <= 0) {return; }
+
   for (var i=0; i<count; i++) {
     var reader = new FileReader();
     var j = i;
@@ -124,21 +119,19 @@ function get_stream_name(mp3_name) {
 }
 
 function handle_binary_data(evt, current_index) {
-  var right_data = null;
-  var current;
   var right_index = -1;
   for (var i=0; i<currently_processed_data.length; i++) {
-    current = currently_processed_data[i];
-    if (!((currently_processed_files[current_index]).name.indexOf(get_stream_name(current.mp3)) == -1)) {
+    if (!((currently_processed_files[current_index]).name.indexOf(get_stream_name(currently_processed_data[i].mp3)) == -1)) {
       right_index = i;
     }
   }
-  if (right_data == -1) {
+  if (right_index == -1) {
     show_error("This was an invalid mp3");
     return;
   }
   hide_error();
   // to binary string
   var mp3_data_uri = "data:audio/mp3;base64," + btoa(atob(currently_processed_data[right_index].tag) + evt.target.result);
+  // crashes the browser
   window.open(mp3_data_uri,'_blank');
 }
