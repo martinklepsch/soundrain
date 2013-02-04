@@ -34,7 +34,7 @@
          html-site (map (comp 
                           #(hash-map :html %)
                           #(html %) 
-                          view/song-form) mp3-metadata)]
+                          view/song-form) mp3-metadata (range))]
      (map #(merge %1 %2 %3) mp3-metadata mp3-tags html-site)))
 
 
