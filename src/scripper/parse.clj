@@ -23,9 +23,7 @@
 
 (defn get-artworks [source text-tags]
   "returns a list of hashs with the artwork-images"
-  (let [re #"http://i1.sndcdn.com/artworks[^\"]*\.jpg"
-        sc-set? (not (empty? (filter #(re-find #"/sets/" (str (:content (:attrs %)))) (html/select source [[:meta]]))))]
-	  (if sc-set?  
+  (let [re #"http://i1.sndcdn.com/artworks[^\"]*\.jpg"]
     (map  
        (comp 
          	(partial hash-map :image)
@@ -33,17 +31,8 @@
 	     		(partial re-find re)
         	:style 
         	:attrs )
-       (html/select source [#{:a.artwork}])))
-  	(map
-     (fn [x](first (map  
-       (comp 
-         	(partial hash-map :image)
-          #(clojure.string/replace % #"badge|large" "t120x120")
-	     		(partial re-find re)
-        	:style 
-        	:attrs )
-       (html/select (get-source (str "http://soundcloud.com/" (:uri x))) [#{:a.artwork}]))))
-     text-tags)))
+       (html/select source [#{:a.artwork}]))))
+
 
 (defn get-text-tags [source]
   "takes a html-resource and returns a list of hashs of all the text-tags"
@@ -60,11 +49,13 @@
 
  (defn get-mp3-metainformations [tags]
    "Filters the metadata"
-   (let [{{artist :username} :user title :title mp3 :streamUrl image :image} tags]
+   (let [{{artist :username} :user title :title mp3 :streamUrl image :image} tags
+         filename (str (second (re-find #"\\(\w+)\?" mp3)) ".mp3")]
     {:artist artist
      :mp3 mp3
      :title title
      :album artist
      :year "2012"
-     :image image}))
+     :image image
+     :filename filename}))
 
