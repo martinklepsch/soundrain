@@ -137,8 +137,6 @@ function handle_binary_data(evt, current_index) {
     show_error("This was an invalid mp3");
     return;
   }
-  console.log("current_index: " + current_index);
-  console.log("right_index: " + right_index);
   hide_error();
   // to binary string
   var mp3_data_uri = "data:audio/mp3;base64," + btoa(atob(currently_processed_data[right_index].tag) + evt.target.result);
