@@ -39,7 +39,7 @@
 
 (defn song-form [tag n]
   (let 
-    [{:keys [artist title year album image mp3]} tag]
+    [{:keys [artist title year album image mp3 filename]} tag]
     [:div.mp3 {:id (str "mp3-" n)}
       [:img.img-polaroid.picture {:src image}]
       [:div.text
@@ -47,7 +47,7 @@
         [:div.subtitle title]
         [:div.drag.drag-inactive "Then drag'n'drop mp3s here"]
         [:a.btn.download-button
-          {:href mp3}
+          {:href mp3 :download filename}
           [:i.icon-download] " Rightclick → Save link as..."]
        ]
 		]))
