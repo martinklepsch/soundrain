@@ -24,10 +24,8 @@ small {
 }
 
 .mp3 {
-  position: relative;
   width: 500px;
   height: 150px;
-  float: left;
 }
 
 .picture {
@@ -36,28 +34,25 @@ small {
 }
 
 .download-button {
-  position: absolute;
-  bottom: 67px;
-  left: 150px;
+  position: relative;
+  top: 50px;
 }
 
 .drag {
-  position: absolute;
-  bottom: 10px;
-  left: 150px;
   height: 50px;
-  width: 194px;
-  background-color: #eeeeee;
+  background-color: #f8f8f8;
   border-radius: 5px;
-  font-size: 14px;
-  padding-left: 10px;
-  line-height: 47px;
+  font-size: 16px;
+  padding: 10px;
+  vertical-align: middle;
+  display: none;
+  margin-bottom: 30px;
 }
 
 .drag-active {
-  border: solid black 1px;
+  border: dashed black 3px;
 }
 
 .drag-inactive {
-  border: solid white 1px;
+  border: dashed #aaa 3px;
 }
