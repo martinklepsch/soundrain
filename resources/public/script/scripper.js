@@ -7,7 +7,10 @@ var pattern = /^(https|http):\/\/(www\.)?soundcloud\.com/i;
 
 
 
-$(document).ready(function() {
+$(function() {
+  // Initializes the dropzone
+  setup_drag_n_drop("dropzone");
+
   $("#search-form").submit(function() {
     // Set button to "Loading..."
     var soundcloud_uri = $("#search").val();
@@ -25,11 +28,20 @@ $(document).ready(function() {
       url: sc_uri,
       datatype: "json",
       type: "GET",
-      success: show_results
-    })
+    }).done(function(data) {
+      show_results(data);
+      attach_onclick_handlers_to_buttons();
+    });
     return false;
   });
 });
+
+// When the user downloads something, the dropzone opens.
+function attach_onclick_handlers_to_buttons() {
+  $('.download-button').click(function(evt) {
+    $('.drag').show(DURATION);
+  });
+}
 
 function is_valid_url(str) {
   if(!pattern.test(str)) {
@@ -58,9 +70,6 @@ function show_results(data) {
 
   for(var i=0; i<data.length; i++) {
     out.append(data[i].html);
-    var new_id = ""+i;
-    $(".drag").last().attr("id", new_id);
-    setup_drag_n_drop(new_id);
   }
 
   // Remove "Loading..." from search-button
@@ -122,14 +131,10 @@ function drop(evt) {
   }
 }
 
-function get_stream_name(mp3_name) {
-  return mp3_name.slice(mp3_name.lastIndexOf("/")+1, mp3_name.lastIndexOf("?"));
-}
-
 function handle_binary_data(evt, current_index) {
   var right_index = -1;
   for (var i=0; i<currently_processed_data.length; i++) {
-    if ((currently_processed_files[current_index]).name.indexOf(get_stream_name(currently_processed_data[i].mp3)) != -1) {
+    if (currently_processed_files[current_index].name.indexOf(currently_processed_data[i].filename) != -1) {
       right_index = i;
     }
   }
