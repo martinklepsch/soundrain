@@ -1,5 +1,5 @@
 	(ns scripper.view
-  (:use compojure.core [hiccup core page form util]))
+  (use compojure.core [hiccup core page form util]))
   (use 'hiccup.bootstrap.page)
 
 (defn html-doc [title & body]
@@ -15,14 +15,20 @@
         (include-css "http://fonts.googleapis.com/css?family=Lato")
       	(include-js "/script/scripper.js")]
       [:body
-        [:div {:class "container-fluid"}
-          body]]]))
+        [:div.container-fluid
+            [:div.row body]
+          ]
+        ]
+      ]))
 
 (defn url-form []
   (html-doc "Scripper"
     [:div.page-header.span12
       [:h1 "Scripper"
         [:small "download your favorite soundcloud songs with ease"]]]
+    [:div#dropzone.drag.drag-inactive.span12
+      "When you have downloaded all mp3s you like just drag and drop them here ;)"
+    ]
     [:form#search-form.form-search.control-group.span12
       [:div.input-append
         [:input#search.search-query.input-xxlarge {
@@ -40,12 +46,11 @@
 (defn song-form [tag n]
   (let 
     [{:keys [artist title year album image mp3 filename]} tag]
-    [:div.mp3 {:id (str "mp3-" n)}
+    [:div.mp3.span4 {:id (str "mp3-" n)}
       [:img.img-polaroid.picture {:src image}]
       [:div.text
         [:div.title artist]
         [:div.subtitle title]
-        [:div.drag.drag-inactive "Then drag'n'drop mp3s here"]
         [:a.btn.download-button
           {:href mp3 :download filename}
           [:i.icon-download] " Rightclick → Save link as..."]
