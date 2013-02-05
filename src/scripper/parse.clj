@@ -50,7 +50,7 @@
  (defn get-mp3-metainformations [tags]
    "Filters the metadata"
    (let [{{artist :username} :user title :title mp3 :streamUrl image :image} tags
-         filename (str (second (re-find #"/(\w+)\?" mp3)) ".mp3")]
+         filename (str (second (re-find #"/(\w+)\?" mp3)) ".128.mp3")]
     {:artist artist
      :mp3 mp3
      :title title
