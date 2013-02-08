@@ -1,5 +1,9 @@
 var DURATION = 300;
+// size of the filesytstem that's going to be allocated
+var FILESYSTEM_SIZE = 10000000;
 
+// variables for data sharing between methods
+var filesystem;
 var currently_processed_data;
 var currently_processed_files;
 var filter = /^(audio\/mpeg|audio\/mp3|audio\/mpeg3|audio\/x\-mpeg\-3|video\/mpeg|video\/x\-mpeg3)$/i;
@@ -30,16 +34,20 @@ $(function() {
       type: "GET",
     }).done(function(data) {
       show_results(data);
-      attach_onclick_handlers_to_buttons();
+      attach_handlers_to_buttons();
     });
     return false;
   });
 });
 
 // When the user downloads something, the dropzone opens.
-function attach_onclick_handlers_to_buttons() {
+function attach_handlers_to_buttons() {
   $('.download-button').click(function(evt) {
-    $('.drag').show(DURATION);
+    // var jquery_object = $(evt.target);
+    if(!$(this).attr('data-on-filesystem')) {
+      $('.drag').show(DURATION);
+      $(this).html("<i class='icon-download'></i> Now drag the file(s) into the box above");
+    }
   });
 }
 
@@ -68,15 +76,14 @@ function show_results(data) {
   out = $(".search-results");
   out.html("");
 
-  for(var i=0; i<data.length; i++) {
-    out.append(data[i].html);
+  currently_processed_data = data;
+
+  for(var i=0; i<currently_processed_data.length; i++) {
+    out.append(currently_processed_data[i].html);
   }
 
   // Remove "Loading..." from search-button
   $("#search-button").button('reset');
-
-  // to reuse the data afterwards for drag'n'drop events
-  currently_processed_data = data;
 }
 
 function setup_drag_n_drop(id) {
@@ -110,6 +117,18 @@ function drop(evt) {
   $(evt.target).removeClass("drag-active").addClass("drag-inactive");
 
   currently_processed_files = evt.dataTransfer.files;
+
+  // request file system access
+  window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+  window.requestFileSystem(window.TEMPORARY, FILESYSTEM_SIZE, 
+                           process_dropped_files, 
+                           error_handler);
+}
+
+function process_dropped_files(fs) {
+  hide_error();
+
+  filesystem = fs;
   var count = currently_processed_files.length;
 
   // Abort when the user hasn't uploaded anything
@@ -127,7 +146,7 @@ function drop(evt) {
     // Otherwise hide the error
     hide_error();
 
-    reader.readAsBinaryString(currently_processed_files[i]);
+    reader.readAsArrayBuffer(currently_processed_files[i]);
   }
 }
 
@@ -144,7 +163,59 @@ function handle_binary_data(evt, current_index) {
   }
   hide_error();
   // to binary string
-  var mp3_data_uri = "data:audio/mp3;base64," + btoa(atob(currently_processed_data[right_index].tag) + evt.target.result);
-  // crashes the browser
-  window.open(mp3_data_uri,'_blank');
+  // Copied code
+  var binary_tag = Base64Binary.decodeArrayBuffer(currently_processed_data[right_index].tag);
+
+  var filename = currently_processed_data[right_index].artist + " - " + currently_processed_data[right_index].title + ".mp3";
+
+  // Actually write to the filesystem
+  filesystem.root.getFile(filename, {create: true}, function(file_entry) {
+
+    // Create a file_writer object for our file_entry (log.txt).
+    file_entry.createWriter(function(file_writer) {
+
+      // Debug information
+      file_writer.onwriteend = function(e) {
+        console.log('Write completed.');
+        var object = $('#mp3-'+right_index+' > .text > .download-button');
+        object.attr("href", file_entry.toURL()).attr('download', filename).addClass('btn-success').attr('data-on-filesystem', 'true').html("<i class='icon-download'></i> Download");
+      };
+      file_writer.onerror = function(e) {
+        console.log('Write failed: ' + e.toString());
+      };
+
+      // Create a new Blob and write it to log.txt.
+      var blob = new Blob([binary_tag, evt.target.result], {type: 'audio/mp3'});
+      file_writer.write(blob);
+
+    }, error_handler);
+  }, error_handler);
+}
+
+// error handler for the filesystem access
+function error_handler(e) {
+  var msg = '';
+
+  switch (e.code) {
+    case FileError.QUOTA_EXCEEDED_ERR:
+      msg = 'QUOTA_EXCEEDED_ERR';
+      break;
+    case FileError.NOT_FOUND_ERR:
+      msg = 'NOT_FOUND_ERR';
+      break;
+    case FileError.SECURITY_ERR:
+      msg = 'SECURITY_ERR';
+      break;
+    case FileError.INVALID_MODIFICATION_ERR:
+      msg = 'INVALID_MODIFICATION_ERR';
+      break;
+    case FileError.INVALID_STATE_ERR:
+      msg = 'INVALID_STATE_ERR';
+      break;
+    default:
+      msg = 'Unknown Error';
+      break;
+  };
+
+  show_error("Filesystem error: "+msg);
 }

@@ -13,6 +13,7 @@
         (include-bootstrap)
         (include-css "/css/style.css")
         (include-css "http://fonts.googleapis.com/css?family=Lato")
+        (include-js "/script/base64-binary.js")
       	(include-js "/script/scripper.js")]
       [:body
         [:div.container-fluid
@@ -53,7 +54,7 @@
         [:div.subtitle title]
         [:a.btn.download-button
           {:href mp3 :download filename}
-          [:i.icon-download] " Rightclick → Save link as..."]
+          [:i.icon-download] " Download raw file"]
        ]
 		]))
 
