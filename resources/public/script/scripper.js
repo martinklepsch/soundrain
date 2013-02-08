@@ -123,6 +123,7 @@ function drop(evt) {
 }
 
 function process_dropped_files(fs) {
+  $("#search-button").button('loading');
   hide_error();
 
   filesystem = fs;
@@ -139,7 +140,11 @@ function process_dropped_files(fs) {
       };
     }(i);
     // Check if the file is a valid mp3
-    if (!filter.test(currently_processed_files[i].type)) { show_error("Please only upload mp3s"); return; }
+    if (!filter.test(currently_processed_files[i].type)) { 
+      show_error("Please only upload mp3s"); 
+      $("#search-button").button('reset'); 
+      return; 
+    }
     // Otherwise hide the error
     hide_error();
 
@@ -155,7 +160,7 @@ function handle_binary_data(evt, current_index) {
     }
   }
   if (right_index == -1) {
-    show_error("This was an invalid mp3");
+    show_error("Please do not change the name of the downloaded files...");
     return;
   }
   hide_error();
@@ -176,6 +181,7 @@ function handle_binary_data(evt, current_index) {
         console.log('Write completed.');
         var object = $('#mp3-'+right_index+' > .text > .download-button');
         object.attr("href", file_entry.toURL()).attr('download', filename).addClass('btn-success').attr('data-on-filesystem', 'true').html("<i class='icon-download'></i> Download");
+        $("#search-button").button('reset');
       };
       file_writer.onerror = function(e) {
         console.log('Write failed: ' + e.toString());
