@@ -6,6 +6,8 @@ var FILESYSTEM_SIZE = 10000000;
 var filesystem;
 var currently_processed_data;
 var currently_processed_files;
+
+// regexes
 var filter = /^(audio\/mpeg|audio\/mp3|audio\/mpeg3|audio\/x\-mpeg\-3|video\/mpeg|video\/x\-mpeg3)$/i;
 var pattern = /^(https|http):\/\/(www\.)?soundcloud\.com/i;
 
@@ -52,12 +54,7 @@ function attach_handlers_to_buttons() {
 }
 
 function is_valid_url(str) {
-  if(!pattern.test(str)) {
-    // alert("Please enter a valid URL.");
-    return false;
-  } else {
-    return true;
-  }
+  return pattern.test(str);
 }
 
 function show_error(msg) {
