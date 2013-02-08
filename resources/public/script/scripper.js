@@ -18,7 +18,6 @@ $(function() {
   setup_drag_n_drop("dropzone");
 
   $("#search-form").submit(function() {
-    // Set button to "Loading..."
     var soundcloud_uri = $("#search").val();
     if(!is_valid_url(soundcloud_uri)) {
       show_error("Please enter a valid Soundcloud URL.");
@@ -185,6 +184,7 @@ function handle_binary_data(evt, current_index) {
       };
       file_writer.onerror = function(e) {
         console.log('Write failed: ' + e.toString());
+        $("#search-button").button('reset');
       };
 
       // Create a new Blob and write it to log.txt.
