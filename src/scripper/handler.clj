@@ -5,6 +5,7 @@
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
             [scripper.core :as core]
+            [scripper.util :as util]
             [ring.adapter.jetty :as ring]))
   (use 'hiccup.bootstrap.middleware 'ring.util.response)
 
@@ -27,7 +28,8 @@
   (->
    (handler/site app-routes)
    (wrap-bootstrap-resources)
-   (wrap-json-response)))
+   (wrap-json-response)
+   (util/ignore-trailing-slash)))
 
 (defn start [port]
   (ring/run-jetty app {:port port :join? false}))
