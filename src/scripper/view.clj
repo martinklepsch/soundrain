@@ -30,7 +30,7 @@
             [:div.row body]
           ]
         ]
-      ]))
+      ]]))
 
 (defn url-form []
   (html-doc "Scripper"
