@@ -45,7 +45,7 @@ $(function() {
 function attach_handlers_to_buttons() {
   $('.download-link').click(function(evt) {
     // var jquery_object = $(evt.target);
-    if(!$(this).attr('data-on-filesystem')) {
+    if(!$(this).attr('data-on-filesystem')){
       $('.drag').show(DURATION);
       $(this).html("<i class='icon-hand-up'></i>now drag the downloaded file(s) into the box at the end of the page");
     }
@@ -140,7 +140,7 @@ function process_dropped_files(fs) {
     }(i);
     // Check if the file is a valid mp3
     if (!filter.test(currently_processed_files[i].type)) {
-      show_error("Please only upload mp3s");
+      show_error("Please only upload MP3s");
       $("#search-button").button('reset');
       return;
     }
@@ -167,7 +167,7 @@ function handle_binary_data(evt, current_index) {
   // Copied code
   var binary_tag = Base64Binary.decodeArrayBuffer(currently_processed_data[right_index].tag);
 
-  var filename = currently_processed_data[right_index].artist + " - " + currently_processed_data[right_index].title + ".mp3";
+  var filename = currently_processed_data[right_index].artist + " - " + currently_processed_data[right_index].title + ".mp3".replace(/\s/g, "_");;
 
   // Actually write to the filesystem
   filesystem.root.getFile(filename, {create: true}, function(file_entry) {
@@ -179,7 +179,8 @@ function handle_binary_data(evt, current_index) {
       file_writer.onwriteend = function(e) {
         console.log('Write completed.');
         var object = $('#mp3-'+right_index+' > .text > .download-link');
-        object.attr("href", file_entry.toURL()).attr('download', filename).addClass('btn-success').attr('data-on-filesystem', 'true').html("<i class='icon-download'></i> Download");
+        object.attr("href", file_entry.toURL()).attr('download', filename);
+        object.attr('data-on-filesystem', 'true').html("<i class='icon-download-alt'></i>download with metadata");
         $("#search-button").button('reset');
       };
       file_writer.onerror = function(e) {
