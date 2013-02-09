@@ -43,11 +43,12 @@ $(function() {
 
 // When the user downloads something, the dropzone opens.
 function attach_handlers_to_buttons() {
-  $('.download-button').click(function(evt) {
+  $('.download-link').click(function(evt) {
     // var jquery_object = $(evt.target);
     if(!$(this).attr('data-on-filesystem')) {
       $('.drag').show(DURATION);
-      $(this).html("<i class='icon-download'></i> Now drag the file(s) into the box above");
+      $(this).click(function () {return false;});
+      $(this).html("<i class='icon-hand-up'></i>now drag the downloaded file(s) into the box at the end of the page");
     }
   });
 }
@@ -116,8 +117,8 @@ function drop(evt) {
 
   // request file system access
   window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
-  window.requestFileSystem(window.TEMPORARY, FILESYSTEM_SIZE, 
-                           process_dropped_files, 
+  window.requestFileSystem(window.TEMPORARY, FILESYSTEM_SIZE,
+                           process_dropped_files,
                            error_handler);
 }
 
@@ -139,10 +140,10 @@ function process_dropped_files(fs) {
       };
     }(i);
     // Check if the file is a valid mp3
-    if (!filter.test(currently_processed_files[i].type)) { 
-      show_error("Please only upload mp3s"); 
-      $("#search-button").button('reset'); 
-      return; 
+    if (!filter.test(currently_processed_files[i].type)) {
+      show_error("Please only upload mp3s");
+      $("#search-button").button('reset');
+      return;
     }
     // Otherwise hide the error
     hide_error();
@@ -178,7 +179,7 @@ function handle_binary_data(evt, current_index) {
       // Debug information
       file_writer.onwriteend = function(e) {
         console.log('Write completed.');
-        var object = $('#mp3-'+right_index+' > .text > .download-button');
+        var object = $('#mp3-'+right_index+' > .text > .download-link');
         object.attr("href", file_entry.toURL()).attr('download', filename).addClass('btn-success').attr('data-on-filesystem', 'true').html("<i class='icon-download'></i> Download");
         $("#search-button").button('reset');
       };

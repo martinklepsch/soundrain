@@ -1,5 +1,5 @@
 body {
-  font-family: 'Lato', Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 small {
@@ -10,13 +10,12 @@ small {
   font-size: 0.9em;
   text-transform: uppercase;
   color: gray;
-  position: relative;
 }
 
 .subtitle {
   color: black;
-  position: relative;
   font-size: 1.2em;
+  margin-bottom: 5px;
 }
 
 .text {
@@ -35,26 +34,30 @@ small {
   margin: 10px 10px 10px 10px;
 }
 
-.download-button {
-  position: relative;
-  top: 50px;
+.download-link {
+  text-transform: lowercase;
+}
+.download-link i {
+  margin: 3px 4px 0 0;
 }
 
 .drag {
-  height: 50px;
-  background-color: #f8f8f8;
-  border-radius: 5px;
-  font-size: 16px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  font-size: 0.75em;
+  text-align: center;
+  background: #FAFAFA;
+  color: gray;
   padding: 10px;
-  vertical-align: middle;
+  height: 50px;
   display: none;
-  margin-bottom: 30px;
 }
 
 .drag-active {
-  border: dashed black 3px;
+  border-top: dashed black 2px;
 }
 
 .drag-inactive {
-  border: dashed #aaa 3px;
+  border-top: dashed #ccc 2px;
 }
