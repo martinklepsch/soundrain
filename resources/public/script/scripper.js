@@ -47,7 +47,6 @@ function attach_handlers_to_buttons() {
     // var jquery_object = $(evt.target);
     if(!$(this).attr('data-on-filesystem')) {
       $('.drag').show(DURATION);
-      $(this).click(function () {return false;});
       $(this).html("<i class='icon-hand-up'></i>now drag the downloaded file(s) into the box at the end of the page");
     }
   });
