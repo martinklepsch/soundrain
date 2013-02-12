@@ -47,7 +47,7 @@ function attach_handlers_to_buttons() {
     // var jquery_object = $(evt.target);
     if(!$(this).attr('data-on-filesystem')){
       $('.drag').show(DURATION);
-      $(this).html("<i class='icon-hand-up'></i>now drag the downloaded file(s) into the box at the end of the page");
+      $(this).html("<i class='icon-hand-down'></i>now drag the downloaded file(s) into the box at the end of the page");
     }
   });
 }
@@ -178,9 +178,11 @@ function handle_binary_data(evt, current_index) {
       // Debug information
       file_writer.onwriteend = function(e) {
         console.log('Write completed.');
-        var object = $('#mp3-'+right_index+' > .text > .download-link');
-        object.attr("href", file_entry.toURL()).attr('download', filename);
-        object.attr('data-on-filesystem', 'true').html("<i class='icon-download-alt'></i>download with metadata");
+        var link = $('#mp3-'+right_index+' > .text > .download-link');
+        link.attr("href", file_entry.toURL()).attr('download', filename);
+        link.attr('data-on-filesystem', 'true').html("<i class='icon-download-alt'></i>download with metadata");
+        var container = $('#mp3-'+right_index);
+        container.addClass('ready');
         $("#search-button").button('reset');
       };
       file_writer.onerror = function(e) {

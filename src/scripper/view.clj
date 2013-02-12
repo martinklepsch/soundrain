@@ -47,7 +47,7 @@
         [:button#search-button.btn {:type "submit" :data-loading-text "Loading..." } "Search"]]
       [:span.help-inline]]
     [:div.search-results.span12]
-    [:div#dropzone.drag.drag-inactive
+    [:div#dropzone.drag.drag-inactive.span12
       "Now just drag & drop all MP3s here to add metainformation like artist and title"]
     ))
 

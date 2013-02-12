@@ -25,6 +25,7 @@ small {
 .mp3 {
   width: 500px;
   height: 150px;
+  border-radius: 5px;
 }
 
 .picture {
@@ -45,19 +46,29 @@ small {
   position: fixed;
   bottom: 0;
   width: 100%;
-  font-size: 0.75em;
+  font-size: 14px;
   text-align: center;
-  background: #FAFAFA;
-  color: gray;
-  padding: 10px;
   height: 50px;
   display: none;
+  padding-left: 10px;
+  padding-top: 30px;
+  padding-right: 70px;
+  padding-bottom: 20px;
+  margin-left: -20px;
+  color: #444;
 }
 
 .drag-active {
-  border-top: dashed black 2px;
+  border-top: dashed #555 4px;
+  background: #ddd;
 }
 
 .drag-inactive {
-  border-top: dashed #ccc 2px;
+  border-top: dashed #999 4px;
+  background: #eee;
 }
+
+.ready {
+  background: #A8FFB4;
+}
+
