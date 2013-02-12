@@ -17,6 +17,8 @@ $(function() {
   // Initializes the dropzone
   setup_drag_n_drop("dropzone");
 
+  check_for_browser_support();
+
   $("#search-form").submit(function() {
     var soundcloud_uri = $("#search").val();
     if(!is_valid_url(soundcloud_uri)) {
@@ -40,6 +42,15 @@ $(function() {
     return false;
   });
 });
+
+function check_for_browser_support() {
+  window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+
+  if(!window.requestFileSystem) {
+    alert("We think that your Browser doesn't support this website. Give the newest Google Chrome a try ;)")
+    return;
+  }
+}
 
 // When the user downloads something, the dropzone opens.
 function attach_handlers_to_buttons() {
@@ -116,6 +127,7 @@ function drop(evt) {
 
   // request file system access
   window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+
   window.requestFileSystem(window.TEMPORARY, FILESYSTEM_SIZE,
                            process_dropped_files,
                            error_handler);
