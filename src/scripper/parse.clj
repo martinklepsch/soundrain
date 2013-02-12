@@ -21,17 +21,21 @@
   "loads source of url and creates enlive html-resource from it"
   (html/html-resource (:body (client/get url {:as :stream}))))
 
-(defn get-artworks [source text-tags]
+(defn get-artworks [source]
   "returns a list of hashs with the artwork-images"
-  (let [re #"http://i1.sndcdn.com/artworks[^\"]*\.jpg"]
-    (map  
-       (comp 
-         	(partial hash-map :image)
-          #(clojure.string/replace % #"badge|large" "t500x500")
-	     		(partial re-find re)
-        	:style 
-        	:attrs )
-       (html/select source [#{:a.artwork}]))))
+  (let [re-new #"(http://i1.sndcdn.com/artworks[^\"]*\.jpg)"
+        re-old #"(http://i1.sndcdn.com/avatars[^\"]*\.jpg)"
+        artworks-new (re-seq re-new (apply str source))
+        artworks-old (re-seq re-old (apply str source))]
+    (map (partial hash-map :image)
+    (if (not (empty? artworks-new))
+  		(filter #(re-find #"t500x500" %)
+       (map
+       #(clojure.string/replace (first %) #"badge|large|t300x300" "t500x500")
+       artworks-new))
+      (repeat (first (map
+       #(clojure.string/replace (first %) #"badge|large|t300x300" "t500x500")
+       artworks-old)))))))
 
 
 (defn get-text-tags [source]
@@ -43,7 +47,7 @@
   "takes a url and returns a list of hashes with the metainformation of the songs on the page"
   (let [source 		(get-source url)
         text-tags (get-text-tags source)
-        artworks 	(get-artworks source text-tags)]
+        artworks 	(get-artworks source)]
       (map #(merge %1 %2) text-tags artworks)))
 
 
