@@ -51,15 +51,15 @@
          {:keys [artist title year album image mp3]} tags   
          bytearray (ByteArrayOutputStream.)
          channel (Channels/newChannel bytearray)
-         backup-image (clojure.string/replace image #"t500x500" "t300x300")]
+         high-res-image (clojure.string/replace image #"t300x300" "t500x500")]
      (.addField tag FieldKey/ARTIST artist)
      (.addField tag FieldKey/TITLE  title)
      (.addField tag FieldKey/YEAR   year)
      (.addField tag FieldKey/ALBUM  album)
-     (try
-     	(.setField tag (-> image util/download-binary set-image))
-      (catch IOException e
-        (.setField tag (-> backup-image util/download-binary set-image))))
+     (.setField tag (set-image 
+                     (try (-> high-res-image util/download-binary)
+                      (catch IOException e
+                        (-> image util/download-binary)))))
      (.write tag channel)
      (.close channel)
      (.toByteArray bytearray)))

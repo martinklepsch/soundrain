@@ -29,12 +29,12 @@
         artworks-old (re-seq re-old (apply str source))]
     (map (partial hash-map :image)
     (concat
-  		(filter #(re-find #"t500x500" %)
+  		(filter #(re-find #"t300x300" %)
        (map
-       #(clojure.string/replace (first %) #"badge|large|t300x300" "t500x500")
+       #(clojure.string/replace (first %) #"badge|large|t500x500" "t300x300")
        artworks-new))
       (repeat (first (map
-       #(clojure.string/replace (first %) #"badge|large|t300x300" "t500x500")
+       #(clojure.string/replace (first %) #"badge|large|t500x500" "t300x300")
        artworks-old)))))))
 
 
