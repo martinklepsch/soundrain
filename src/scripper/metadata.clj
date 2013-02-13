@@ -10,6 +10,7 @@
            [org.jaudiotagger.audio.mp3					MP3File]
            [org.jaudiotagger.tag.id3						ID3v23Tag]
            [java.io															ByteArrayOutputStream]
+           [java.io															IOException]
            [java.nio.channels										Channels])
   (:require [clojure.java.io :as io]
             [scripper.util :as util]))
@@ -49,12 +50,16 @@
    (let [tag (ID3v23Tag.)
          {:keys [artist title year album image mp3]} tags   
          bytearray (ByteArrayOutputStream.)
-         channel (Channels/newChannel bytearray)]
+         channel (Channels/newChannel bytearray)
+         backup-image (clojure.string/replace image #"t500x500" "t300x300")]
      (.addField tag FieldKey/ARTIST artist)
      (.addField tag FieldKey/TITLE  title)
      (.addField tag FieldKey/YEAR   year)
      (.addField tag FieldKey/ALBUM  album)
-     (.setField tag (-> image util/download-binary set-image))
+     (try
+     	(.setField tag (-> image util/download-binary set-image))
+      (catch IOException e
+        (.setField tag (-> backup-image util/download-binary set-image))))
      (.write tag channel)
      (.close channel)
      (.toByteArray bytearray)))
