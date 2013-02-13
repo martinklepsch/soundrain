@@ -40,15 +40,17 @@
 
 (defn get-text-tags [source]
   "takes a html-resource and returns a list of hashs of all the text-tags"
-  (map #(cheshire/parse-string % true) 
-        (extract-json source)))
+  (filter
+   (comp not nil? :streamUrl)
+   (map #(cheshire/parse-string % true) 
+        (extract-json source))))
 
 (defn get-metainformations [url]
   "takes a url and returns a list of hashes with the metainformation of the songs on the page"
   (let [source 		(get-source url)
         text-tags (get-text-tags source)
         artworks 	(get-artworks source)]
-      (map #(merge %1 %2) text-tags artworks)))
+       (map #(merge %1 %2) text-tags artworks)))
 
 
  (defn get-mp3-metainformations [tags]
