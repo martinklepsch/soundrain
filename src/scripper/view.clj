@@ -63,7 +63,7 @@
         [:div.subtitle title]
         [:a.download-link
           {:href mp3 :download filename}
-          [:i.icon-download] "Download file from soundcloud"]
+          [:i.icon-download] "Download file"]
        ]
 		]))
 
@@ -71,8 +71,8 @@
   ([:h2 "scripper.herokuapp.com Terms of Service Agreement"]
 		[:dl
 				[:dt "Start"]
-				[:dd "Welcome to scripper.herokuapp.com. By using (the "Service") scripper.herokuapp.com (the \"Web site\") you agree to be bound by these Terms of Use Agreement (this \"Agreement\").
-							This Agreement sets out the legally binding terms of your use of the Web site and the Service and may be modified by scripper.herokuapp.com at any time and without prior notice, such modifications to be effective upon posting by scripper.herokuapp.com site. This Agreement includes scripper.herokuapp.com acceptable use policy for Content (the "Content") posted or accessed trough the Web site, scripper.herokuapp.com Privacy Policy, and any notices regarding the Web site."]
+				[:dd "Welcome to scripper.herokuapp.com. By using (the \"Service\") scripper.herokuapp.com (the \"Web site\") you agree to be bound by these Terms of Use Agreement (this \"Agreement\").
+							This Agreement sets out the legally binding terms of your use of the Web site and the Service and may be modified by scripper.herokuapp.com at any time and without prior notice, such modifications to be effective upon posting by scripper.herokuapp.com site. This Agreement includes scripper.herokuapp.com acceptable use policy for Content (the \"Content\") posted or accessed trough the Web site, scripper.herokuapp.com Privacy Policy, and any notices regarding the Web site."]
 				[:dt "Eligibilty" ]
         [:dd "By using the Web site, you represent and warrant that you have the right, authority, and capacity to enter into this Agreement and to abide by all of the terms and conditions of this Agreement."]
         [:dt "Term" ]
@@ -80,11 +80,11 @@
         [:dt "Non commercial use by users"]
         [:dd "scripper.herokuapp.com is intended for the personal use, unauthorized framing of or linking to the Web site will be investigated, and appropriate legal action will be taken, including without limitation, civil, criminal, and injunctive redress."]
         [:dt "Copyright policy"]
-        [:dd "None of information, code, data, text, software, music, sound, photos, pictures, graphics, video, chat, messages, files, or other materials (the "Content") that can be accessed by using this site are hosted by this site; this site is not affiliate with the pages that you access. You only can use this site to examine your own pages, you acknowledge, warrant and represent that you legally own all intellectual property rights of the content that you access using this service. You may not post, distribute, or reproduce in any way any copyrighted material, trademarks, or other proprietary information without obtaining the prior written consent of the owner of such proprietary rights. You are solely responsible for the content that you access using this service."]
+        [:dd "None of information, code, data, text, software, music, sound, photos, pictures, graphics, video, chat, messages, files, or other materials (the \"Content\") that can be accessed by using this site are hosted by this site; this site is not affiliate with the pages that you access. You only can use this site to examine your own pages, you acknowledge, warrant and represent that you legally own all intellectual property rights of the content that you access using this service. You may not post, distribute, or reproduce in any way any copyrighted material, trademarks, or other proprietary information without obtaining the prior written consent of the owner of such proprietary rights. You are solely responsible for the content that you access using this service."]
         [:dt "Privacy"]
         [:dd "Use of the Web site and/or the Service is also governed by our Privacy Policy."]
         [:dt "Disclaimers"]
-        [:dd "scripper.herokuapp.com is not responsible for any incorrect or inaccurate Content posted on the Web site or in connection with the Service, whether caused by any of the equipment or programming associated with or utilized in the Service. scripper.herokuapp.com assumes no responsibility for any error, omission, interruption, deletion, defect, delay in operation or transmission, communications line failure, theft or destruction or unauthorized access to, or alteration of, user or communications. scripper.herokuapp.com is not responsible for any problems or technical malfunction of any telephone network or lines, computer online systems, servers or providers, computer equipment, software, failure of email or players on account of technical problems or traffic congestion on the Internet or at any web site or combination thereof, including injury or damage to users or to any other person's computer related to or resulting from participating or downloading materials in connection with the Web and/or in connection with the Service. Under no circumstances will scripper.herokuapp.com be responsible for any loss or damage, including personal injury or death, resulting from anyone's use of the Web site or the Service, any Content posted on the Web site, accessed trough the site. The Web site and the Service are provided "AS-IS" and scripper.herokuapp.com expressly disclaims any warranty of fitness for a particular purpose or non-infringement. scripper.herokuapp.com cannot guarantee and does not promise any specific results from use of the Web site and/or the Service. The service may be temporarily unavailable from time to time for maintenance or other reasons."]
+        [:dd "scripper.herokuapp.com is not responsible for any incorrect or inaccurate Content posted on the Web site or in connection with the Service, whether caused by any of the equipment or programming associated with or utilized in the Service. scripper.herokuapp.com assumes no responsibility for any error, omission, interruption, deletion, defect, delay in operation or transmission, communications line failure, theft or destruction or unauthorized access to, or alteration of, user or communications. scripper.herokuapp.com is not responsible for any problems or technical malfunction of any telephone network or lines, computer online systems, servers or providers, computer equipment, software, failure of email or players on account of technical problems or traffic congestion on the Internet or at any web site or combination thereof, including injury or damage to users or to any other person's computer related to or resulting from participating or downloading materials in connection with the Web and/or in connection with the Service. Under no circumstances will scripper.herokuapp.com be responsible for any loss or damage, including personal injury or death, resulting from anyone's use of the Web site or the Service, any Content posted on the Web site, accessed trough the site. The Web site and the Service are provided \"AS-IS\" and scripper.herokuapp.com expressly disclaims any warranty of fitness for a particular purpose or non-infringement. scripper.herokuapp.com cannot guarantee and does not promise any specific results from use of the Web site and/or the Service. The service may be temporarily unavailable from time to time for maintenance or other reasons."]
         [:dt "Limitation on liability"]
         [:dd "In no event will scripper.herokuapp.com be liable to you or any third person for any indirect, consequential, exemplary, incidental, special or punitive damages, including also lost profits arising from your use of the Web site or the Service, even if scripper.herokuapp.com has been advised of the possibility of such damages."]
         [:dt "Disputes"]
@@ -92,12 +92,12 @@
         [:dt "Indemnity"]
         [:dd "You agree to indemnify and hold scripper.herokuapp.com, its subsidiaries, affiliates, officers, agents, and other partners and employees, harmless from any loss, liability, claim, or demand, including reasonable attorney's fees, made by any third party due to or arising out of your use of the Service in violation of this Agreement and/or arising from a breach of this Agreement and/or any breach of your representations and warranties set forth above."]
         [:dt "No Agency"]
-        [:dd There is no agency, partnership, joint venture, employee-employer or franchisor-franchisee relationship between scripper.herokuapp.com and any User of the Service.]
-        [:dt Other ]
+        [:dd "There is no agency, partnership, joint venture, employee-employer or franchisor-franchisee relationship between scripper.herokuapp.com and any User of the Service."]
+        [:dt "Other" ]
         [:dd "This Agreement, accepted upon use of the Web site, contains the entire agreement between you and scripper.herokuapp.com regarding the use of the Web site and/or the Service. The failure of scripper.herokuapp.com to exercise or enforce any right or provision of these Terms of Service shall not constitute a waiver of such right or provision. If any provision of this Agreement is held invalid, the remainder of this Agreement shall continue in full force and effect. The section titles in these Terms of Service are for convenience only and have no legal or contractual effect."]
         [:dt "Agreement"]
         [:dd "I have read the above policy and will agree to all of the provisions above."]
-		]]))
+		]))
 
 
 
