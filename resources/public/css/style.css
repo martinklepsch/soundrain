@@ -26,6 +26,7 @@ small {
   width: 500px;
   height: 150px;
   border-radius: 5px;
+  margin-bottom: 5px;
 }
 
 .picture {
@@ -48,13 +49,13 @@ small {
   width: 100%;
   font-size: 14px;
   text-align: center;
-  height: 50px;
+  height: 80px;
   display: none;
   padding-left: 10px;
   padding-top: 30px;
   padding-right: 70px;
-  padding-bottom: 20px;
-  margin-left: -20px;
+  padding-bottom: 0px;
+  margin-left: -18px;
   color: #444;
 }
 
@@ -70,5 +71,9 @@ small {
 
 .ready {
   background: #A8FFB4;
+}
+
+.search-results {
+  padding-top: 5px;
 }
 

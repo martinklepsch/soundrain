@@ -9,7 +9,7 @@ var currently_processed_files;
 
 // regexes
 var filter = /^(audio\/mpeg|audio\/mp3|audio\/mpeg3|audio\/x\-mpeg\-3|video\/mpeg|video\/x\-mpeg3)$/i;
-var pattern = /^(https|http):\/\/(www\.)?soundcloud\.com/i;
+var pattern = /^https:\/\/(www\.)?soundcloud\.com/i;
 
 
 
@@ -58,6 +58,7 @@ function attach_handlers_to_buttons() {
     // var jquery_object = $(evt.target);
     if(!$(this).attr('data-on-filesystem')){
       $('.drag').show(DURATION);
+      $('.search-results').css('padding-bottom','120px');
       $(this).html("<i class='icon-hand-down'></i>now drag the downloaded file(s) into the box at the end of the page");
     }
   });
