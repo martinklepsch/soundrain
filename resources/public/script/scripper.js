@@ -59,7 +59,7 @@ function attach_handlers_to_buttons() {
     if(!$(this).attr('data-on-filesystem')){
       $('.drag').show(DURATION);
       $('.search-results').css('padding-bottom','120px');
-      $(this).html("<i class='icon-hand-down'></i>now drag the downloaded file(s) into the box at the end of the page");
+      $(this).html("<i class='icon-hand-down'></i>now drag the downloaded file(s) into the box at the bottom of the page");
     }
   });
 }

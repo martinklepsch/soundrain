@@ -63,7 +63,7 @@
         [:div.subtitle title]
         [:a.download-link
           {:href mp3 :download filename}
-          [:i.icon-download] "Download file"]
+          [:i.icon-download] "Download file from soundcloud"]
        ]
 		]))
 
