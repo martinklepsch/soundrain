@@ -71,7 +71,7 @@
           [:dt "Limitation on liability"]
           [:dd "In no event will scripper.herokuapp.com be liable to you or any third person for any indirect, consequential, exemplary, incidental, special or punitive damages, including also lost profits arising from your use of the Web site or the Service, even if scripper.herokuapp.com has been advised of the possibility of such damages."]
           [:dt "Disputes"]
-          [:dd "If there is any dispute about or involving the Web site and/or the Service, by using the Web site, you agree that the dispute will be governed by the laws of MADRID/SPAIN without regard to its conflict of law provisions. You agree to personal jurisdiction by and venue in MADRID/SPAIN."]
+          [:dd "If there is any dispute about or involving the Web site and/or the Service, by using the Web site, you agree that the dispute will be governed by the laws of Berlin/Germany without regard to its conflict of law provisions. You agree to personal jurisdiction by and venue in Berlin/Germany."]
           [:dt "Indemnity"]
           [:dd "You agree to indemnify and hold scripper.herokuapp.com, its subsidiaries, affiliates, officers, agents, and other partners and employees, harmless from any loss, liability, claim, or demand, including reasonable attorney's fees, made by any third party due to or arising out of your use of the Service in violation of this Agreement and/or arising from a breach of this Agreement and/or any breach of your representations and warranties set forth above."]
           [:dt "No Agency"]
