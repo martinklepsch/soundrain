@@ -42,8 +42,9 @@
    [:dl
     [:dt "About Scripper"]
     [:dd 
-     "Being big fans of Soundcloud and listening almost exclusively to music streamed from Soundcloud we missed the possibility to access our favorite tunes on the go and offline in general without killing our 3G plan. <br/><br/> Our initial plan was to let you copy and paste a URL from Soundcloud into our site and provide you with download links for every track which is listed on the URL you provided. Because raw MP3 files suck we wanted to combine this with adding an ID3 container (this is where all the metainformation like artist and title is stored). Our goal was to provide one single button that just downloads the MP3 with correct metainformation. <br/><br/>Unfortunately we hit some problems which made this impossible (yes impossible, not just hard). <br/><br/>The current solution is the best possible given our unwillingness to spend money on this little project which was just for fun anyway. <br/><br/>If you are interested in how it works, you can find the source here: <a href=\" https://github.com/mklappstuhl/scripper\"></a> <br/>Scripper was built by: Tom Nick, Maximilian Bachl, Martin Klepsch"
-     ]]]]))
+      "Being big fans of Soundcloud and listening almost exclusively to music streamed from Soundcloud we were interested if it is possible to download songs from Soundcloud using only new Web technologies. <br/><br/> Our initial plan was to let the user copy and paste a URL from Soundcloud into the site and then create a download links for every track which is listed on the URL you provided. Because raw MP3 files suck we wanted to combine this with adding an ID3 container (this is where all the metainformation like artist and title is stored). Our goal was to provide one single button that just downloads the MP3 with correct metainformation. <br/><br/>Unfortunately we hit some problems which made this impossible (yes impossible, not just hard). <br/><br/>The current solution is the best possible given our unwillingness to spend money on this little project which was just initiated to by our curiosity about the new HTML5 File API and Clojure. <br/><br/>If you are interested in how it works, you can find the source at: <a href=\"https://github.com/mklappstuhl/scripper\">https://github.com/mklappstuhl/scripper</a> <br/>Scripper was built by: Tom Nick, Maximilian Bachl, Martin Klepsch"
+      ; "Being big fans of Soundcloud and listening almost exclusively to music streamed from Soundcloud we missed the possibility to access our favorite tunes on the go and offline in general without killing our 3G plan. <br/><br/> Our initial plan was to let you copy and paste a URL from Soundcloud into our site and provide you with download links for every track which is listed on the URL you provided. Because raw MP3 files suck we wanted to combine this with adding an ID3 container (this is where all the metainformation like artist and title is stored). Our goal was to provide one single button that just downloads the MP3 with correct metainformation. <br/><br/>Unfortunately we hit some problems which made this impossible (yes impossible, not just hard). <br/><br/>The current solution is the best possible given our unwillingness to spend money on this little project which was just for fun anyway. <br/><br/>If you are interested in how it works, you can find the source here: <a href=\" https://github.com/mklappstuhl/scripper\"></a> <br/>Scripper was built by: Tom Nick, Maximilian Bachl, Martin Klepsch"
+    ]]]]))
 
 (defn tos []
   (html
@@ -55,7 +56,7 @@
       [:dl
           [:dt "Start"]
           [:dd "Welcome to scripper.herokuapp.com. By using (the \"Service\") scripper.herokuapp.com (the \"Web site\") you agree to be bound by these Terms of Use Agreement (this \"Agreement\").
-                This Agreement sets out the legally binding terms of your use of the Web site and the Service and may be modified by scripper.herokuapp.com at any time and without prior notice, such modifications to be effective upon posting by scripper.herokuapp.com site. This Agreement includes scripper.herokuapp.com acceptable use policy for Content (the \"Content\") posted or accessed trough the Web site, scripper.herokuapp.com Privacy Policy, and any notices regarding the Web site."]
+                This Agreement sets out the legally binding terms of your use of the Web site and the Service and may be modified by scripper.herokuapp.com at any time and without prior notice, such modifications to be effective upon posting by scripper.herokuapp.com site. This Agreement includes scripper.herokuapp.com acceptable use policy for Content (the \"Content\") posted or accessed trough the Web site, scripper.herokuapp.com Privacy Policy, and any notices regarding the Web site.<br/> Please note that this website was ONLY designed to be a technical demo of the new HTML5 File API and the use of Clojure on the server side. It is only legal to download songs, when the creator of the corresponding content explicitly entitles you to do this or you are downloading your own works."]
           [:dt "Eligibilty" ]
           [:dd "By using the Web site, you represent and warrant that you have the right, authority, and capacity to enter into this Agreement and to abide by all of the terms and conditions of this Agreement."]
           [:dt "Term" ]
@@ -87,10 +88,10 @@
   (html-doc "Scripper" 
     [:div.page-header.span12
       [:h1 "Scripper"
-        [:small "download your favorite soundcloud songs with ease"]]
+        [:small "download your soundcloud songs with ease"]]
      [:ul.inline
-     	[:li [:a.btn-link {:href "#tosModal" :role "button" :data-toggle "modal"} "TOS"]]
-     	[:li [:a.btn-link {:href "#aboutModal" :role "button" :data-toggle "modal"} "ABOUT"]]]
+     	[:li [:a.btn-link {:href "#tosModal" :role "button" :data-toggle "modal"} "Terms Of Service"]]
+     	[:li [:a.btn-link {:href "#aboutModal" :role "button" :data-toggle "modal"} "About"]]]
      ]      
     [:form#search-form.form-search.control-group.span12
       [:div.input-append
