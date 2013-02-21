@@ -47,8 +47,10 @@ function check_for_browser_support() {
   window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
 
   if(!window.requestFileSystem) {
-    alert("We think that your Browser doesn't support this website. Give the newest Google Chrome a try ;)")
+    show_error("We think that your Browser doesn't support this website. Give the newest Google Chrome a try ;)");
     return;
+  } else {
+    hide_error();
   }
 }
 
