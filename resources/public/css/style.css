@@ -1,5 +1,7 @@
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic,700italic);
+
 body {
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  font-family: Ubuntu, Helvetica, Arial;
 }
 
 small {
