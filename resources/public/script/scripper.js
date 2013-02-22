@@ -182,7 +182,7 @@ function handle_binary_data(evt, current_index) {
   // Copied code
   var binary_tag = Base64Binary.decodeArrayBuffer(currently_processed_data[right_index].tag);
 
-  var filename = currently_processed_data[right_index].artist + " - " + currently_processed_data[right_index].title + ".mp3".replace(/\s/g, "_");;
+  var filename = (currently_processed_data[right_index].artist + " - " + currently_processed_data[right_index].title + ".mp3").replace(/\s/g, "_");;
 
   // Actually write to the filesystem
   filesystem.root.getFile(filename, {create: true}, function(file_entry) {
