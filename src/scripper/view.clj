@@ -41,7 +41,7 @@
     [:div.modal-body
       [:dl
         [:dt "About Scripper"]
-        [:dd 
+        [:dd
           "Being big fans of Soundcloud and listening almost exclusively to music streamed from Soundcloud we were interested if it is possible to download songs from Soundcloud using only new Web technologies. <br/><br/> Our initial plan was to let the user copy and paste a URL from Soundcloud into the site and then create a download links for every track which is listed on the URL you provided. Because raw MP3 files suck we wanted to combine this with adding an ID3 container (this is where all the metainformation like artist and title is stored). Our goal was to provide one single button that just downloads the MP3 with correct metainformation. <br/><br/>Unfortunately we hit some problems which made this impossible (yes impossible, not just hard). <br/><br/>The current solution is the best possible given our unwillingness to spend money on this little project which was just initiated to by our curiosity about the new HTML5 File API and Clojure. <br/><br/>If you are interested in how it works, you can find the source at: <a href=\"https://github.com/mklappstuhl/scripper\">https://github.com/mklappstuhl/scripper</a> <br/>Scripper was built by: Tom Nick, Maximilian Bachl, Martin Klepsch"
           ; "Being big fans of Soundcloud and listening almost exclusively to music streamed from Soundcloud we missed the possibility to access our favorite tunes on the go and offline in general without killing our 3G plan. <br/><br/> Our initial plan was to let you copy and paste a URL from Soundcloud into our site and provide you with download links for every track which is listed on the URL you provided. Because raw MP3 files suck we wanted to combine this with adding an ID3 container (this is where all the metainformation like artist and title is stored). Our goal was to provide one single button that just downloads the MP3 with correct metainformation. <br/><br/>Unfortunately we hit some problems which made this impossible (yes impossible, not just hard). <br/><br/>The current solution is the best possible given our unwillingness to spend money on this little project which was just for fun anyway. <br/><br/>If you are interested in how it works, you can find the source here: <a href=\" https://github.com/mklappstuhl/scripper\"></a> <br/>Scripper was built by: Tom Nick, Maximilian Bachl, Martin Klepsch"
     ]]]]))
@@ -93,23 +93,23 @@
     [:div.modal-body
       [:dl
         [:dt "Instructions"]
-        [:dd 
-          [:ol 
+        [:dd
+          [:ol
             [:li "Download all the files on the page that you like."]
             [:li "Drag all the downloaded songs (named something like \"h3ShIpHVBzrw.128.mp3\" into the box that opened on the bottom of the page."]
-            [:li "Now the backgroud of the songs on the page that you dragged and dropped into the box changed to mint green. <em>Download and enjoy</em> :)"]                                                                       
+            [:li "Now the backgroud of the songs on the page that you dragged and dropped into the box changed to mint green. <em>Download and enjoy</em> :)"]
             ]]]]]))
 
 (defn url-form []
-  (html-doc "Scripper" 
+  (html-doc "Scripper"
     [:div.page-header.span12
       [:h1 "Scripper"
-        [:small "download your soundcloud songs with ease"]]
+        [:small "download soundcloud songs with ease"]]
      [:ul.inline
       [:li [:a.btn-link {:href "#instructionsModal" :role "button" :data-toggle "modal"} [:strong "Instructions"]]]
      	[:li [:a.btn-link {:href "#tosModal" :role "button" :data-toggle "modal"} "Terms Of Service"]]
      	[:li [:a.btn-link {:href "#aboutModal" :role "button" :data-toggle "modal"} "About"]]]
-     ]      
+     ]
     [:form#search-form.form-search.control-group.span12
       [:div.input-append
         [:input#search.search-query.input-xxlarge {
