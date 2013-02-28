@@ -182,7 +182,7 @@ function handle_binary_data(evt, current_index) {
   // Copied code
   var binary_tag = Base64Binary.decodeArrayBuffer(currently_processed_data[right_index].tag);
 
-  var filename = (currently_processed_data[right_index].artist + " - " + currently_processed_data[right_index].title + ".mp3").replace(/\s/g, "_");;
+  var filename = (currently_processed_data[right_index].artist + "-" + currently_processed_data[right_index].title + ".mp3");
 
   // Actually write to the filesystem
   filesystem.root.getFile(filename, {create: true}, function(file_entry) {
@@ -192,17 +192,17 @@ function handle_binary_data(evt, current_index) {
 
       // Debug information
       file_writer.onwriteend = function(e) {
-        console.log('Write completed.');
         var link = $('#mp3-'+right_index+' > .text > .download-link');
         link.attr("href", file_entry.toURL()).attr('download', filename);
         link.attr('data-on-filesystem', 'true').html("<i class='icon-download-alt'></i>download with metadata");
         var container = $('#mp3-'+right_index);
         container.addClass('ready');
         $("#search-button").button('reset');
+        hide_error();
       };
       file_writer.onerror = function(e) {
-        console.log('Write failed: ' + e.toString());
         $("#search-button").button('reset');
+        show_error('Write failed: ' + e.toString());
       };
 
       // Create a new Blob and write it to log.txt.

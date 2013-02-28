@@ -59,7 +59,8 @@
          filename (str (second (re-find #"/(\w+)\?" mp3)) ".128.mp3")]
     {:artist artist
      :mp3 mp3
-     :title title
+     ; reverse escapes the title of the song.
+     :title (clojure.string/replace title #"&quot;|&gt;|&lt;|\/" {"&quot;" "&", "&gt;" ">", "&lt;" "<", "/" "|"})
      :album artist
      :year "2012"
      :image image
