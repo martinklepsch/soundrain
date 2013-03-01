@@ -79,3 +79,6 @@ small {
   padding-top: 5px;
 }
 
+.instructions-modal-body {
+  text-align: center;
+}

@@ -93,7 +93,7 @@
       [:div.modal-header
         [:button.close {:data-dismiss "modal" :aria-hidden "true"} "x"]
         [:h3 "Instructions"]]
-      [:div.modal-body
+      [:div.modal-body.instructions-modal-body
         [:img {:src "images/instructions.png"}]]]))
       ; [:dl
       ;   [:dt "Instructions"]
