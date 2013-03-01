@@ -34,7 +34,7 @@
     (with-uri-rewrite handler uri-snip-slash))
   
   (defn unescape-string
-    "Takes a string and unescapes it, also replaces \\ with |"
+    "Takes a string and unescapes it, also replaces / with |"
   	[s]
   	(replace s 
              #"&quot;|&gt;|&lt;|\/" 
