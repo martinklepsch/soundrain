@@ -1,6 +1,8 @@
 	(ns scripper.view
-  (use compojure.core [hiccup core page form util]))
-  (use 'hiccup.bootstrap.page)
+  (:use	compojure.core
+        hiccup.core
+        hiccup.page
+       	hiccup.bootstrap.page))
 
 (defn html-doc [title & body]
   (html
@@ -128,10 +130,10 @@
     (about)))
 
 
-
 (defn song-form [tag n]
   (let
     [{:keys [artist title year album image mp3 filename]} tag]
+   (html
     [:div.mp3.span4 {:id (str "mp3-" n)}
       [:img.img-polaroid.picture {:src image}]
       [:div.text
@@ -141,7 +143,4 @@
           {:href mp3 :download filename}
           [:i.icon-download] "Download file"]
        ]
-		]))
-
-
-
+		])))

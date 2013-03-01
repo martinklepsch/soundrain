@@ -1,6 +1,7 @@
 (ns scripper.util
   (:import [org.apache.commons.io IOUtils])
-  (:require [compojure.handler :as handler]))
+  (:require [compojure.handler :as handler])
+  (:use [clojure.string :only [replace]]))
   
   (defn download-binary [url]
     "downloads a file and returns it as a bytearray"
@@ -31,3 +32,10 @@
     "Makes routes match regardless of whether or not a uri ends in a slash."
     [handler]
     (with-uri-rewrite handler uri-snip-slash))
+  
+  (defn unescape-string
+    "Takes a string and unescapes it, also replaces \\ with |"
+  	[s]
+  	(replace s 
+             #"&quot;|&gt;|&lt;|\/" 
+             {"&quot;" "&", "&gt;" ">", "&lt;" "<", "/" "|"}))
