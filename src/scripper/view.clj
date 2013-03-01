@@ -8,13 +8,13 @@
     [:html
       [:head
         [:title title]
-        (include-js "/script/jquery-1.9.0.min.js")
+        (include-js "/scripts/jquery-1.9.0.min.js")
         [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]
         (include-bootstrap)
         (include-css "/css/style.css")
         (include-css "http://fonts.googleapis.com/css?family=Open+Sans")
-        (include-js "/script/base64-binary.js")
-      	(include-js "/script/scripper.js")
+        (include-js "/scripts/base64-binary.js")
+      	(include-js "/scripts/scripper.js")
         [:script {:type "text/javascript"}
           "var _gaq = _gaq || [];
           _gaq.push(['_setAccount', 'UA-3138561-9']);
@@ -91,15 +91,16 @@
       [:div.modal-header
         [:button.close {:data-dismiss "modal" :aria-hidden "true"} "x"]
         [:h3 "Instructions"]]
-    [:div.modal-body
-      [:dl
-        [:dt "Instructions"]
-        [:dd
-          [:ol
-            [:li "Download all the files on the page that you like."]
-            [:li "Drag all the downloaded songs (named something like \"h3ShIpHVBzrw.128.mp3\" into the box that opened on the bottom of the page."]
-            [:li "Now the backgroud of the songs on the page that you dragged and dropped into the box changed to mint green. <em>Download and enjoy</em> :)"]
-            ]]]]]))
+      [:div.modal-body
+        [:img {:src "images/instructions.png"}]]]))
+      ; [:dl
+      ;   [:dt "Instructions"]
+      ;   [:dd
+      ;     [:ol
+      ;       [:li "Download all the files on the page that you like."]
+      ;       [:li "Drag all the downloaded songs (named something like \"h3ShIpHVBzrw.128.mp3\" into the box that opened on the bottom of the page."]
+      ;       [:li "Now the backgroud of the songs on the page that you dragged and dropped into the box changed to mint green. <em>Download and enjoy</em> :)"]
+      ;       ]]]]]))
 
 (defn url-form []
   (html-doc "Scripper"
