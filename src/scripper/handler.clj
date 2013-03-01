@@ -1,13 +1,15 @@
 (ns scripper.handler
-  (:use compojure.core scripper.view
-         [ring.middleware.format-params :only [wrap-json-params]]
-         [ring.middleware.format-response :only [wrap-json-response]])
+  (:use compojure.core 
+        scripper.view
+        hiccup.bootstrap.middleware
+				ring.util.response
+        [ring.middleware.format-params :only [wrap-json-params]]
+        [ring.middleware.format-response :only [wrap-json-response]])
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
             [scripper.core :as core]
             [scripper.util :as util]
             [ring.adapter.jetty :as ring]))
-  (use 'hiccup.bootstrap.middleware 'ring.util.response)
 
 (defroutes app-routes
   (GET "/" [] (url-form))

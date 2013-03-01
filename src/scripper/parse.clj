@@ -2,7 +2,8 @@
   (:require [net.cgrand.enlive-html :as html]
 	          [clj-http.client :as client]
             [cheshire.core :as cheshire]
-            [scripper.metadata :as metadata] ))
+            [scripper.metadata :as metadata] 
+            [scripper.util :as util]))
 
 
 (defn get-scripts [source]
@@ -15,7 +16,7 @@
   (let [re      #"\{[^}]*\{[^}]*\}[^}]*\}"
         scripts (get-scripts source)]
     (filter (comp not nil?) 
-            (map #(re-find re %) scripts))))
+            (map (partial re-find re) scripts))))
 
 (defn get-source [url]
   "loads source of url and creates enlive html-resource from it"
@@ -29,7 +30,7 @@
         artworks-old (re-seq re-old (apply str source))]
     (map (partial hash-map :image)
     (concat
-  		(filter #(re-find #"t300x300" %)
+  		(filter (partial re-find #"t300x300")
        (map
        #(clojure.string/replace (first %) #"badge|large|t500x500" "t300x300")
        artworks-new))
@@ -50,17 +51,16 @@
   (let [source 		(get-source url)
         text-tags (get-text-tags source)
         artworks 	(get-artworks source)]
-       (map #(merge %1 %2) text-tags artworks)))
+       (map merge text-tags artworks)))
 
 
- (defn get-mp3-metainformations [tags]
+ (defn filter-metainformations [tags]
    "Filters the metadata"
    (let [{{artist :username} :user title :title mp3 :streamUrl image :image} tags
          filename (str (second (re-find #"/(\w+)\?" mp3)) ".128.mp3")]
     {:artist artist
      :mp3 mp3
-     ; reverse escapes the title of the song.
-     :title (clojure.string/replace title #"&quot;|&gt;|&lt;|\/" {"&quot;" "&", "&gt;" ">", "&lt;" "<", "/" "|"})
+     :title (util/unescape-string title)
      :album artist
      :year "2012"
      :image image
