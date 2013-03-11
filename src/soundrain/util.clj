@@ -1,4 +1,4 @@
-(ns scripper.util
+(ns soundrain.util
   (:import [org.apache.commons.io IOUtils])
   (:require [compojure.handler :as handler])
   (:use [clojure.string :only [replace]]))

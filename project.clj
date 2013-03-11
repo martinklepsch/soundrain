@@ -1,4 +1,4 @@
-(defproject scripper "0.1.0-SNAPSHOT"
+(defproject soundrain "0.1.0-SNAPSHOT"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
@@ -16,7 +16,7 @@
                  [ring/ring-jetty-adapter "1.1.6"]
                  [ring-json-response "0.2.0"]]
   :plugins [[lein-ring "0.8.2"]]
-  :ring {:handler scripper.handler/app}
+  :ring {:handler soundrain.handler/app}
   :profiles
   {:dev {:dependencies [[ring-mock "0.1.3"]]}}
-  :main scripper.handler)
+  :main soundrain.handler)

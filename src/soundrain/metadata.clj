@@ -1,4 +1,4 @@
-(ns scripper.metadata
+(ns soundrain.metadata
   (:import [org.jaudiotagger.audio							AudioFileIO]
            [org.jaudiotagger.tag								FieldKey]
            [org.jaudiotagger.tag.id3						AbstractID3v2Tag]
@@ -13,7 +13,7 @@
            [java.io															IOException]
            [java.nio.channels										Channels])
   (:require [clojure.java.io :as io]
-            [scripper.util :as util]))
+            [soundrain.util :as util]))
 
  (defn set-image [image]
    "returns a id3v2-frame containing image"

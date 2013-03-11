@@ -1,6 +1,6 @@
 var DURATION = 300;
 // size of the filesytstem that's going to be allocated
-var FILESYSTEM_SIZE = 10000000;
+var FILESYSTEM_SIZE = 100000000;
 
 // variables for data sharing between methods
 var filesystem;
@@ -8,12 +8,16 @@ var currently_processed_data;
 var currently_processed_files;
 
 // regexes
-var filter = /^(audio\/mpeg|audio\/mp3|audio\/mpeg3|audio\/x\-mpeg\-3|video\/mpeg|video\/x\-mpeg3)$/i;
-var pattern = /^https:\/\/(www\.)?soundcloud\.com/i;
+var mp3_mime_type_regex = /^(audio\/mpeg|audio\/mp3|audio\/mpeg3|audio\/x\-mpeg\-3|video\/mpeg|video\/x\-mpeg3)$/i;
+var url_regex = /^https:\/\/(www\.)?soundcloud\.com/i;
 
 
 
+// Things to be done after jQuery loads
 $(function() {
+  // For generality's sake
+  window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+
   // Initializes the dropzone
   setup_drag_n_drop("dropzone");
 
@@ -25,17 +29,18 @@ $(function() {
       show_error("Please enter a valid Soundcloud URL.");
       return false;
     } else {
+      hide_error();
       $("#search-button").button('loading');
     }
 
     sc_uri = soundcloud_uri.split("/").slice(3).join("/")
 
-    hide_error();
     $.ajax({
       url: sc_uri,
       datatype: "json",
       type: "GET",
     }).done(function(data) {
+      hide_error();
       show_results(data);
       attach_handlers_to_buttons();
     });
@@ -44,13 +49,10 @@ $(function() {
 });
 
 function check_for_browser_support() {
-  window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
-
-  if(!window.requestFileSystem) {
-    show_error("We think that your Browser doesn't support this website. Give the newest Google Chrome a try ;)");
-    return;
-  } else {
+  if(window.requestFileSystem) {
     hide_error();
+  } else {
+    show_error("We think that your Browser doesn't support this website. Give the newest Google Chrome a try ;)");
   }
 }
 
@@ -67,13 +69,14 @@ function attach_handlers_to_buttons() {
 }
 
 function is_valid_url(str) {
-  return pattern.test(str);
+  return url_regex.test(str);
 }
 
 function show_error(msg) {
   $("#search-form.control-group").addClass("error");
   $(".help-inline").html(msg);
   $(".help-inline").show(DURATION);
+  $("#search-button").button('reset');
 }
 
 function hide_error() {
@@ -87,6 +90,11 @@ function show_results(data) {
   out.html("");
 
   currently_processed_data = data;
+
+  if (currently_processed_data.length <= 0) {
+    show_error("Are you sure that the page exists and contains songs? We are not sure...")
+    return;
+  } 
 
   for(var i=0; i<currently_processed_data.length; i++) {
     out.append(currently_processed_data[i].html);
@@ -129,8 +137,6 @@ function drop(evt) {
   currently_processed_files = evt.dataTransfer.files;
 
   // request file system access
-  window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
-
   window.requestFileSystem(window.TEMPORARY, FILESYSTEM_SIZE,
                            process_dropped_files,
                            error_handler);
@@ -154,9 +160,8 @@ function process_dropped_files(fs) {
       };
     }(i);
     // Check if the file is a valid mp3
-    if (!filter.test(currently_processed_files[i].type)) {
+    if (!mp3_mime_type_regex.test(currently_processed_files[i].type)) {
       show_error("Please only upload MP3s");
-      $("#search-button").button('reset');
       return;
     }
     // Otherwise hide the error
@@ -190,7 +195,6 @@ function handle_binary_data(evt, current_index) {
     // Create a file_writer object for our file_entry (log.txt).
     file_entry.createWriter(function(file_writer) {
 
-      // Debug information
       file_writer.onwriteend = function(e) {
         var link = $('#mp3-'+right_index+' > .text > .download-link');
         link.attr("href", file_entry.toURL()).attr('download', filename);

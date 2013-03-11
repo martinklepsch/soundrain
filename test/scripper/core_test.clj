@@ -1,6 +1,6 @@
-(ns scripper.core-test
+(ns soundrain.core-test
   (:use clojure.test
-        scripper.core))
+        soundrain.core))
 
 (deftest a-test
   (testing "FIXME, I fail."

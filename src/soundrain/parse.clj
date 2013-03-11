@@ -1,9 +1,9 @@
-(ns scripper.parse
+(ns soundrain.parse
   (:require [net.cgrand.enlive-html :as html]
 	          [clj-http.client :as client]
             [cheshire.core :as cheshire]
-            [scripper.metadata :as metadata] 
-            [scripper.util :as util]))
+            [soundrain.metadata :as metadata] 
+            [soundrain.util :as util]))
 
 
 (defn get-scripts [source]
@@ -48,10 +48,10 @@
 
 (defn get-metainformations [url]
   "takes a url and returns a list of hashes with the metainformation of the songs on the page"
-  (let [source 		(get-source url)
-        text-tags (get-text-tags source)
-        artworks 	(get-artworks source)]
-       (map merge text-tags artworks)))
+  (let  [source 		(get-source url)
+        text-tags   (get-text-tags source)
+        artworks 	  (get-artworks source)]
+    (map merge text-tags artworks)))
 
 
  (defn filter-metainformations [tags]

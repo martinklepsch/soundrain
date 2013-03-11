@@ -55,8 +55,8 @@ function base64ArrayBuffer(arrayBuffer) {
 
 function createDownloadButton(scResource){
   var btn = document.createElement("button")
-  btn.setAttribute("class", "scripper-button sc-button sc-button-small sc-button-download")
-  btn.setAttribute("data-scripper", "http://0.0.0.0:3000" + scResource)
+  btn.setAttribute("class", "soundrain-button sc-button sc-button-small sc-button-download")
+  btn.setAttribute("data-soundrain", "http://0.0.0.0:3000" + scResource)
   btn.appendChild(document.createTextNode("Download"))
   btn.setAttribute("onclick", "downloadTrack(this)")
   return btn
@@ -76,6 +76,6 @@ var sounds=document.getElementsByClassName("soundList__item");
 (function(){
   var newScript = document.createElement('script');
   newScript.type = "text/javascript"
-  newScript.text = "function downloadTrack(el){console.log(el.getAttribute('data-scripper')); }"
+  newScript.text = "function downloadTrack(el){console.log(el.getAttribute('data-soundrain')); }"
   document.body.appendChild(newScript);
 })();
