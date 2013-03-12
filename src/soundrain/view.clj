@@ -35,7 +35,6 @@
         (include-css "/css/style.css")
         (include-css "http://fonts.googleapis.com/css?family=Open+Sans")
         (include-js "/scripts/base64-binary.js")
-        (include-js "/scripts/id3.js")
       	(include-js "/scripts/soundrain.js")
         [:script {:type "text/javascript"}
           "var _gaq = _gaq || [];
