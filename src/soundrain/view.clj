@@ -26,10 +26,11 @@
 (defn html-doc [title & body]
   (html
     (doctype :html5)
-    [:html
+    [:html {:lang "en"}
       [:head
         [:title title]
         (include-js "/scripts/jquery-1.9.0.min.js")
+        [:meta {:name "google" :value "notranslate"}]
         [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]
         (include-bootstrap)
         (include-css "/css/style.css")
