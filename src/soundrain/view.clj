@@ -46,7 +46,13 @@
             ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
           })();"]
-        [:link {:rel "shortcut icon" :href "/favicon.ico"}]]
+        [:link {:rel "shortcut icon" :href "/favicon.ico"}]
+       [:meta {:property "og:image" :content "images/logotext.png"}]
+       [:meta {:property "og:title" :content "soundrain.org"}]
+       [:meta {:property "og:site_name" :content "soundrain"}]
+       [:meta {:property "og:url" :content "http://soundrain.org"}]
+       [:meta {:property "og:type" :content "website"}]
+       [:link {:rel "image_src" :href "images/logotext.png"}]]
       [:body
        (fb)
         [:div.container-fluid
