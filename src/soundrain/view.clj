@@ -117,9 +117,9 @@
 
 (defn url-form []
   (html-doc "soundrain"
-    [:div.page-header.span12
-      [:h1 "soundrain"
-        [:small "download soundcloud songs with ease"]]
+    [:div.page-header.span12      
+     	[:h1 [:img {:src "images/logotext.png" :width "100" :height "100"}
+        [:small "download soundcloud songs with ease"] ]]
     [:ul.inline
       [:li [:a.btn-link {:href "#instructionsModal" :role "button" :data-toggle "modal"} [:strong "Instructions"]]]
      	[:li [:a.btn-link {:href "#tosModal" :role "button" :data-toggle "modal"} "Terms Of Service"]]
