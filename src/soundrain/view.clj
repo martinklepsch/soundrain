@@ -35,6 +35,7 @@
         (include-css "/css/style.css")
         (include-css "http://fonts.googleapis.com/css?family=Open+Sans")
         (include-js "/scripts/base64-binary.js")
+        (include-js "/scripts/id3.js")
       	(include-js "/scripts/soundrain.js")
         [:script {:type "text/javascript"}
           "var _gaq = _gaq || [];
@@ -46,17 +47,17 @@
             ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
           })();"]
-        [:link {:rel "shortcut icon" :href "/favicon.ico"}]
-       [:meta {:property "og:image" :content "http://soundrain.org/images/logotext.png"}]
-       [:meta {:property "og:title" :content "soundrain.org"}]
-       [:meta {:property "og:site_name" :content "soundrain"}]
-       [:meta {:property "og:url" :content "http://soundrain.org"}]
-       [:meta {:property "og:type" :content "website"}]
-       [:link {:rel "image_src" :href "http://soundrain.org/images/logotext.png"}]]
+        [:link {:rel "shortcut icon" :href "/images/favicon.png"}]
+        [:meta {:property "og:image" :content "/images/logotext.png"}]
+        [:meta {:property "og:title" :content "soundrain.org"}]
+        [:meta {:property "og:site_name" :content "soundrain"}]
+        [:meta {:property "og:url" :content "http://soundrain.org"}]
+        [:meta {:property "og:type" :content "website"}]
+        [:link {:rel "image_src" :href "/images/logotext.png"}]]
       [:body
-       (fb)
+        (fb)
         [:div.container-fluid
-            [:div.row body]]]]))
+          [:div.row body]]]]))
 
 (defn about []
   (html
@@ -117,14 +118,14 @@
         [:button.close {:data-dismiss "modal" :aria-hidden "true"} "x"]
         [:h3 "Instructions"]]
       [:div.modal-body.instructions-modal-body
-        [:img {:src "images/instructions.png"}]]
+        [:img {:src "/images/instructions.png"}]]
       [:div.modal-footer
         [:button.btn {:data-dismiss "modal" :aria-hidden "true"} "Close"]]]))
 
 (defn url-form []
   (html-doc "soundrain"
     [:div.page-header.span12      
-     	[:h1 [:img {:src "images/logotext.png" :width "100" :height "100"}
+     	[:h1 [:img {:src "/images/logotext.png" :width "100" :height "100"}
         [:small "download soundcloud songs with ease"] ]]
     [:ul.inline
       [:li [:a.btn-link {:href "#instructionsModal" :role "button" :data-toggle "modal"} [:strong "Instructions"]]]
