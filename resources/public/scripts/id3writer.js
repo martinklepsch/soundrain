@@ -2,6 +2,7 @@
 
 
 var ID3Writer = {
+  
   // input is an array of objects following this pattern:
   //    {frameType: <frame-type>, data: <data>, <optional> isBinary: <bool>}
   create: function(input, data) {
@@ -62,19 +63,4 @@ var ID3Writer = {
                     this.syncSafeSize(size)]) //size
   }
 
-  // Utils for converting between UTF-16 strings and arraybuffers
-  // ab2str: function(buf) {
-  //   return String.fromCharCode.apply(null, new Uint16Array(buf));
-  // },
-  // str2ab: function(str) {
-  //   var buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
-  //   var bufView = new Uint16Array(buf);
-  //   for (var i=0, strLen=str.length; i<strLen; i++) {
-  //     bufView[i] = str.charCodeAt(i);
-  //   }
-  //   return buf;
-  // },
-
-  // UTF-16 byte order mark
-  // bom: "\ufeff",
 }
