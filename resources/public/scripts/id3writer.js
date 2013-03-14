@@ -2,7 +2,7 @@
 
 
 var ID3Writer = {
-  
+
   // input is an array of objects following this pattern:
   //    {frameType: <frame-type>, data: <data>, <optional> isBinary: <bool>}
   create: function(input, data) {
@@ -51,8 +51,6 @@ var ID3Writer = {
     for (var i=3; i>=0; i--) {
       ret[3-i] = (size & (0x7F << i*7)) >> (i*7);
     }
-    console.log(size);
-    console.log(ret);
     return ret;
   },
 
