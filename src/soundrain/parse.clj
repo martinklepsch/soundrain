@@ -46,7 +46,7 @@
    (map #(cheshire/parse-string % true) 
         (extract-json source))))
 
-(defn get-metainformations [url]
+(defn get-metainformation [url]
   "takes a url and returns a list of hashes with the metainformation of the songs on the page"
   (let  [source 		(get-source url)
         text-tags   (get-text-tags source)
@@ -54,7 +54,7 @@
     (map merge text-tags artworks)))
 
 
- (defn filter-metainformations [tags]
+ (defn filter-metainformation [tags]
    "Filters the metadata"
    (let [{{artist :username} :user title :title mp3 :streamUrl image :image} tags
          filename (str (second (re-find #"/(\w+)\?" mp3)) ".128.mp3")]

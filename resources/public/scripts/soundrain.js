@@ -185,9 +185,12 @@ function handle_binary_data(evt, current_index) {
   hide_error();
   // to binary string
   // Copied code
-  var binary_tag = Base64Binary.decodeArrayBuffer(currently_processed_data[right_index].tag);
 
-  var filename = (currently_processed_data[right_index].artist + " - " + currently_processed_data[right_index].title + ".mp3");
+  c = currently_processed_data[right_index];
+
+  // var binary_tag = Base64Binary.decodeArrayBuffer(c.tag);
+
+  var filename = (c.artist + " - " + c.title + ".mp3");
 
   // Actually write to the filesystem
   filesystem.root.getFile(filename, {create: true}, function(file_entry) {
@@ -210,7 +213,12 @@ function handle_binary_data(evt, current_index) {
       };
 
       // Create a new Blob and write it to log.txt.
-      var blob = new Blob([binary_tag, evt.target.result], {type: 'audio/mp3'});
+      var blob = ID3Writer.create([
+                                    {frameType: 'TIT2', data: c.title},
+                                    {frameType: 'TALB', data: c.album},
+                                    {frameType: 'TPE1', data: c.artist},
+                                    {frameType: 'TYER', data: c.year},
+                                  ], evt.target.result);
       file_writer.write(blob);
 
     }, error_handler);

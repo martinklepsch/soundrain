@@ -3,43 +3,55 @@
 
 var ID3Writer = {
   // input is an array of objects following this pattern:
-  //    {frameType: <frame-type>, data: <data>}
+  //    {frameType: <frame-type>, data: <data>, <optional> isBinary: <bool>}
   create: function(input, data) {
     var finishedFrames = new Array();
 
     for (var i=0; i<input.length; i++) {
-      finishedFrames.push(this.buildFrame(input[i].frameType, input[i].data));
+      finishedFrames.push(this.buildFrame(input[i].frameType, input[i].data, input[i].isBinary || false));
+      
     }
 
-    var totalSize = finishedFrames.size;
+    var finishedFramesBlob = new Blob(finishedFrames);
+    var totalSize = finishedFramesBlob.size;
     var header = this.calculateHeader(totalSize);
-    return new Blob(header + finishedFrames + [data]);
+    var array = [header];
+    array.push(finishedFramesBlob);
+    array.push(data);
+    return new Blob(array, {type: 'audio/mp3'});
   },
 
-  buildFrame: function(frameType, data) {
+  buildFrame: function(frameType, data, isBinary) {
     var dataBlob = new Blob([data]);
-    var length = dataBlob.size;
+    var length = dataBlob.size+1;
 
     var sizeBuffer = new ArrayBuffer(4);
-    var int32View = new Int32Array(sizeBuffer);
-    int32View[0] = length;
+    var dataView = new DataView(sizeBuffer);
+    dataView.setInt32(0, length, false);
 
     var frameTypeBuffer = new ArrayBuffer(4);
     var Uint8View = new Uint8Array(frameTypeBuffer);
-    for (int i=0; i<4; i++) {
+    for (var i=0; i<4; i++) {
       Uint8View[i] = frameType.charCodeAt(i);
     }
  
-    //               frameType, size,      flags,  UTF-16, data 
-    return new Blob([Uint8View, int32View, "\0\0", "\x01", dataBlob]));
+    if (isBinary) {
+      //               frameType, size,     flags,  data 
+      return new Blob([Uint8View, dataView, "\0\0", dataBlob]);
+    } else {
+      //               frameType, size,     flags,  UTF-8,  data 
+      return new Blob([Uint8View, dataView, "\0\0", "\x03", dataBlob]);
+    }
   },
 
   syncSafeSize: function(size) {
     var buffer = new ArrayBuffer(4);
     var ret = new Uint8Array(buffer);
-    for (int i=3; i>=0; i--) {
+    for (var i=3; i>=0; i--) {
       ret[3-i] = (size & (0x7F << i*7)) >> (i*7);
     }
+    console.log(size);
+    console.log(ret);
     return ret;
   },
 
