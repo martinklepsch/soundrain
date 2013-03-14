@@ -49,12 +49,12 @@
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
           })();"]
         [:link {:rel "shortcut icon" :href "/images/favicon.png"}]
-        [:meta {:property "og:image" :content "/images/logotext.png"}]
+        [:meta {:property "og:image" :content "http://soundrain.org/images/logotext_square.png"}]
         [:meta {:property "og:title" :content "soundrain.org"}]
         [:meta {:property "og:site_name" :content "soundrain"}]
+        [:meta {:property "og:description" :content "Download soundcloud songs with ease."}]
         [:meta {:property "og:url" :content "http://soundrain.org"}]
-        [:meta {:property "og:type" :content "website"}]
-        [:link {:rel "image_src" :href "/images/logotext.png"}]]
+        [:meta {:property "og:type" :content "website"}]]
       [:body
         (fb)
         [:div.container-fluid
