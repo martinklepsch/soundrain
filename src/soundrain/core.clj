@@ -18,7 +18,7 @@
           ;            mp3-metadata)
           html-site (map (comp (partial hash-map :html) view/song-form) 
                           mp3-metadata (range))
-          images (map (comp (partial hash-map :image-data) codec/base64-encode util/download-binary :image) mp3-metadata)]
+          images (map (comp (partial hash-map :image_data) codec/base64-encode util/download-binary :image) mp3-metadata)]
       ; (map merge mp3-metadata mp3-tags html-site))
       (map merge mp3-metadata html-site images))
   ; Return empty list when an error occurs

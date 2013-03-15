@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 var ID3Writer = {
 
   // input is an array of objects following this pattern:
-  //    {frameType: <frame-type>, data: <mp3Data>, <optional> isBinary: <bool>}
+  //    {frameType: <frame-type>, data: <mp3Data>, <optional> isBinary: <bool>, <optional> coverMime: <mimeType>}
   // 
   // You can find a list of all frameTypes at 
   // http://en.wikipedia.org/wiki/ID3#ID3v2_Frame_Specification_.28Version_2.3.29
@@ -34,9 +34,15 @@ var ID3Writer = {
     var finishedFrames = new Array();
 
     for (var i=0; i<input.length; i++) {
-      finishedFrames.push(this.buildFrame(input[i].frameType, 
-                          input[i].data, 
-                          input[i].isBinary || false));
+      if (input[i].frameType === 'APIC') {
+        finishedFrames.push(this.buildCoverFrame(input[i].frameType, 
+                            input[i].data, 
+                            input[i].coverMime || "image/jpeg"));
+      } else {
+        finishedFrames.push(this.buildFrame(input[i].frameType, 
+                            input[i].data, 
+                            input[i].isBinary || false));
+      }
     }
 
     var finishedFramesBlob = new Blob(finishedFrames);
@@ -50,7 +56,9 @@ var ID3Writer = {
 
   buildFrame: function(frameType, data, isBinary) {
     var dataBlob = new Blob([data]);
-    var length = dataBlob.size+1;
+    var length = dataBlob.size;
+    if (!isBinary)
+      length += 1;
 
     var sizeBuffer = new ArrayBuffer(4);
     var dataView = new DataView(sizeBuffer);
@@ -69,6 +77,25 @@ var ID3Writer = {
       //               frameType, size,     flags,  UTF-8,  data 
       return new Blob([Uint8View, dataView, "\0\0", "\x03", dataBlob]);
     }
+  },
+
+  buildCoverFrame: function(frameType, data, coverMime) {
+    var dataBlob = new Blob([data]);
+    var coverMimeBlob = new Blob([coverMime]);
+    var length = dataBlob.size + 4 + coverMimeBlob.size;
+
+    var sizeBuffer = new ArrayBuffer(4);
+    var dataView = new DataView(sizeBuffer);
+    dataView.setInt32(0, length, false);
+
+    var frameTypeBuffer = new ArrayBuffer(4);
+    var Uint8View = new Uint8Array(frameTypeBuffer);
+    for (var i=0; i<4; i++) {
+      Uint8View[i] = frameType.charCodeAt(i);
+    }
+ 
+    //               frameType, size,     flags,  UTF-8,  mimeType,      used for cover, data
+    return new Blob([Uint8View, dataView, "\0\0", "\x03", coverMimeBlob, "\0\x03\0", dataBlob]);
   },
 
   syncSafeSize: function(size) {

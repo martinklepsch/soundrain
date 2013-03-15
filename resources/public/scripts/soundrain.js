@@ -188,8 +188,6 @@ function handle_binary_data(evt, current_index) {
 
   c = currently_processed_data[right_index];
 
-  // var binary_tag = Base64Binary.decodeArrayBuffer(c.tag);
-
   var filename = (c.artist + " - " + c.title + ".mp3");
 
   // Actually write to the filesystem
@@ -218,6 +216,7 @@ function handle_binary_data(evt, current_index) {
                                     {frameType: 'TALB', data: c.album},
                                     {frameType: 'TPE1', data: c.artist},
                                     {frameType: 'TYER', data: c.year},
+                                    {frameType: 'APIC', data: Base64Binary.decodeArrayBuffer(c.image_data)}
                                   ], evt.target.result);
       file_writer.write(blob);
 
