@@ -70,7 +70,7 @@
       [:dl
         [:dt "About Soundrain"]
         [:dd
-          "Being big fans of Soundcloud and listening almost exclusively to music streamed from Soundcloud we were interested if it is possible to download songs from Soundcloud using only new Web technologies. <br/><br/> Our initial plan was to let the user copy and paste a URL from Soundcloud into the site and then create a download links for every track which is listed on the URL you provided. Because raw MP3 files suck we wanted to combine this with adding an ID3 container (this is where all the metainformation like artist and title is stored). Our goal was to provide one single button that just downloads the MP3 with correct metainformation. <br/><br/>Unfortunately we hit some problems which made this impossible (yes impossible, not just hard). <br/><br/>The current solution is the best possible given our unwillingness to spend money on this little project which was just initiated to by our curiosity about the new HTML5 File API and Clojure. <br/><br/>If you are interested in how it works, you can find the source at: <a href=\"https://github.com/mklappstuhl/soundrain\">https://github.com/mklappstuhl/soundrain</a> <br/>soundrain was built by: Tom Nick, Maximilian Bachl, Martin Klepsch"]]]
+          "Being big fans of Soundcloud and listening almost exclusively to music streamed from Soundcloud we were interested if it is possible to download songs from Soundcloud using only new Web technologies. <br/><br/> Our initial plan was to let the user copy and paste a URL from Soundcloud into the site and then create a download links for every track which is listed on the URL you provided. Because raw MP3 files suck we wanted to combine this with adding an ID3 container (this is where all the metainformation like artist, title and cover is stored). Our goal was to provide one single button that just downloads the MP3 with correct metainformation. <br/><br/>Unfortunately we hit some problems which made this impossible (yes impossible, not just hard). <br/><br/>The current solution is the best possible given our unwillingness to spend money on this little project which was just initiated to by our curiosity about the new HTML5 File API and Clojure. <br/><br/>If you are interested in how it works, you can find the source at: <a href=\"https://github.com/mklappstuhl/soundrain\">https://github.com/mklappstuhl/soundrain</a> <br/>soundrain was built by: Tom Nick, Maximilian Bachl, Martin Klepsch"]]]
     [:div.modal-footer
       [:button.btn {:data-dismiss "modal" :aria-hidden "true"} "Close"]]]))
 
@@ -144,7 +144,7 @@
       [:span.help-inline]]
     [:div.search-results.span12]
     [:div#dropzone.drag.drag-inactive.span12
-      "Now just drag & drop all MP3s here to add metainformation like artist and title"]
+      "Now just drag & drop all MP3s here to add metainformation like artist, title and cover"]
     (instructions)
     (tos)
     (about)))
