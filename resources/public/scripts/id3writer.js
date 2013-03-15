@@ -25,11 +25,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // Implicitly assumes UTF-8 as the encoding of your website
 var ID3Writer = {
 
-  // input is an array of objects following this pattern:
-  //    {frameType: <frame-type>, data: <mp3Data>, <optional> isBinary: <bool>, <optional> coverMime: <mimeType>}
-  // 
-  // You can find a list of all frameTypes at 
-  // http://en.wikipedia.org/wiki/ID3#ID3v2_Frame_Specification_.28Version_2.3.29
+  /*
+  input is an array of objects following this pattern:
+      {frameType: <frame-type>, data: <mp3Data>, <optional> isBinary: <bool>, <optional> coverMime: <mimeType>}
+   
+  You can find a list of all frameTypes at 
+  http://en.wikipedia.org/wiki/ID3#ID3v2_Frame_Specification_.28Version_2.3.29
+  
+  isBinary indicates, that the frame's contents do not represent text and thus no encoding info is needed.
+  coverMime is only used for the APIC frame with the cover. The cover is treated as a special frame.
+  */
   create: function(input, data) {
     var finishedFrames = new Array();
 
@@ -54,6 +59,7 @@ var ID3Writer = {
     return new Blob(array, {type: 'audio/mp3'});
   },
 
+  // Builds a generic frame, that can either contain text or binary data, indicated by isBinary
   buildFrame: function(frameType, data, isBinary) {
     var dataBlob = new Blob([data]);
     var length = dataBlob.size;
@@ -79,6 +85,7 @@ var ID3Writer = {
     }
   },
 
+  // Special case for the APIC frame, which contains the cover 
   buildCoverFrame: function(frameType, data, coverMime) {
     var dataBlob = new Blob([data]);
     var coverMimeBlob = new Blob([coverMime]);
