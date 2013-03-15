@@ -100,6 +100,11 @@ function show_results(data) {
     out.append(currently_processed_data[i].html);
   }
 
+  for(var i=0; i<currently_processed_data.length; i++) {
+    var base64Cover = 'data:image/jpeg;base64,' + currently_processed_data[i].image_data;
+    $("#mp3-" + i + " img").attr('src', base64Cover);
+  }
+
   // Remove "Loading..." from search-button
   $("#search-button").button('reset');
 }
@@ -186,7 +191,7 @@ function handle_binary_data(evt, current_index) {
   // to binary string
   // Copied code
 
-  c = currently_processed_data[right_index];
+  var c = currently_processed_data[right_index];
 
   var filename = (c.artist + " - " + c.title + ".mp3");
 

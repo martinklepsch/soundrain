@@ -154,7 +154,7 @@
     [{:keys [artist title year album image mp3 filename]} tag]
    (html
     [:div.mp3.span4 {:id (str "mp3-" n)}
-      [:img.img-polaroid.picture {:src image}]
+      [:img.img-polaroid.picture]
       [:div.text
         [:div.title artist]
         [:div.subtitle title]
