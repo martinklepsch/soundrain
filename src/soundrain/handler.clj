@@ -1,15 +1,17 @@
 (ns soundrain.handler
-  (:use compojure.core 
-        soundrain.view
-        hiccup.bootstrap.middleware
-				ring.util.response
-        [ring.middleware.format-params :only [wrap-json-params]]
-        [ring.middleware.format-response :only [wrap-json-response]])
-  (:require [compojure.handler :as handler]
-            [compojure.route :as route]
-            [soundrain.core :as core]
-            [soundrain.util :as util]
-            [ring.adapter.jetty :as ring]))
+  (:use 
+    compojure.core 
+    soundrain.view
+    hiccup.bootstrap.middleware
+    ring.util.response
+    [ring.middleware.format-params :only [wrap-json-params]]
+    [ring.middleware.format-response :only [wrap-json-response]])
+  (:require 
+    [compojure.handler :as handler]
+    [compojure.route :as route]
+    [soundrain.core :as core]
+    [soundrain.util :as util]
+    [ring.adapter.jetty :as ring]))
 
 (defroutes app-routes
   (GET "/" [] (url-form))

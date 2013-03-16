@@ -1,9 +1,10 @@
 (ns soundrain.parse
-  (:require [net.cgrand.enlive-html :as html]
-	          [clj-http.client :as client]
-            [cheshire.core :as cheshire]
-            [soundrain.metadata :as metadata] 
-            [soundrain.util :as util]))
+  (:require 
+    [net.cgrand.enlive-html :as html]
+    [clj-http.client :as client]
+    [cheshire.core :as cheshire]
+    [soundrain.metadata :as metadata] 
+    [soundrain.util :as util]))
 
 
 (defn get-scripts [source]

@@ -1,19 +1,21 @@
 (ns soundrain.metadata
-  (:import [org.jaudiotagger.audio							AudioFileIO]
-           [org.jaudiotagger.tag								FieldKey]
-           [org.jaudiotagger.tag.id3						AbstractID3v2Tag]
-           [org.jaudiotagger.tag.id3.framebody	FrameBodyAPIC]
-           [org.jaudiotagger.tag.id3						ID3v23Frame]
-           [org.jaudiotagger.tag.datatype				DataTypes]
-           [org.jaudiotagger.tag.reference			PictureTypes]
-           [org.jaudiotagger.tag								TagField]
-           [org.jaudiotagger.audio.mp3					MP3File]
-           [org.jaudiotagger.tag.id3						ID3v23Tag]
-           [java.io															ByteArrayOutputStream]
-           [java.io															IOException]
-           [java.nio.channels										Channels])
-  (:require [clojure.java.io :as io]
-            [soundrain.util :as util]))
+  (:import 
+    [org.jaudiotagger.audio AudioFileIO]
+    [org.jaudiotagger.tag FieldKey]
+    [org.jaudiotagger.tag.id3 AbstractID3v2Tag]
+    [org.jaudiotagger.tag.id3.framebody FrameBodyAPIC]
+    [org.jaudiotagger.tag.id3 ID3v23Frame]
+    [org.jaudiotagger.tag.datatype DataTypes]
+    [org.jaudiotagger.tag.reference	 PictureTypes]
+    [org.jaudiotagger.tag TagField]
+    [org.jaudiotagger.audio.mp3 MP3File]
+    [org.jaudiotagger.tag.id3 ID3v23Tag]
+    [java.io ByteArrayOutputStream]
+    [java.io IOException]
+    [java.nio.channels Channels])
+  (:require 
+    [clojure.java.io :as io]
+    [soundrain.util :as util]))
 
  (defn set-image [image]
    "returns a id3v2-frame containing image"

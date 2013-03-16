@@ -1,8 +1,9 @@
 (ns soundrain.view
-  (:use	compojure.core
-        hiccup.core
-        hiccup.page
-       	hiccup.bootstrap.page))
+  (:use 
+    compojure.core
+    hiccup.core
+    hiccup.page
+    hiccup.bootstrap.page))
 
 (def hostname "<i>soundrain.org</i>")
 (defn fb [] 
