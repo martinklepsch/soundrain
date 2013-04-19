@@ -25,8 +25,8 @@
 
 (defn get-artworks [source]
   "returns a list of hashs with the artwork-images"
-  (let [re-new #"(http://i1.sndcdn.com/artworks[^\"]*\.jpg)"
-        re-old #"(http://i1.sndcdn.com/avatars[^\"]*\.jpg)"
+  (let [re-new #"(http://i2.sndcdn.com/artworks[^\"]*\.jpg)"
+        re-old #"(http://i2.sndcdn.com/avatars[^\"]*\.jpg)"
         artworks-new (re-seq re-new (apply str source))
         artworks-old (re-seq re-old (apply str source))]
     (map (partial hash-map :image)
