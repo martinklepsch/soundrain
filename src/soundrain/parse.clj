@@ -10,7 +10,7 @@
 (defn get-scripts [source]
   "returns a list of all the javascripts embedded in source"
   (flatten (map :content 
-                (html/select source [:div#main-content :script]))))
+                (html/select source [:div#spotlight :script]))))
 
 (defn extract-json [source]
   "takes an html-resource and extracts all json in the page"
@@ -25,8 +25,8 @@
 
 (defn get-artworks [source]
   "returns a list of hashs with the artwork-images"
-  (let [re-new #"(http://i2.sndcdn.com/artworks[^\"]*\.jpg)"
-        re-old #"(http://i2.sndcdn.com/avatars[^\"]*\.jpg)"
+  (let [re-new #"((https|http)://(i2|i1).sndcdn.com/artworks[^\"]*\.jpg)"
+        re-old #"((https|http)://(i2|i1).sndcdn.com/avatars[^\"]*\.jpg)"
         artworks-new (re-seq re-new (apply str source))
         artworks-old (re-seq re-old (apply str source))]
     (map (partial hash-map :image)
