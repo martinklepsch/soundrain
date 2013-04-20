@@ -7,17 +7,17 @@
     [soundrain.util :as util]))
 
 
-(defn get-scripts [source]
-  "returns a list of all the javascripts embedded in source"
+(defn get-scripts [html-source]
+  "returns a list of all the javascripts embedded in html-source"
   (flatten (map :content 
-                (html/select source [:div#spotlight :script]))))
+                (html/select html-source [:script]))))
 
-(defn extract-json [source]
-  "takes an html-resource and extracts all json in the page"
-  (let [re      #"\{[^}]*\{[^}]*\}[^}]*\}"
-        scripts (get-scripts source)]
+(defn extract-json [html-source]
+  "takes an html-rehtml-source and extracts all json in the page"
+  (let [re      #"(\{\"id[^}]*\{[^}]*\}[^}]*\})"
+        scripts (get-scripts html-source)]
     (filter (comp not nil?) 
-            (map (partial re-find re) scripts))))
+            (map #(second (re-find re %)) (filter (comp not nil?) scripts)))))
 
 (defn get-source [url]
   "loads source of url and creates enlive html-resource from it"
@@ -66,4 +66,7 @@
      :year "2012"
      :image image
      :filename filename}))
+ 
+ ;(def s (get-source "https://soundcloud.com/qotsa"))
+ 
 
