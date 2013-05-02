@@ -1,13 +1,13 @@
 (ns soundrain.view
-  (:use 
+  (:use
     compojure.core
     hiccup.core
     hiccup.page
     hiccup.bootstrap.page))
 
 (def hostname "<i>soundrain.org</i>")
-(defn fb [] 
-  (html 
+(defn fb []
+  (html
    [:div#fb-root]
 		[:script {:type "text/javascript"}
      "(function(d, s, id) {
@@ -18,10 +18,10 @@
       fjs.parentNode.insertBefore(js, fjs);
     } (document, 'script', 'facebook-jssdk'));"]))
 
-(defn fb-like [] 
-  (html [:div.fb-like 
-         {:data-href "http://soundrain.org/" :data-send "false" 
-          :data-layout "button_count" :data-width "450" 
+(defn fb-like []
+  (html [:div.fb-like
+         {:data-href "http://soundrain.org/" :data-send "false"
+          :data-layout "button_count" :data-width "450"
           :data-show-faces "false" :data-font "segoe ui"}]))
 
 (defn html-doc [title & body]
@@ -126,13 +126,13 @@
 
 (defn url-form []
   (html-doc "soundrain"
-    [:div.page-header.span12      
-     	[:h1 [:img {:src "/images/logotext.png" :width "100" :height "100"}
+    [:div.page-header.span12
+      [:h1 [:img {:src "/images/logotext.png" :width "100" :height "100"}
         [:small "download soundcloud songs with ease"] ]]
     [:ul.inline
-      [:li [:a.btn-link {:href "#instructionsModal" :role "button" :data-toggle "modal"} [:strong "Instructions"]]]
-     	[:li [:a.btn-link {:href "#tosModal" :role "button" :data-toggle "modal"} "Terms Of Service"]]
-     	[:li [:a.btn-link {:href "#aboutModal" :role "button" :data-toggle "modal"} "About"]]
+      [:li [:a.btn-link {:href "#instructionsModal" :role "button" :data-toggle "modal" :onClick "_gaq.push(['_trackEvent', 'Modals', 'Introduction']);"} [:strong "Instructions"]]]
+      [:li [:a.btn-link {:href "#tosModal" :role "button" :data-toggle "modal" :onClick "_gaq.push(['_trackEvent', 'Modals', 'Terms']);"} "Terms Of Service"]]
+      [:li [:a.btn-link {:href "#aboutModal" :role "button" :data-toggle "modal" :onClick "_gaq.push(['_trackEvent', 'Modals', 'About']);"} "About"]]
       [:li (fb-like)]]]
     [:form#search-form.form-search.control-group.span12
       [:div.input-append

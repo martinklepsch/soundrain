@@ -31,6 +31,7 @@ $(function() {
     } else {
       hide_error();
       $("#search-button").button('loading');
+      _gaq.push(['_trackEvent', 'Search', 'submit', soundcloud_uri]);
     }
 
     sc_uri = soundcloud_uri.split("/").slice(3).join("/")
@@ -61,6 +62,7 @@ function attach_handlers_to_buttons() {
   $('.download-link').click(function(evt) {
     // var jquery_object = $(evt.target);
     if(!$(this).attr('data-on-filesystem')){
+      _gaq.push(['_trackEvent', 'Download', 'original file downloaded', $(this).siblings('div').text()]);
       $('.drag').show(DURATION);
       $('.search-results').css('padding-bottom','120px');
       $(this).html("<i class='icon-hand-down'></i>now drag the downloaded file(s) into the box at the bottom of the page");
@@ -93,8 +95,9 @@ function show_results(data) {
 
   if (currently_processed_data.length <= 0) {
     show_error("Are you sure that the page exists and contains songs? We are not sure...")
+    _gaq.push(['_trackEvent', 'Search', 'no songs found', $('#search').val()]);
     return;
-  } 
+  }
 
   for(var i=0; i<currently_processed_data.length; i++) {
     out.append(currently_processed_data[i].html);
