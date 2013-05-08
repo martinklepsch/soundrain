@@ -8,7 +8,7 @@
     (try (let [stream     (new java.net.URL url)
           filestream (.openStream stream)]
       (IOUtils/toByteArray filestream))
-    (catch Exception e (download-binary "http://soundrain.org/images/logotext.png"))))
+    (catch Exception e (download-binary "http://soundrain.org/images/default_cover.jpg"))))
 
   (defn with-uri-rewrite
   "Rewrites a request uri with the result of calling f with the

@@ -1,5 +1,5 @@
 (ns soundrain.metadata
-  (:import 
+  (:import
     [org.jaudiotagger.audio AudioFileIO]
     [org.jaudiotagger.tag FieldKey]
     [org.jaudiotagger.tag.id3 AbstractID3v2Tag]
@@ -13,7 +13,7 @@
     [java.io ByteArrayOutputStream]
     [java.io IOException]
     [java.nio.channels Channels])
-  (:require 
+  (:require
     [clojure.java.io :as io]
     [soundrain.util :as util]))
 
@@ -46,11 +46,11 @@
      (.setField tag FieldKey/ALBUM  album)
      (.setField tag (-> image util/download-binary set-image))
      (.commit file)))
- 
+
  (defn create-ID3v23-tag [tags]
    "takes a hash of tags and returns an ID3-v23-tag bytearray"
    (let [tag (ID3v23Tag.)
-         {:keys [artist title year album image mp3]} tags   
+         {:keys [artist title year album image mp3]} tags
          bytearray (ByteArrayOutputStream.)
          channel (Channels/newChannel bytearray)
          high-res-image (clojure.string/replace image #"t300x300" "t500x500")]
@@ -58,8 +58,8 @@
      (.addField tag FieldKey/TITLE  title)
      (.addField tag FieldKey/YEAR   year)
      (.addField tag FieldKey/ALBUM  album)
-     (.setField tag (set-image 
-                     (try (-> high-res-image util/download-binary)
+     (.setField tag (set-image
+                    (try (-> high-res-image util/download-binary)
                       (catch IOException e
                         (-> image util/download-binary)))))
      (.write tag channel)
