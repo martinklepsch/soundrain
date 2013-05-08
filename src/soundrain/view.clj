@@ -30,12 +30,11 @@
     [:html {:lang "en"}
       [:head
         [:title title]
-        (include-js "/scripts/jquery-1.9.0.min.js")
+        (include-js "//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js")
         [:meta {:name "google" :value "notranslate"}]
         [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]
         (include-bootstrap)
         (include-css "/css/style.css")
-        (include-css "http://fonts.googleapis.com/css?family=Open+Sans")
         (include-js "/scripts/base64-binary.js")
         (include-js "/scripts/id3writer.js")
       	(include-js "/scripts/soundrain.js")
@@ -139,7 +138,8 @@
         [:input#search.search-query.input-xxlarge {
           :type "search"
           :placeholder "Paste a link to Soundcloud here"
-          :autofocus ""
+          :autofocus "autofocus"
+          :autocomplete "on"
           :name "url"}]
         [:button#search-button.btn {:type "submit" :data-loading-text "Loading..." } "Get songs"]]
       [:span.help-inline]]

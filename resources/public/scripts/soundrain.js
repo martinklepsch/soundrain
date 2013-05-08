@@ -40,6 +40,9 @@ $(function() {
       url: sc_uri,
       datatype: "json",
       type: "GET",
+    }).fail(function(jqXHR, text, err) {
+      show_error('An error occured: ' + err.toString());
+      _gaq.push(['_trackEvent', 'Search', 'ajax failed', err]);
     }).done(function(data) {
       hide_error();
       show_results(data);

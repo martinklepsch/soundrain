@@ -62,12 +62,12 @@ small {
 }
 
 .drag-active {
-  border-top: dashed #555 1px;
+  border-top: dashed #555 2px;
   background: #ddd;
 }
 
 .drag-inactive {
-  border-top: dashed #999 1px;
+  border-top: dashed #999 2px;
   background: #eee;
 }
 
